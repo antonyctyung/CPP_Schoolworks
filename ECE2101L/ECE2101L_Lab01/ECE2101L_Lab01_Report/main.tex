@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\ExplSyntaxOn
+\NewDocumentCommand{\defcon}{mm}
+ {
+  \cs_new:Npx #1 { \fp_eval:n { #2 } }
+ }
+\ExplSyntaxOff
+
+\title{ECE2101L\\Electrical Circuit Analysis II Laboratory\\\,\\Lab 1\\Positive and Negative Gain Op Amp Circuits\\\,\\Report\\\,\\}
+\author{Choi Tim Antony Yung\\\,\\Willis Nguyen\\Phineas Cozmiuc}
+\date{10 February 2020}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\section*{Objective}
+The objective of this lab is to explore the behavior of an operation amplifier (op amp) with a positive or negative gain.
+
+
+
+%1
+\section{Basic characteristics of positive-gain op amp circuit}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0, 0) node[op amp, yscale=-1] (opamp) {}
+            (opamp.down) to[short] ++(0,0.4) node[vcc]{$V_{cc}=\SI{20}{\volt}$} %Vcc
+            (opamp.up) to[short] ++(0,-0.4) node[vee]{$-V_{cc}=\SI{-20}{\volt}$} %Vee
+            (opamp.+) to[short] ++(-0.01,0) -- ++(-2.99,0) to[V,l_=$V_s\equal\SI{2}{\volt}$] ++(0,-5) coordinate (groundnode) node[ground]{}
+            (opamp.-) to[short] ++(-0.01,0) -- ++(-0.34,0) -- ++(0,-2) coordinate (vnnode)
+            -- (vnnode -| opamp.-) to[R,l_=$R_f$] (vnnode -| opamp.out)
+            (groundnode) -- (groundnode -| vnnode) to[R=$R_g\equal\SI{3.3}{\kilo\ohm}$] (vnnode)
+            (opamp.out) -- ++(0.5,0) coordinate (outnode)
+            (vnnode -| opamp.out) -- ++(0.5,0) to[short,i<=I] (outnode) -- ++(1.5,0) coordinate (vnaughtplusnode)
+            (groundnode -| vnnode) -- (groundnode -| vnaughtplusnode) to[open, v^<=$V_o$] (vnaughtplusnode)
+            
+            % op amp pinout label
+            (opamp.down) to[open] ++ (0,0.15) node[anchor=south east, color=red] {7}
+            (opamp.up) ++ (0,-0.15) node[anchor=north east, color=red] {4}
+            (opamp.+) node[anchor=north west, color=red] {3}
+            (opamp.-) node[anchor=south west, color=red] {2}
+            (opamp.out) ++(-0.15,0) node[anchor=south east, color=red] {6}
+            ;
+    \end{circuitikz}
+\end{center}
+
+\subsection*{Procedure}
+A circuit was set up following the above schematic, with $V_s=\SI{2.0115}{\volt}$, $V_{cc}=\SI{20}{\volt}$ and $-V_{cc}=-\SI{20}{\volt}$ supplied by a DC power supply and a DC dual power supply with the COM port of both power supplies connected to the ground of circuit. For each value of $R_f$, $V_o$ was measured with the positive terminal of a digital multimeter (DMM) connected to pin 6 of LM741 chip, the output of the op amp, and negative terminal of DMM connected to ground, and the current I was then measured with the positive terminal of DDM connected to pin 6 of LM741 and negative terminal connected to $R_f$.
+
+\subsection*{Result}
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{}r r r r@{}}
+         \toprule
+        $R_f$ & G & $V_o$ & I\\
+         &calculated & measured & measured  \\
+         \midrule
+        \SI{3.3}{\kilo\ohm}& 2 & \SI{4.0153}{\volt} & \SI{0.602}{\milli\ampere} \\
+        \SI{3.9}{\kilo\ohm}& 2.18 & \SI{4.3768}{\volt} & \SI{0.602}{\milli\ampere}\\
+        \SI{4.7}{\kilo\ohm}& 2.42 & \SI{4.8045}{\volt} & \SI{0.602}{\milli\ampere}\\ 
+
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection*{Analysis}
+Assuming ideal op amp, no current flow into the inverting input of op amp, and therefore current flowing across $R_g$ must be the same as I, current flowing across $R_f$, by KCL. As the current flowing across $R_g$ is $\frac{V_-}{R_g}=\frac{V_s}{R_g}$ which does not depend on the value of $R_f$, I must remain constant as well.
+
+%2
+\section{}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0, 0) node[op amp] (opamp) {}
+            (opamp.-) -- ++(-0.5,0) to[R,l_=$R_1\equal\SI{3.3}{\kilo\ohm}$] ++(-2.5,0) to [short, i<_=$I$] ++(-0.5,0) to[V,l_=$V_s$] ++(0,-2) node[ground]{} -- ++(2,0) coordinate (groundnode) -- (groundnode |- opamp.+) -- (opamp.+)
+            (opamp.-) ++(-0.5,0) -- ++(0,1) coordinate (tempcoor) 
+            (tempcoor -| opamp.out) to[R,l_=$R_f\equal\SI{5.6}{\kilo\ohm}$] (tempcoor)
+            (tempcoor -| opamp.out) -- (opamp.out) -- ++(1.5,0) coordinate (voplus) to[open, v=$V_o$] (voplus |- groundnode) -- (groundnode)
+            
+            % op amp pinout label
+            (opamp.down) node[anchor=north, color=red] {7}
+            (opamp.up) node[anchor=south, color=red] {4}
+            (opamp.+) node[anchor=north west, color=red] {3}
+            (opamp.-) node[anchor=south west, color=red] {2}
+            (opamp.out) ++(-0.15,0) node[anchor=south east, color=red] {6}
+            ;
+    \end{circuitikz}
+\end{center}
+
+\subsection*{Procedure}
+A circuit was set up following the above schematic, with $V_s=\SI{2.0115}{\volt}$, $V_{cc}=\SI{20}{\volt}$ and $-V_{cc}=-\SI{20}{\volt}$ supplied by a DC power supply and a DC dual power supply with the COM port of both power supplies connected to the ground of circuit. For each value of $R_f$, $V_o$ was measured with the positive terminal of a digital multimeter (DMM) connected to pin 6 of LM741 chip, the output of the op amp, and negative terminal of DMM connected to ground, $V_s$ was measured by connecting the positive terminal of DMM to positive terminal of $V_s$ and negative to the ground, and the current I was then measured with the positive terminal of DDM connected to positive terminal of $V_s$ and negative to the resistor R.
+
+\pagebreak
+
+\subsection*{Result}
+$$R_f=\SI{5.6}{\kilo\ohm}$$
+$$G_{calc}=-1.697$$
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{}r r r r r r r@{}}
+         \toprule
+        $V_s$ &$V_s$ &$V_o$ &$V_o$ & G &  I &Error\\
+         nominal & measured&calculated & measured & measured& measured&  \\
+         \midrule
+\SI{0}{\volt} & \SI{0.002}{\volt} & \SI{-0.003}{\volt} &  \SI{0.019}{\volt} &  9.500 & \SI{0}{\micro\ampere} & 659.82\% \\
+\SI{1}{\volt} & \SI{1.011}{\volt} & \SI{-1.716}{\volt} & \SI{-1.631}{\volt} & -1.613 & \SI{289}{\micro\ampere} & 4.93\% \\
+\SI{2}{\volt} & \SI{2.065}{\volt} & \SI{-3.504}{\volt} & \SI{-3.346}{\volt} & -1.620 & \SI{594}{\micro\ampere} & 4.52\% \\
+\SI{3}{\volt} & \SI{3.037}{\volt} & \SI{-5.154}{\volt} & \SI{-4.931}{\volt} & -1.624 & \SI{878}{\micro\ampere} & 4.32\% \\
+\SI{4}{\volt} & \SI{4.054}{\volt} & \SI{-6.880}{\volt} & \SI{-6.600}{\volt} & -1.628 & \SI{1175}{\micro\ampere} & 4.06\% \\
+\SI{5}{\volt} & \SI{4.964}{\volt} & \SI{-8.424}{\volt} & \SI{-8.089}{\volt} & -1.630 & \SI{1441}{\micro\ampere} & 3.97\% \\ 
+
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection*{Analysis}
+The RMS value of $V_o$ was measured to be \SI{11.947}{\volt}, which is a positive value. The op amp circuit did indeed invert the sinusoidal voltage. However, the calculation of the RMS value concern simply the amplitude of the sinusoidal output, and results in a positive value. 
+
+
+\end{document}

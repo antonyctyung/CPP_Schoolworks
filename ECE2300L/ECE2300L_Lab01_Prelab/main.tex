@@ -1,0 +1,70 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+
+\title{ECE2300L_Prelab1}
+\author{Choi Tim Antony }
+\begin{document}
+
+\begin{center}
+    \begin{circuitikz}
+        \draw
+        (0,0) node[vcc] {5V}
+        to[nos] (0,-1)
+        to[R=1k] (0,-2.5)
+        node[ground]{}
+        (0,-1) -- (1,-1)
+        to[Do] (1,-2.5)
+        node[ground]{}
+        (1,-1) -- (2,-1)
+        node[circ] (A) {A}
+        ++(1,0) node[american not port] (not1) {04}
+        (A)--(not1.in)
+        (not1.out)
+        node[circ] (barA) {$\bar{A}$}
+        
+        (0,-5) node[vcc] {5V}
+        to[nos] (0,-6)
+        to[R=1k] (0,-7.5)
+        node[ground]{}
+        (0,-6) -- (1,-6)
+        to[Do] (1,-7.5)
+        node[ground]{}
+        (1,-6) -- (2,-6)
+        node[circ](B){B}
+        ++(1,0) node[american not port] (not2) {04}
+        (B)--(not2.in)
+        (not2.out)
+        node[circ] (barB) {$\bar{B}$}
+        
+        (not1.out)++(2,-1) node[american and port] (and1) {08}
+        
+        (not2.out)++(2,1) node[american and port] (and2) {08}
+
+        (not1.out)-|(and1.in 1)
+        (and1.in 2)--(B)
+        
+        (not2.out)-|(and2.in 2)
+        (and2.in 1)--(A)
+        
+        (and1.out)++(2,-1.5) node[american or port] (or) {32}
+        
+        (and1.out)--(or.in 1)
+        (and2.out)--(or.in 2)
+        
+        (or.out) to[Do]++(0,-2)
+        to[R=340] ++(0,-2) node[ground]{}
+        
+        ;
+    \end{circuitikz}
+\end{center}
+
+\end{document}

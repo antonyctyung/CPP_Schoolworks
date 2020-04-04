@@ -1,0 +1,11 @@
+* C:\Users\Antony Yung\Documents\workspace\ECE2100L\Lab7\Draft1.asc
+V1 N001 0 AC 6 0
+Ra N002 N001 43
+C1 N002 0 10p
+C2 N003 N002 1000µ
+C4 Vth N003 470µ
+Rb N003 N004 51
+C3 N004 0 20p
+.ac list 60
+.backanno
+.end

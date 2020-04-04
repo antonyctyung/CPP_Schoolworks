@@ -1,0 +1,114 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+%\usepackage[landscape]{geometry}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+
+\title{ECE2300L_Prelab3}
+\author{Choi Tim Antony Yung}
+\begin{document}
+\begin{circuitikz}
+    \draw 
+        (-9,8) node[vcc]{5V} to[nos] ++(0,-1) node[circ,label=0:A](A){} -- ++(-1,0) to [Do] ++(0,-1) to[R] ++(0,-1.5) node[ground]{}
+        
+        (-7,8) node[vcc]{5V} to[nos] ++(0,-1) node[circ,label=0:B](B){} -- ++(-1,0) to [Do] ++(0,-1) to[R] ++(0,-1.5) node[ground]{}
+        
+        (-5,8) node[vcc]{5V} to[nos] ++(0,-1) node[circ,label=0:C](C){} -- ++(-1,0) to [Do] ++(0,-1) to[R] ++(0,-1.5) node[ground]{}
+        
+        (-3,8) node[vcc]{5V} to[nos] ++(0,-1) node[circ,label=0:D](D){} -- ++(-1,0) to [Do] ++(0,-1) to[R] ++(0,-1.5) node[ground]{}
+        
+        (0,0) node[dipchip, num pins=16](dec1){138}
+        ++(0,-6.5)node[dipchip, num pins=16](dec2){138}
+        
+        (dec1.pin 16) node[vcc]{5V}
+        (dec2.pin 16) node[vcc]{5V}
+        
+        (dec1.pin 8) node[ground]{}
+        (dec2.pin 8) node[ground]{}
+        
+        (dec1.pin 5) -- (dec1.pin 4) -- ++(-0.5,0) node[ground]{}
+        (dec2.pin 5) -- (dec2.pin 4) -- ++(-0.5,0) node[ground]{}
+        
+        (dec1.pin 15) node[label=0:$Y_0$]{}
+        (dec1.pin 14) node[label=0:$Y_1$]{}
+        (dec1.pin 13) node[label=0:$Y_2$]{}
+        (dec1.pin 12) node[label=0:$Y_3$]{}
+        (dec1.pin 11) node[label=0:$Y_4$]{}
+        (dec1.pin 10) node[label=0:$Y_5$]{}
+        (dec1.pin 9) node[label=0:$Y_6$]{}
+        (dec1.pin 7) -- ++(-0.5,0) -- ++(0,-1.5) coordinate(Y7) -- (Y7-|dec1.pin 9) node[label=0:$Y_7$]{}
+        
+        (dec2.pin 15) node[label=0:$Y_8$]{}
+        (dec2.pin 14) node[label=0:$Y_9$]{}
+        (dec2.pin 13) node[label=0:$Y_{10}$]{}
+        (dec2.pin 12) node[label=0:$Y_{11}$]{}
+        (dec2.pin 11) node[label=0:$Y_{12}$]{}
+        (dec2.pin 10) node[label=0:$Y_{13}$]{}
+        (dec2.pin 9) node[label=0:$Y_{14}$]{}
+        (dec2.pin 7) -- ++(-0.5,0) -- ++(0,-1.5) coordinate(Y15) -- (Y15-|dec2.pin 9) node[label=0:$Y_{15}$]{}
+        
+        (B|-dec1.pin 1)node[jump crossing](B11){}
+        (C|-dec1.pin 1)node[jump crossing](C11){}
+        (D|-dec1.pin 1)node[jump crossing](D11){}
+        (A) -- (A|-dec1.pin 1) node[circ]{} -- (B11.west)
+        (B11.east) -- (C11.west)
+        (C11.east) -- (D11.west)
+        (D11.east) -- (dec1.pin 1)
+        (B) -- (B11.north)
+        (C) -- (C11.north)
+        (D) -- (D11.north)
+        
+        (C|-dec1.pin 2)node[jump crossing](C12){}
+        (D|-dec1.pin 2)node[jump crossing](D12){}
+        (B11.south) -- (B|-dec1.pin 2) node[circ]{} -- (C12.west)
+        (C12.east) -- (D12.west)
+        (D12.east) -- (dec1.pin 2)
+        (C11.south) -- (C12.north)
+        (D11.south) -- (D12.north)
+        
+        (D|-dec1.pin 3)node[jump crossing](D13){}
+        (C12.south) -- (C|-dec1.pin 3) node[circ]{} -- (D13.west)
+        (D13.east) -- (dec1.pin 3)
+        (D12.south) -- (D13.north)
+
+        (D13.south) -- (D|-dec1.pin 6) node[circ]{}
+        (dec1.pin 6) node[not port, anchor=out](not){}
+        (not.in) -- (D|-dec1.pin 6)
+        
+        (B|-dec2.pin 1)node[jump crossing](B11){}
+        (C|-dec2.pin 1)node[jump crossing](C11){}
+        (D|-dec2.pin 1)node[jump crossing](D11){}
+        (A|-dec1.pin 1) -- (A|-dec2.pin 1) node[circ]{} -- (B11.west)
+        (B11.east) -- (C11.west)
+        (C11.east) -- (D11.west)
+        (D11.east) -- (dec2.pin 1)
+        (B|-dec1.pin 2) -- (B11.north)
+        (C|-dec1.pin 3) -- (C11.north)
+        (D13.south) -- (D11.north)
+        
+        (C|-dec2.pin 2)node[jump crossing](C12){}
+        (D|-dec2.pin 2)node[jump crossing](D12){}
+        (B11.south) -- (B|-dec2.pin 2) node[circ]{} -- (C12.west)
+        (C12.east) -- (D12.west)
+        (D12.east) -- (dec2.pin 2)
+        (C11.south) -- (C12.north)
+        (D11.south) -- (D12.north)
+        
+        (D|-dec2.pin 3)node[jump crossing](D13){}
+        (C12.south) -- (C|-dec2.pin 3) node[circ]{} -- (D13.west)
+        (D13.east) -- (dec2.pin 3)
+        (D12.south) -- (D13.north)
+        
+        (D13.south) -- (D|-dec2.pin 6) node[circ]{} -- (dec2.pin 6)
+
+        ;
+\end{circuitikz}
+
+\end{document}

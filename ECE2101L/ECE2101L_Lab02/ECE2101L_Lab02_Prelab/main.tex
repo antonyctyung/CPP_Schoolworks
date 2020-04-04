@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+%\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\ExplSyntaxOn
+\NewDocumentCommand{\defcon}{mm}
+ {
+  \cs_new:Npx #1 { \fp_eval:n { #2 } }
+ }
+\ExplSyntaxOff
+
+\title{ECE2101L\\Electrical Circuit Analysis II Laboratory\\\,\\Lab 2\\ Introduction to Capacitors and Inductors\\\,\\Prelab\\}
+\author{Choi Tim Antony Yung}
+\date{10 February 2020}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+%1
+\section{Relation between voltage and current in capacitors and inductors}
+
+%1a
+\subsection{For the following capacitor circuit:}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,0) to[V,v_=v(t)] (0,-2)
+            (0,0) to[short, i=i(t)] (2,0)
+            to[C=C] ++(0,-2) -- (0,-2)
+            ;
+    \end{circuitikz}
+\end{center}
+$$i(t)=C\frac{dv(t)}{dt}$$
+
+%1b
+\subsection{For the following inductor circuit:}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,0) to[V,v_=v(t)] (0,-2)
+            (0,0) to[short, i=i(t)] (2,0)
+            to[L=L] ++(0,-2) -- (0,-2)
+            ;
+    \end{circuitikz}
+\end{center}
+$$v(t)=L\frac{di(t)}{dt}$$
+
+\section{Phase difference between two sinusoids}
+
+\subsection{The phase difference between $v_1(t)=10cos(2\pi60t+\ang{20})$ and $v_2(t)=5sin(2\pi60t)=5cos(2\pi60t+\ang{90})$ is $\ang{90}-\ang{20}=\ang{70}$}
+
+\subsection{The phase difference between $i_1(t)=Acos(2\pi ft+\theta_1)$ and $i_2(t)=Bcos(2\pi ft+\theta_2)$ is $\theta_1-\theta_2=\ang{70}$}
+
+\subsection{The phase difference between $v_3(t)=120cos(377 t+\ang{50})$ and $v_4(t)=90cos(125 t+\ang{30})$ is $(377 t+\ang{50})-(125 t+\ang{30})=252 t+\ang{20}$}
+
+\,\\
+
+\section{Per Keysight Infiniivision 2000 X-Series Oscilloscopes User's Guide, measurement of a phase shift between two functions can be obtained, using the oscilloscope, as follow:}
+
+Press the [Meas] Key to display the Measurement Menu, press the Source softkey to select the channel to be measured, press the type softkey and rotate the Entry knob to select phase ans use the setting softkey to select the other channel to measure the phase shift with.
+
+
+
+\end{document}

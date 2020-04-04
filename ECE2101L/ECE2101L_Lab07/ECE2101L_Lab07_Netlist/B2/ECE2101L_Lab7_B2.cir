@@ -1,0 +1,30 @@
+ECE2101L Lab7 Part B2: Measuring INPUT impedance of a black box
+*Author: Choi Tim Antony Yung
+
+V1 1 0 AC 5 0
+* AC voltage source with magnitude of 5V and phase of 0
+* with node 1 as + terminal and node 0 (ground) at - terminal
+
+R0 1 2 130
+* Resistor 0 from node 1 to node 2 with 130 ohm
+
+R1 2 3 51
+* Resistor 1 from node 2 to node 3 with 51 ohm
+
+R2 3 0 620
+* Resistor 2 from node 3 to node 0 (ground) with 620 ohm
+
+C0 3 0 33u
+* Capacitor 0 from node 3 to node 0 (ground) with 33 microFarad
+* u denotes micro
+
+.AC LIN 1 60 60
+* perform AC analysis with one frequency value (from 60 Hz to 60 Hz)
+
+.PRINT AC v(2)
+* Print the voltage at node 2, relative to ground
+
+.PRINT AC i(R0)
+* Print the current flowing through R0
+
+.END

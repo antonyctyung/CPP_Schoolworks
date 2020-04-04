@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage{graphics}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{graphicx} 
+\usepackage{steinmetz}
+%\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\ExplSyntaxOn
+\NewDocumentCommand{\defcon}{mm}
+ {
+  \cs_new:Npx #1 { \fp_eval:n { #2 } }
+ }
+\ExplSyntaxOff
+
+\title{ECE2101L\\Electrical Circuit Analysis II Laboratory\\\,\\Lab 7\\Input and Output Impedances of AC Black Boxes\\\,\\Prelab\\}
+\author{Choi Tim Antony Yung}
+%\author{Choi Tim Antony Yung\\\,\\Willis Nguyen\\Phineas Cozmiuc}
+\date{16 March 2020}
+
+\begin{document}
+
+\clearpage\maketitle
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+\section{Thevenin and Norton equivalent circuits}
+\subsection{Simplification of circuit between two node}
+Thevenin equivalent circuit is a simplification of a circuit between two node into a relatively simple circuit consist of a voltage source and an impedance in series, while Norton equivalent circuit simplifies into a current source and an impedance in parallel source.\\
+
+Thevenin equivalent circuit:\\
+\begin{center}
+\begin{circuitikz}
+    \draw
+    (0,0) to[voltage source, l_=$V_{TH}$](0,-2) -- ++ (3,0) node[circ,label = b]{}
+    (0,0) to[generic, label = $Z_{TH}$] (3,0) node[circ,label = a]{}
+    
+    ;
+\end{circuitikz}
+\end{center}
+
+Norton equivalent circuit:\\
+\begin{center}
+\begin{circuitikz}
+    \draw
+    (0,-2) to[current source, label=$I_{N}$](0,0) -- (3,0) node[circ,label = a]{}
+    (1.5,0) to[generic, label = $Z_{N}$] ++(0,-2)
+    (0,-2) -- ++ (3,0) node[circ,label = b]{}
+    ;
+\end{circuitikz}
+\end{center}
+
+\subsection{$Z_N=Z_{TH}=\frac{V_{TH}}{I_{TH}}$}
+
+\section{Input impedance}
+\subsection{$Z=R_1+\frac{1}{\frac{1}{R_2}+\frac{1}{\frac{1}{j\omega C}}}$}
+\subsection{Magnitude and phase of Z can be determined as follow}
+$$Z=R_1+\frac{1}{\frac{1}{R_2}+\frac{1}{\frac{1}{j\omega C}}}=R_1+\frac{R_2}{1+R_2j\omega C}=R_1+\frac{R_2(1-R_2j\omega C)}{1+(R_2\omega C)^2}=R_1+\frac{R_2-R_2^2j\omega C}{1+(R_2\omega C)^2}$$
+$$Z=(R_1+\frac{R_2}{1+(R_2\omega C)^2})-\frac{R_2^2\omega C}{1+(R_2\omega C)^2}j$$
+$$Z=\sqrt{(R_1+\frac{R_2}{1+(R_2\omega C)^2})^2+(\frac{R_2^2\omega C}{1+(R_2\omega C)^2})^2}\phase{tan^{-1}\frac{-\frac{R_2^2\omega C}{1+(R_2\omega C)^2}}{R_1+\frac{R_2}{1+(R_2\omega C)^2}}}$$
+
+\section{AC circuit analysis}
+\subsection{The impedance of the capacitor $Z_c$ and capacitance C can be found as follow:}
+$$V=V_{R_1}+V_0=V_{R_1}+4.8015\phase{-27.74^{\circ}}=7\phase{0^{\circ}}$$
+$$V_{R_1}=7\phase{0^{\circ}}-4.8015\phase{-27.74^{\circ}}=3.5439\phase{39.10^{\circ}}\,V$$
+$$I=\frac{V_{R_1}}{R_1}=\frac{3.5439{\phase{39.10^{\circ}}}}{180}=0.01969\phase{39.10^{\circ}}\,A$$
+$$I=I_{R_2}+I_{C}$$
+$$I_{R_2}=\frac{V_{R_2}}{R_2}=\frac{V_0}{R_2}$$
+$$I_C=0.01969\phase{39.10^{\circ}}-\frac{4.8015\phase{-27.74^{\circ}}}{620}=0.01810\phase{62.26^{\circ}}\,A$$
+$$Z_C=\frac{V_{C}}{I_{C}}=\frac{V_{0}}{I_{C}}=\frac{4.8015\phase{-27.74^{\circ}}}{0.01810\phase{62.26^{\circ}}}\approx265.3\phase{-90^{\circ}}=-265.3j\,\Omega$$
+$$C=\frac{-j}{\omega Z_C}=\frac{-j}{(2\pi 60)(-265.3j)}\approx\SI{10}{\micro\farad}$$
+\subsection{Phase difference}
+The input current I is $19.69\phase{39.10^{\circ}}$\,mA with reference to $V=7\phase{0^{\circ}}$\,V. Therefore, the input current leads the input voltage by a phase difference of $39.1^{\circ}$
+
+\end{document}

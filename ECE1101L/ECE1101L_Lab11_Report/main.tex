@@ -1,0 +1,369 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\ExplSyntaxOn
+\NewDocumentCommand{\defcon}{mm}
+ {
+  \cs_new:Npx #1 { \fp_eval:n { #2 } }
+ }
+\ExplSyntaxOff
+
+\title{ECE1101L\\Lab 11\\Positive Gain Op Amp}
+\author{Choi Tim Antony Yung}
+\date{14 November 2019}
+
+\begin{document}
+
+\maketitle
+
+\section*{Objective}
+The objective of this lab is to explore the behavior of a positive gain operation amplifier (op amp).
+
+\section*{Lab Partner}
+Antony Nursalim
+Mario Molina
+
+\pagebreak
+
+%1
+\section{An op amp circuit was set up as follow}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0, 0) node[op amp, yscale=-1] (opamp) {}
+            (opamp.down) to[short, i_=$I_3$] ++(0,0.4) node[vcc]{$V_{cc}=\SI{15}{\volt}$} %Vcc
+            (opamp.up) to[short, i=$I_4$] ++(0,-0.4) node[vee]{$-V_{cc}=\SI{-15}{\volt}$} %Vee
+            (opamp.+) to[short, i<_=$I_1$] ++(-0.01,0) -- ++(-2.99,0) to[V,l_=$\SI{5}{\volt}$] ++(0,-5) coordinate (groundnode) node[ground]{}
+            (opamp.-) to[short, i<=$I_2$] ++(-0.01,0) -- ++(-0.34,0) -- ++(0,-2) coordinate (vnnode)
+            -- (vnnode -| opamp.-) to[R,l_=$R_2\equal\SI{2}{\kilo\ohm}$] (vnnode -| opamp.out)
+            (groundnode) -- (groundnode -| vnnode) to[R=$R_1\equal\SI{4.7}{\kilo\ohm}$] (vnnode)
+            (opamp.out) to[short, i=$I_5$] ++(0.01,0) -- ++(0.49,0) coordinate (outnode)
+            (vnnode -| opamp.out) -- ++(0.5,0) -- (outnode) -- ++(1.5,0) coordinate (vnaughtplusnode)
+            (groundnode -| vnnode) -- (groundnode -| vnaughtplusnode) to[open, v^<=$V_o$] (vnaughtplusnode)
+            
+            % op amp pinout label
+            (opamp.down) to[open] ++ (0,0.15) node[anchor=south east, color=red] {7}
+            (opamp.up) ++ (0,-0.15) node[anchor=north east, color=red] {4}
+            (opamp.+) node[anchor=north west, color=red] {3}
+            (opamp.-) node[anchor=south west, color=red] {2}
+            (opamp.out) ++(-0.15,0) node[anchor=south east, color=red] {6}
+            ;
+    \end{circuitikz}
+\end{center}
+
+%1a
+\subsection{The op amp pin numbers was labeled in the above diagram at the corresponding terminals}
+
+%1b
+\defcon{\conaba}{4.64}
+\defcon{\conabb}{4640}
+\defcon{\conabc}{-1.28}
+\defcon{\conabd}{1.993}
+\defcon{\conabe}{1993}
+\defcon{\conabf}{-0.35}
+\subsection{The resistance of the two resistors in circuit were measured}
+The \SI{4.7}{\kilo\ohm} resistor was measured to have a resistance of \SI{\conaba}{\kilo\ohm}, and the \SI{2}{\kilo\ohm} resistor was measured to have a resistance of \SI{\conabd}{\kilo\ohm}.
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{}r r r r@{}}
+         \toprule
+         &measured & nominal & \%diff  \\
+         \midrule
+        $R_1$&\SI{\conabb}{\ohm} & \SI{4700}{\ohm} & \conabc\% \\
+        $R_2$&\SI{\conabe}{\ohm} & \SI{2000}{\ohm} & \conabf\% \\ 
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+%1c
+\defcon{\conac}{0.01}
+\subsection{$V_+ - V_-$ was measured}
+The potential difference between $V_+$ and $V_-$ was measured with positive terminal of the voltmeter connected with pin 3 and negative terminal connected to pin 2. The measured value of $V_+ - V_-$ is \SI{\conac}{\volt}. Since $V_+ - V_- \approx 0$, which implies $V_+ \approx V_-$, the op amp is operating in its linear active region.
+
+%1d
+\defcon{\conada}{0.0001}
+\defcon{\conadb}{0.0001}
+\defcon{\conadc}{-1.810}
+\defcon{\conadd}{0.735}
+\defcon{\conade}{1.076}
+\subsection{Current $I_1$, $I_2$, $I_3$, $I_4$ and $I_5$ was measured}
+$I_1$ was measured to be \SI{\conada}{\milli\ampere}, $I_2$ was measured to be \SI{\conadb}{\milli\ampere}, $I_3$ was measured to be \SI{\conadc}{\milli\ampere}, $I_4$ was measured to be \SI{\conadd}{\milli\ampere}, and $I_5$ was measured to be \SI{\conade}{\milli\ampere}.
+
+%1e
+\subsection{KCL was satisfied}
+\begin{equation*}
+    I_1 + I_2 = \conada + \conadb = \fpeval{\conada + \conadb} \approx \fpeval{\conadc + \conadd + \conade} = \conadc + \conadd + \conade = I_3 + I_4 + I_5
+\end{equation*}
+As $I_1 + I_2 \approx I_3 + I_4 + I_5$, KCL is satisfied at the op amp.
+
+%2
+\section{An op amp circuit was set up as follow}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0, 0) node[op amp, yscale=-1] (opamp) {}
+            (opamp.+) to[short] ++(-0.01,0) -- ++(-2.99,0) to[V,l_=$V_s\equal\SI{4}{\volt}$] ++(0,-4) coordinate (groundnode) node[ground]{}
+            (opamp.-) to[short] ++(-0.01,0) -- ++(-0.34,0) -- ++(0,-1) coordinate (vnnode)
+            -- (vnnode -| opamp.-) to[R,l_=$R_2\equal\SI{2}{\kilo\ohm}$] (vnnode -| opamp.out)
+            (groundnode) -- (groundnode -| vnnode) to[R=$R_1\equal\SI{2}{\kilo\ohm}$] (vnnode)
+            (opamp.out) to[short] ++(0.01,0) -- ++(0.49,0) coordinate (outnode)
+            (vnnode -| opamp.out) -- ++(0.5,0) -- (outnode) -- ++(1.5,0) coordinate (vnaughtplusnode)
+            (groundnode -| vnnode) -- (groundnode -| vnaughtplusnode) to[open, v^<=$V_o$] (vnaughtplusnode)
+            
+            % op amp pinout label
+            (opamp.down) node[anchor=south, color=red] {7}
+            (opamp.up) node[anchor=north, color=red] {4}
+            (opamp.+) node[anchor=north west, color=red] {3}
+            (opamp.-) node[anchor=south west, color=red] {2}
+            (opamp.out) ++(-0.15,0) node[anchor=south east, color=red] {6}
+            ;
+    \end{circuitikz}
+\end{center}
+
+%2a
+\subsection{The op amp pin numbers was labeled in the above diagram at the corresponding terminals}
+
+%2b
+\defcon{\conbba}{1.985}
+\defcon{\conbbb}{1985}
+\defcon{\conbbc}{-0.75}
+\defcon{\conbbd}{1.993}
+\defcon{\conbbe}{1993}
+\defcon{\conbbf}{-0.35}
+\subsection{The resistance of the two resistors in circuit were measured}
+The first \SI{2}{\kilo\ohm} resistor, $R_1$, was measured to have a resistance of \SI{\conbba}{\kilo\ohm}, and the second \SI{2}{\kilo\ohm} resistor, $R_2$, was measured to have a resistance of \SI{\conbbd}{\kilo\ohm}.
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{}r r r r@{}}
+         \toprule
+         &measured & nominal & \%diff  \\
+         \midrule
+        $R_1$&\SI{\conbbb}{\ohm} & \SI{2000}{\ohm} & \conbbc\% \\
+        $R_2$&\SI{\conbbe}{\ohm} & \SI{2000}{\ohm} & \conbbf\% \\ 
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+%2c
+\defcon{\conbc}{8.03}
+\subsection{$V_o$ was measured}
+$V_o$ was measured to be \SI{\conbc}{\volt}.
+
+%2d
+\defcon{\conbd}{8.016}
+\subsection{$V_o$ was calculated}
+$V_o = G\cdot V_s = \frac{R_1 + R_2}{R_1}\cdot V_s = \frac{\SI{\conbbb}{\ohm} + \SI{\conbbe}{\ohm}}{\SI{\conbbb}{\ohm}}\cdot \SI{4}{\volt} = \SI{\conbd}{\volt}$ \\
+\\
+$V_o$ is calculated to be \SI{\conbd}{\volt}.
+
+%2e
+\defcon{\conbe}{0.17}
+\subsection{The measured value of $V_o$ is slightly higher than the calculated value}
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{}r r r r@{}}
+         \toprule
+         &measured & calculated & \%diff  \\
+         \midrule
+        $V_o$&\SI{\conbc}{\volt} & \SI{\conbd}{\volt} & \conbe\% \\
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+%3
+\section{An op amp circuit was set up as follow}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0, 0) node[op amp, yscale=-1] (opamp) {}
+            (opamp.+) to[short] ++(-0.01,0) -- ++(-2.99,0) to[V,l_=$V_s\equal\SI{3}{\volt}$] ++(0,-4) coordinate (groundnode) node[ground]{}
+            (opamp.-) to[short] ++(-0.01,0) -- ++(-0.34,0) -- ++(0,-1) coordinate (vnnode)
+            -- (vnnode -| opamp.-) 
+            (vnnode -| opamp.out) to[vR,l=$R_2$] (vnnode -| opamp.-)
+            (groundnode) -- (groundnode -| vnnode) to[R=$R_1\equal\SI{5.7}{\kilo\ohm}$] (vnnode)
+            (opamp.out) to[short] ++(0.01,0) -- ++(0.49,0) coordinate (outnode)
+            (vnnode -| opamp.out) -- ++(0.5,0) to[short, i<=$I$] (outnode) -- ++(1.5,0) coordinate (vnaughtplusnode)
+            (groundnode -| vnnode) -- (groundnode -| vnaughtplusnode) to[open, v^<=$V_o$] (vnaughtplusnode)
+            
+            % op amp pinout label
+            (opamp.down) node[anchor=south, color=red] {7}
+            (opamp.up) node[anchor=north, color=red] {4}
+            (opamp.+) node[anchor=north west, color=red] {3}
+            (opamp.-) node[anchor=south west, color=red] {2}
+            (opamp.out) ++(-0.15,0) node[anchor=south east, color=red] {6}
+            ;
+    \end{circuitikz}
+\end{center}
+
+%3a
+\subsection{The op amp pin numbers was labeled in the above diagram at the corresponding terminals}
+
+%3b
+\defcon{\concba}{4.64}
+\defcon{\concbb}{4640}
+\defcon{\concbc}{-1.28}
+\subsection{The resistance of the resistor $R_1$ in circuit were measured}
+The \SI{5.7}{\kilo\ohm} resistor was measured to have a resistance of \SI{\concba}{\kilo\ohm}.
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{}r r r r@{}}
+         \toprule
+         &measured & nominal & \%diff  \\
+         \midrule
+        $R_1$&\SI{\concbb}{\ohm} & \SI{5700}{\ohm} & \concbc\% \\ 
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+\pagebreak
+
+%3c
+\subsection{Voltage $V_o$ was measured as resistance $R_2$ was changed}
+Below is the data set obtained.
+\begin{center}
+    \begin{tabular}{S[table-format=4.1] S[table-format=1.3]}
+        \toprule
+        {$R_2$ ($\Omega$)} & {$V_o$ (V)}\\
+        \midrule
+        0.01 & 3.125 \\
+        5060 & 5.835 \\
+        9870 & 8.421 \\ 
+        \bottomrule
+    \end{tabular}
+\end{center}
+The graph below illustrated the values of $V_o$ with respect of $R_2$.
+\begin{figure}[H]
+\includesvg[width = 345pt]{chart}
+\end{figure}
+$V_o$ seems to increase at a constant rate as $R_2$ increase.
+
+\pagebreak
+
+%3d
+\subsection{Current $I$ was measured as resistance $R_2$ was changed}
+Below is the data set obtained.
+\begin{center}
+    \begin{tabular}{S[table-format=4.1] S[table-format=1.3]}
+        \toprule
+        {$R_2$ ($\Omega$)} & {$I$ (mA)}\\
+        \midrule
+        0.01 & 0.535 \\
+        5060 & 0.535 \\
+        9870 & 0.535 \\ 
+        \bottomrule
+    \end{tabular}
+\end{center}
+The graph below illustrated the values of $I$ with respect of $R_2$.
+\begin{figure}[H]
+\includesvg[width = 345pt]{chart2}
+\end{figure}
+$I$ seems to be constant as $R_2$ changes.
+
+%4
+\section{An op amp circuit was set up as follow}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0, 0) node[op amp, yscale=-1] (opamp) {}
+            (opamp.+) to[short] ++(-0.01,0) -- ++(-3.99,0) to[V,l_=$V_s\equal\SI{3}{\volt}$] ++(0,-6) coordinate (groundnode) node[ground]{}
+            (opamp.-) to[short] ++(-0.01,0) -- ++(-0.34,0) -- ++(0,-1) coordinate (vnnode)
+            -- (vnnode -| opamp.-) 
+            (vnnode -| opamp.out) to[R,l=$R_2\equal \SI{10}{\kilo\ohm}$] (vnnode -| opamp.-)
+            (groundnode) -- (groundnode -| vnnode) 
+            to[vR=$R_B$] ++(0,2)
+            to[R=$R_A\equal\SI{4.7}{\kilo\ohm}$] (vnnode)
+            (opamp.out) to[short] ++(0.01,0) -- ++(0.49,0) coordinate (outnode)
+            (vnnode -| opamp.out) -- ++(0.5,0) to[short, i<=$I$] (outnode) -- ++(1.5,0) coordinate (vnaughtplusnode)
+            (groundnode -| vnnode) -- (groundnode -| vnaughtplusnode) to[open, v^<=$V_o$] (vnaughtplusnode)
+            
+            % op amp pinout label
+            (opamp.down) node[anchor=south, color=red] {7}
+            (opamp.up) node[anchor=north, color=red] {4}
+            (opamp.+) node[anchor=north west, color=red] {3}
+            (opamp.-) node[anchor=south west, color=red] {2}
+            (opamp.out) ++(-0.15,0) node[anchor=south east, color=red] {6}
+            ;
+    \end{circuitikz}
+\end{center}
+
+%4a
+\subsection{The op amp pin numbers was labeled in the above diagram at the corresponding terminals}
+
+%4b
+\defcon{\condba}{9.970}
+\defcon{\condbb}{9970}
+\defcon{\condbc}{-0.30}
+\defcon{\condbd}{4.64}
+\defcon{\condbe}{4640}
+\defcon{\condbf}{-1.28}
+\subsection{The resistance of the two resistors in circuit were measured}
+The \SI{10}{\kilo\ohm} resistor, $R_2$, was measured to have a resistance of \SI{\condba}{\kilo\ohm}, and the \SI{4.7}{\kilo\ohm} resistor, $R_A$, was measured to have a resistance of \SI{\condbd}{\kilo\ohm}.
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{}r r r r@{}}
+         \toprule
+         &measured & nominal & \%diff  \\
+         \midrule
+        $R_2$&\SI{\condbb}{\ohm} & \SI{10000}{\ohm} & \condbc\% \\
+        $R_A$&\SI{\condbe}{\ohm} & \SI{4700}{\ohm} & \condbf\% \\ 
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+\pagebreak
+
+%4c
+\subsection{Voltage $V_o$ was measured as resistance $R_1$ was changed}
+Below is the data set obtained.
+\begin{center}
+    \begin{tabular}{S[table-format=4.1] S[table-format=1.3]}
+        \toprule
+        {$R_1$ ($\Omega$)} & {$V_o$ (V)}\\
+        \midrule
+        4641.3 & 9.665 \\
+        7200 & 7.304 \\
+        9640 & 6.227 \\
+        12190 & 5.565 \\
+        14500 & 5.165 \\ 
+        \bottomrule
+    \end{tabular}
+\end{center}
+The graph below illustrated the values of $V_o$ with respect of $R_1$.
+\begin{figure}[H]
+\includesvg[width = 345pt]{chart3}
+\end{figure}
+$V_o$ seems to decrease at a decreasing rate as $R_B$ increase.
+
+\pagebreak
+
+%4d
+\subsection{Current $I$ was measured as resistance $R_1$ was changed}
+Below is the data set obtained.
+\begin{center}
+    \begin{tabular}{S[table-format=4.1] S[table-format=1.3]}
+        \toprule
+        {$R_1$ ($\Omega$)} & {$I$ (mA)}\\
+        \midrule 
+        4641.3&0.651 \\
+        7200&0.419 \\
+        9640&0.313 \\
+        12190&0.249 \\
+        14500&0.209 \\ 
+        \bottomrule
+    \end{tabular}
+\end{center}
+The graph below illustrated the values of $I$ with respect of $R_1$.
+\begin{figure}[H]
+\includesvg[width = 345pt]{chart4}
+\end{figure}
+$I$ seems to decrease at a decreasing rate as $R_1$ increase.
+
+\end{document}

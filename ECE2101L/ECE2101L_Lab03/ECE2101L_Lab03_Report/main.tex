@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\ExplSyntaxOn
+\NewDocumentCommand{\defcon}{mm}
+ {
+  \cs_new:Npx #1 { \fp_eval:n { #2 } }
+ }
+\ExplSyntaxOff
+
+\title{ECE2101L\\Electrical Circuit Analysis II Laboratory\\\,\\Lab 3\\Time Constants of First Order RC Circuits \\\,\\Report\\\,\\}
+\author{Choi Tim Antony Yung\\\,\\Willis Nguyen\\Phineas Cozmiuc}
+\date{17 February 2020}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\section*{Objective}
+The objective of this lab is to explore the behavior of first order resistor and capacitor circuit with an emphasis on how its time constant affect its natural and forced response.
+
+%1
+\section{Time Constant of a Simple RC Circuit}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,0) to[V=$V_s$] (0,-2)
+            (0,0) to[R, label=R\equal\SI{4.7}{\kilo\ohm}] ++(2,0)
+            to[short,i=$i_c(t)$] ++(1,0)
+            to[C=C, v=$v_c(t)$] ++(0,-2) -- (0,-2)
+            ;
+    \end{circuitikz}
+\end{center}
+
+\subsection*{Procedure}
+A circuit was set up following the above schematic. $V_s$ was generated using the FG 503 Function Generator as a square wave with an amplitude of \SI{2.5}{\volt} simulating a pulse waveform of amplitude of \SI{2.5}{\volt} to simulate a step \SI{5}{\volt} DC voltage source. Both $v_s(t)$ and $v_c(t)$ was measured with Keysight DSOX2022A oscilloscope. The resistor is measured to be \SI{4633}{\ohm}. 
+
+\subsection*{Result}
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{}r r r r r r r@{}}
+         \toprule
+         Capacitance & Pulse Period & Pulse Width  & Edge Time & $\tau$& $\Delta t$ & $h=\frac{\Delta t}{\tau}$\\
+         measured & & & & calculated & measured & measured  \\
+         \midrule
+        \SI{9.258}{\micro\farad}& \SI{1000}{\milli\second} & \SI{500}{\milli\second} & $\leq$\SI{60}{\nano\second} & \SI{42.892314}{\milli\second} & \SI{248}{\milli\second} & 5.781921675 \\
+        \SI{21.49}{\micro\farad}& \SI{2000}{\milli\second} & \SI{1000}{\milli\second} & $\leq$\SI{60}{\nano\second} & \SI{99.56317}{\milli\second}& \SI{484}{\milli\second} & 4.861235334 \\
+        \SI{96.171}{\micro\farad}& \SI{5000}{\milli\second} & \SI{2500}{\milli\second} & $\leq$\SI{60}{\nano\second} & \SI{445.560243}{\milli\second} & \SI{2080}{\milli\second} & 4.668280065 \\
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+
+\subsection*{Analysis}
+During the rising portion of $V_c$, an external voltage source was applied to the circuit, therefore the forced response of RC circuit is present. As the capacitor was being charged, it also demonstrated a natural response to the circuit. In other words, the rising waveform is a combination of natural response and forced response of the RC circuit.\\
+It was observed that with resistance held constant and source voltage $V_s$ held steady, as capacitance increases, both time constant and the time required to reach steady state increases. Also, the ratio of time required to reach steady state and the time constant, h, stays steady when capacitance varies. Hence, both time required to reach steady state and the time constant are directly proportional to capacitance and the coefficient of proportionality is the same for both proportionality.
+
+%2
+\section{Time constant of a complex RC circuit}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,0) to[V,l_=$V_s$] (0,-2)
+            (0,0) to[R, label=$R_1$\equal\SI{3.3}{\kilo\ohm}] ++(2,0) coordinate(R2)
+            -- ++(4,0) coordinate (C) -- ++(1,0) coordinate (R3)
+            (R2) to[R=$R_2\equal\SI{3.9}{\kilo\ohm}$] ++(0,-2)
+            (C) to[C, v=$v_c(t)$] ++(0,-2) 
+            (R3) to[R=$R_3\equal\SI{3.3}{\kilo\ohm}$] ++(0,-2) -- (0,-2)
+            ;
+    \end{circuitikz}
+\end{center}
+
+\subsection*{Procedure}
+A circuit was set up following the above schematic. $V_s$ was generated using the FG 503 Function Generator as a square wave with an amplitude of \SI{1.5}{\volt} simulating a pulse waveform of amplitude of \SI{1.5}{\volt} to simulate a step \SI{3}{\volt} DC voltage source. Both $v_s(t)$ and $v_c(t)$ was measured with Keysight DSOX2022A oscilloscope. The resistors were measured to be $R_1=\SI{3325}{\ohm}$, $R_2=\SI{3915}{\ohm}$, and $R_1=\SI{3302}{\ohm}$. A capacitor with capacitance of \SI{96.171}{\micro\farad} was used.
+
+\subsection*{Theory}
+The calculations are as follows:\\
+
+The thevenin equivalent resistance $R_{TH}$ at the capacitor terminal was calculated to be $R_{TH}=\frac{1}{\frac{1}{3325}+\frac{1}{3915}+\frac{1}{3302}}=\SI{1164}{\ohm}$.\\
+
+The time constant $\tau$ of the above RC circuit was calculated to be $\tau=RC=(\SI{1164}{\ohm})(\SI{96.171}{\micro\farad})=\SI{112.0}{\milli\second}$.\\
+
+The Voltage $V_c$ under a $V_s=2.96289\approx$ \SI{3}{\volt} DC voltage source was calculated to be $\frac{\frac{1}{\frac{1}{3302}+\frac{1}{3915}}}{\frac{1}{\frac{1}{3302}+\frac{1}{3915}}+3325}2.96289=\SI{1.03733}{\volt}$
+
+\subsection*{Result}
+$\Delta t$ was measured to be \SI{572}{\milli\second} and the steady state value $V_c$ was measured to be \SI{1.00625}{\volt}.
+
+\subsection*{Analysis}
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{}r r r r@{}}
+        \toprule
+        &measured & calculated & \%diff \\
+        \midrule
+        $V_c$&\SI{1.00625}{\volt} & \SI{1.03733}{\volt} & 3.00\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+As seen in the table above, considering the precision of the oscilloscope, the measured capacitor voltage is reasonably close to the calculated value.\\
+
+
+The ratio of time to steady state to time constant was calculated to be $h=\frac{572}{112.0}=5.11$, which is reasonably close to the value obtained in the first part of the experiment.
+\end{document}

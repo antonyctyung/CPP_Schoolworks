@@ -1,0 +1,108 @@
+New empty linked list
+ LinkedList: [ ]
+Inserting 0 at front
+LinkedList: [ 0 ]
+Inserting 2 at back
+LinkedList: [ 0 , 2 ]
+Inserting 1 at index 1
+LinkedList: [ 0 , 1 , 2 ]
+Inserting 3 to 7 at back
+LinkedList: [ 0 , 1 , 2 , 3 ]
+LinkedList: [ 0 , 1 , 2 , 3 , 4 ]
+LinkedList: [ 0 , 1 , 2 , 3 , 4 , 5 ]
+LinkedList: [ 0 , 1 , 2 , 3 , 4 , 5 , 6 ]
+LinkedList: [ 0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 ]
+1 is at index 1
+The list have a length of 8
+Removing from front
+LinkedList: [ 1 , 2 , 3 , 4 , 5 , 6 , 7 ]
+Removing from back
+LinkedList: [ 1 , 2 , 3 , 4 , 5 , 6 ]
+Removing at index 3
+LinkedList: [ 1 , 2 , 3 , 5 , 6 ]
+
+New empty circular linked list
+ CircularLinkedList: [ ]
+Inserting 0 at front
+CircularLinkedList: [ 0 ]
+Inserting 2 at back
+CircularLinkedList: [ 0 , 2 ]
+Inserting 1 at index 1
+CircularLinkedList: [ 0 , 1 , 2 ]
+Inserting 3 to 7 at back
+CircularLinkedList: [ 0 , 1 , 2 , 3 ]
+CircularLinkedList: [ 0 , 1 , 2 , 3 , 4 ]
+CircularLinkedList: [ 0 , 1 , 2 , 3 , 4 , 5 ]
+CircularLinkedList: [ 0 , 1 , 2 , 3 , 4 , 5 , 6 ]
+CircularLinkedList: [ 0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 ]
+1 is at index 1
+The list have a length of 8
+Removing from front
+CircularLinkedList: [ 1 , 2 , 3 , 4 , 5 , 6 , 7 ]
+Removing from back
+CircularLinkedList: [ 1 , 2 , 3 , 4 , 5 , 6 ]
+Removing at index 3
+CircularLinkedList: [ 1 , 2 , 3 , 5 , 6 ]
+Last node's next node have value of 1
+
+New empty doubly linked list
+ DoublyLinkedList: [ ]
+Inserting 0 at front
+DoublyLinkedList: [ 0 ]
+Inserting 2 at back
+DoublyLinkedList: [ 0 , 2 ]
+Inserting 1 at index 1
+DoublyLinkedList: [ 0 , 1 , 2 ]
+Inserting 3 to 7 at back
+DoublyLinkedList: [ 0 , 1 , 2 , 3 ]
+DoublyLinkedList: [ 0 , 1 , 2 , 3 , 4 ]
+DoublyLinkedList: [ 0 , 1 , 2 , 3 , 4 , 5 ]
+DoublyLinkedList: [ 0 , 1 , 2 , 3 , 4 , 5 , 6 ]
+DoublyLinkedList: [ 0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 ]
+1 is at index 1
+The list have a length of 8
+Removing from front
+DoublyLinkedList: [ 1 , 2 , 3 , 4 , 5 , 6 , 7 ]
+Removing from back
+DoublyLinkedList: [ 1 , 2 , 3 , 4 , 5 , 6 ]
+Last node's previous node have value of 5
+Removing at index 3
+DoublyLinkedList: [ 1 , 2 , 3 , 5 , 6 ]
+
+New empty circular linked list
+ CircularDoublyLinkedList: [ ]
+Inserting 0 at front
+CircularDoublyLinkedList: [ 0 ]
+Inserting 2 at back
+CircularDoublyLinkedList: [ 0 , 2 ]
+Inserting 1 at index 1
+CircularDoublyLinkedList: [ 0 , 1 , 2 ]
+Inserting 3 to 7 at back
+CircularDoublyLinkedList: [ 0 , 1 , 2 , 3 ]
+CircularDoublyLinkedList: [ 0 , 1 , 2 , 3 , 4 ]
+CircularDoublyLinkedList: [ 0 , 1 , 2 , 3 , 4 , 5 ]
+CircularDoublyLinkedList: [ 0 , 1 , 2 , 3 , 4 , 5 , 6 ]
+CircularDoublyLinkedList: [ 0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 ]
+1 is at index 1
+The list have a length of 8
+Removing from front
+CircularDoublyLinkedList: [ 1 , 2 , 3 , 4 , 5 , 6 , 7 ]
+Removing from back
+CircularDoublyLinkedList: [ 1 , 2 , 3 , 4 , 5 , 6 ]
+Removing at index 3
+CircularDoublyLinkedList: [ 1 , 2 , 3 , 5 , 6 ]
+Last node's next node have value of 1
+First node's previous node have value of 6
+
+New empty stack
+Stack: [ True ]
+Stack: [ $ , True ]
+Stack: [ 34567 , $ , True ]
+Stack: [ hello , 34567 , $ , True ]
+hello popped
+34567 popped
+$ popped
+True popped
+Attempting to remove from an empty list.
+
+

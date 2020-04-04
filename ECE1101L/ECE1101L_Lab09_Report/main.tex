@@ -1,0 +1,358 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+
+\title{ECE1101L\\Lab 9\\Voltage and Current Gain}
+\author{Choi Tim Antony Yung}
+\date{31 October 2019}
+
+\begin{document}
+
+\maketitle
+
+\section*{Objective}
+The objective of this lab is to measure and calculate gains G in parallel and series circuits.
+
+\section*{Lab Result}
+Lab Partner: Anthony Nursalim
+
+%1
+\section{A circuit as illustrated below was set up with a varying voltage source}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (1,2) 
+            to[V_=$V_s$] (1,0)
+            %(0,2) to[short,i>^=I] 
+            (1,2) to[R=\SI{1}{\kilo\ohm}] (3,2)
+            (3,2)to[R=\SI{2.2}{\kilo\ohm}]
+            (5,2)to[R,l_=\SI{1.8}{\kilo\ohm} , v^=$V_2$] (5,0)--(1,0)
+            ;
+    \end{circuitikz}
+\end{center}
+
+\pagebreak
+
+%1a
+\subsection{The resistance of the three resistors in circuit were measured}
+The \SI{1}{\kilo\ohm} resistor was measured to have a resistance of \SI{0.995}{\kilo\ohm}, the \SI{2}{\kilo\ohm} resistor was measured to have a resistance of \SI{2.21}{\kilo\ohm}, and the \SI{1.8}{\kilo\ohm} resistor was measured to have a resistance of \SI{1.796}{\kilo\ohm}.
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{}r r r@{}}
+         \toprule
+         measured & nominal & \%diff  \\
+         \midrule
+         \SI{0.995}{\kilo\ohm} & \SI{1}{\kilo\ohm} & -0.5\% \\
+         \SI{2.21}{\kilo\ohm} & \SI{2.2}{\kilo\ohm} & 0.5\% \\
+         \SI{1.796}{\kilo\ohm} & \SI{1.8}{\kilo\ohm} & -0.2\% \\
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+%1b
+\subsection{Voltage $V_2$ was measured as voltage $V_s$ was changed}
+Below is the data set obtained.
+\begin{center}
+    \begin{tabular}{S[table-format=2.3] S[table-format=2.3]}
+        \toprule
+        {$V_s$ (V)} & {$V_2$ (V)}\\
+        \midrule
+        -4.97 & -1.786 \\
+        -3.96 & -1.425 \\
+        -3.50 & -1.258 \\
+        -2.98 & -1.073 \\
+        -2.03 & -0.728 \\
+        -0.957 & -0.344 \\
+        0.000 & 0.000 \\
+        0.950 & 0.342 \\
+        1.931 & 0.693 \\
+        3.06 & 1.100 \\
+        3.50 & 1.258 \\
+        4.01 & 1.444 \\
+        4.93 & 1.774 \\ 
+        \bottomrule
+    \end{tabular}
+\end{center}
+
+\pagebreak
+
+%1c
+\subsection{A graph is generated using the above data set}
+The graph below illustrated $V_2$ as a function of $V_s$.
+\begin{figure}[H]
+\includesvg[width = 345pt]{chart}
+\end{figure}
+
+%1d
+\subsection{A best fit line is generated}
+The slope of the best fit line is 0.36.
+
+%1e
+\subsection{An equation for $V_2$ as a function of $V_s$ can be derived from the slope derived from the best fit line}
+From the slope of the above chart, we can derive the gain $G = 0.36$. Thus, the relation between $V_2$ in volts and $V_s$ in volts is $V_2 = 0.36\cdot V_s$.
+
+%1f
+\subsection{The gain $G=\frac{V_2}{V_s}$ can be calculated as follow}
+\begin{align}
+    \intertext{From voltage divider rule:}
+    V_2 &= \frac{R_2}{R_t} \cdot V_s\\
+    \intertext{Since the resistors are in series:}
+    R_t &= \SI{995}{\ohm} + \SI{2210}{\ohm} + \SI{1796}{\ohm} =\SI{5001}{\ohm}\\
+    \intertext{Substituting $R_2 = \SI{1796}{\ohm}$ and (2) into (1):}
+    V_2 &= \frac{1796}{5001} \cdot V_s\\
+    G = \frac{V_2}{V_s} &= 0.359 \cdot \frac{V_s}{V_s} = 0.359
+\end{align}
+Thus, the gain $G = 0.359$
+
+%1g
+\subsection{The measured gain G derived from the chart is slightly higher than the gain G calculated}
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{} l r r r@{}}
+         \toprule
+         &measured & calculated & \%diff  \\
+         \midrule
+         G & 0.36 & 0.359 & 0.24\% \\
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+%1h
+\subsection{$V_2$ when $V_s = \SI{3.5}{\volt}$ can be predicted as follow}
+Using the equation of gain $G=\frac{V_2}{V_s}$, given that $V_s = \SI{3.5}{volt}$ and $G = 0.36$, $V_2 = G\cdot V_s = 3.5 \times 0.36 = \SI{1.26}{\volt}$
+
+%1i
+\subsection{$V_2$ was measured to be \SI{1.258}{\volt} when $V_s = \SI{3.5}{\volt}$}
+
+%1j
+\subsection{The measured value of $V_2$ is slightly lower than the value calculated}
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{} l r r r@{}}
+         \toprule
+         &measured & calculated & \%diff  \\
+         \midrule
+         $V_2$ &\SI{1.258}{\volt} & \SI{1.26}{\volt} & -0.16\% \\
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+%2
+\section{A circuit as illustrated below was set up with a varying voltage source}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,2) 
+            to[V_=$V_s$] (0,0) -- (6,0)
+            (0,2)
+            (0,2) -- (1,2) 
+            to[R=$R_1$\equal\SI{4.7}{\kilo\ohm}] (1,0)
+            (1,2) -- (3.5,2)
+            to[R=$R_2$\equal\SI{10}{\kilo\ohm}] (3.5,0)
+            (3.5,2) to[short,i<^=$I_2$] (6,2)
+            to[R=$R_3$\equal\SI{10}{\kilo\ohm}] (6,0)
+            ;
+    \end{circuitikz}
+\end{center}
+
+
+%2a
+\subsection{The resistance of the three resistors in circuit were measured}
+The \SI{4.7}{\kilo\ohm} resistor was measured to have a resistance of \SI{4.63}{\kilo\ohm}, the first \SI{10}{\kilo\ohm} resistor was measured to have a resistance of \SI{9.95}{\kilo\ohm}, and the second \SI{10}{\kilo\ohm} resistor was measured to have a resistance of \SI{9.97}{\kilo\ohm}.
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{}l r r r@{}}
+         \toprule
+         &measured & nominal & \%diff  \\
+         \midrule
+         $R_1$&\SI{4.63}{\kilo\ohm} & \SI{4.7}{\kilo\ohm} & -1.5\% \\
+         $R_2$&\SI{9.95}{\kilo\ohm} & \SI{10}{\kilo\ohm} & -0.5\% \\
+         $R_3$&\SI{9.97}{\kilo\ohm} & \SI{10}{\kilo\ohm} & -0.3\% \\
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+%2b
+\subsection{Current $I_2$ was measured as voltage $V_s$ was changed}
+Below is the data set obtained.
+\begin{center}
+    \begin{tabular}{S[table-format=2.3] S[table-format=2.6]}
+        \toprule
+        {$V_s$ (V)} & {$I_2$ (A)}\\
+        \midrule
+        -4.98 & 0.000493 \\
+        -3.94 & 0.000390 \\
+        -3.50 & 0.000346 \\
+        -2.93 & 0.000290 \\
+        -2.00 & 0.000197 \\
+        -0.940 & 0.000092 \\
+        0.000 & 0.000000 \\
+        0.960 & -0.000095 \\
+        1.97 & -0.000194 \\
+        3.01 & -0.000298 \\
+        3.50 & -0.000346 \\
+        3.99 & -0.000395 \\
+        4.96 & -0.000490 \\ 
+        \bottomrule
+    \end{tabular}
+\end{center}
+
+\pagebreak
+
+%2c
+\subsection{A graph is generated using the above data set}
+The graph below illustrated $V_2$ as a function of $V_s$.
+\begin{figure}[H]
+\includesvg[width = 345pt]{chart2}
+\end{figure}
+
+%2d
+\subsection{A best fit line is generated}
+The slope of the best fit line is \SI{-9.89e-5}{ }.
+
+%2e
+\subsection{An equation for $I_2$ as a function of $V_s$ can be derived from the slope derived from the best fit line}
+From the slope of the above chart, we can derive the gain $G =\frac{I_2}{V_s}=\SI{-9.89e-5}{ }$. Thus, the relation between $I_2$ in volts and $V_s$ in volts is $I_2 = \SI{-9.89e-5}{ }\cdot V_s$.
+
+%2f
+\subsection{The gain $G=\frac{I_2}{V_s}$ can be calculated as follow}
+\begin{align}
+    \intertext{From current divider rule:}
+    I_2 &= -(\frac{R_t}{R_2} \cdot I_s)\\
+    %\intertext{Since the resistors are in parallel:}
+    %R_t &= \frac{1}{\frac{1}{\SI{995}{\ohm}} + \frac{1}{\SI{2210}{\ohm}} + \frac{1}{\SI{1796}{\ohm}}} =\SI{5001}{\ohm}\\
+    \intertext{By Ohm's Law:}
+    V_s &= R_t \cdot I_s\\
+    I_s &= \frac{V_s}{R_t}
+    \intertext{Substituting $R_2 = \SI{9970}{\ohm}$ and (7) into (5):}
+    I_2 &= -(\frac{R_t\cdot V_s}{9970\cdot R_t}) = -\frac{V_s}{9970}\\
+    G = \frac{I_2}{V_s} &= -(\frac{1\cdot V_s}{9970 \cdot V_s}) =-\frac{1}{9970} = \SI{-1.003e-4}{ }
+\end{align}
+Thus, the gain $G = \SI{-1.003e-4}{ }$
+
+%2g
+\subsection{The magnitude of the measured gain G derived from the chart is slightly lower than the gain G calculated}
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{} l r r r@{}}
+         \toprule
+         &measured & calculated & \%diff  \\
+         \midrule
+         G & \SI{-9.89e-5}{ } & \SI{-1.003e-4}{ } & -1.4\% \\
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+%2h
+\subsection{$I_2$ when $V_s = \SI{3.5}{\volt}$ can be predicted as follow}
+Using the equation of gain $G=\frac{I_2}{V_s}$, given that $V_s = \SI{3.5}{\volt}$ and $G = \SI{-9.89e-5}{ }$, $I_2 = G\cdot V_s = 3.5 \times \SI{-9.89e-5}{ } = \SI{-0.000346}{\ampere}$
+
+%2i
+\subsection{$I_2$ was measured to be \SI{-0.000346}{\ampere} when $V_s = \SI{3.5}{\volt}$}
+
+%2j
+\subsection{The measured value of $I_2$ is slightly lower in magnitude than the value calculated}
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{} l r r r@{}}
+         \toprule
+         &measured & calculated & \%diff  \\
+         \midrule
+         $I_2$ &\SI{-0.000346}{\volt} & \SI{-0.00034615}{\volt} & -0.04\% \\
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+%3
+\section{A circuit as illustrated below was set up with a 5.00V voltage source}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (1,2) 
+            to[V_=$V\equal\SI{5}{\volt}$] (1,0) -- (7,0)
+            (1,2) to[R=$R_1$\equal\SI{1}{\kilo\ohm}] (3.5,2)
+            to[R,v^=$V_1$,l_=$R_2$\equal\SI{1}{\kilo\ohm}] (3.5,0)
+            (3.5,2) to [short, i=$I_2$] (4,2) to [R=$R_3$\equal\SI{1}{\kilo\ohm}, v_=$V_2$] (6.5,2) -- (7,2)
+            to[open, v=$V_3$] (7,0)
+            ;
+    \end{circuitikz}
+\end{center}
+
+%3a
+\subsection{The current $I_2$, the voltage $V_1$, $V_2$ and $V_3$ was calculated}
+The current $I_2$ was calculated to be \SI{0}{\ampere}, the voltage $V_1$ was calculated to be \SI{2.50}{\volt}, the voltage $V_3$ was calculated to be the same, \SI{2.50}{\volt}, while the voltage $V_2$ was calculated to be \SI{0}{\volt}.
+
+%3b
+\subsection{The current $I_2$, the voltage $V_1$, $V_2$ and $V_3$ was measured}
+The current $I_2$ was measured to be \SI{0}{\ampere}, the voltage $V_1$ was measured to be \SI{3.39}{\volt} and the voltage $V_2$ was measured to be the same, \SI{3.39}{\volt}.
+
+%3c
+\subsection{The calculated values and the measured values are mostly the same}
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{} l r r r@{}}
+         \toprule
+         &measured & calculated & \%diff  \\
+         \midrule
+            $V_1$ & 2.48 & 2.497479839 & -0.70\% \\
+            $I_2$ & 0.000 & 0 & 0 \\
+            $V_2$ & 0.000 & 0 & 0 \\
+            $V_3$ & 2.48 & 2.497479839 & -0.70\% \\ 
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+%3d
+\subsection{There are no current flowing through $R_3$, the voltage across $R_3$ was the same, thus $V_3=V_1$}
+As the current flow through where there is least resistance, as they arrive at the node connecting $R_1$ and $R_2$, they all chose to flow through $R_2$, as it have far less resistance than an open circuit, having a theoretically infinite resistance. As no current is flowing through $R_3$, the voltage across $R_3$ will be zero as well by Ohm's Law, meaning there are no potential difference before and after $R_3$, thus $V_1$, the voltage different across $R_2$ is the same as $V_3$, the one across the open circuit.
+
+%4
+\section{A circuit as illustrated below was set up with a 5.00V voltage source}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,3) 
+            to[V_=$V\equal\SI{5}{\volt}$] (0,0) -- (5,0)
+            (0,3)
+            (0,3) to[short,i>^=I] (1,3) to[R=$R_1$\equal\SI{1}{\kilo\ohm}] (3.5,3)
+            to[short, i=$I_1$] (3.5,2) to[R, l_=$R_2$\equal\SI{1}{\kilo\ohm}, v^=$V_1$] (3.5,0)
+            (3.5,3) -- (5,3)
+            to[short, i=$I_2$] (5,2) -- (5,0)
+            ;
+    \end{circuitikz}
+\end{center}
+
+%4a
+\subsection{The current $I_1$ and $I_2$, and the voltage $V_1$ was calculated}
+The current $I_1$ was calculated to be \SI{0}{\ampere}, The current $I_2$ was calculated to be \SI{0.005}{\ampere}, and the voltage $V_1$ was calculated to be \SI{0}{\volt}.
+
+%4b
+\subsection{The current $I_1$ and $I_2$, and the voltage $V_1$ was measured}
+The current $I_1$ was measured to be \SI{0}{\ampere}, The current $I_2$ was measured to be \SI{0.00504}{\ampere}, and the voltage $V_1$ was measured to be \SI{0}{\volt}.
+
+%4c
+\subsection{The calculated values and the measured values are mostly the same}
+\begin{table}[H]
+\centering
+    \begin{tabular}{@{} l r r r@{}}
+         \toprule
+         &measured & calculated & \%diff  \\
+         \midrule
+            $I_1$ & 0.000 & 0 & 0 \\
+            $V_1$ & 0.000 & 0 & 0 \\
+            $I_2$ & 0.00487 & 0.00504 & -3.28\% \\ 
+         \bottomrule
+    \end{tabular}
+\end{table}
+
+%4d
+\subsection{There are no epc flowing through $R_2$}
+As epc flow through where there is least resistance, as they arrive at the node connecting $R_1$ and $R_2$, they all chose to flow through the short circuit, as it, having an ideal resistance of zero, have far less resistance than $R_2$. Therefore, the current flowing through $R_2$, $I_1$, is zero as there are no epc flowing through $R_2$. Consuming no power from the epc, there are no potential difference across $R_2$, thus $V_1$ is zero.
+\end{document}

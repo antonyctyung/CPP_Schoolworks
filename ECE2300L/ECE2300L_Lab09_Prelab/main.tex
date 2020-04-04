@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage[landscape]{geometry}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+
+\title{ECE2300L_Prelab3}
+\author{Choi Tim Antony Yung}
+\begin{document}
+
+\thispagestyle{empty}
+\begin{center}
+    \begin{circuitikz}
+        \draw
+        
+        % Left side (Input)
+        (0,0) node[vcc]{5V} -- 
+        (0,-1) coordinate(W1) to[nos] ++(1,0)
+        -- ++(0,-1) to[Do] ++(1,0) to[R] ++(1.5,0) node[ground]{}
+        (W1) ++(1,0) ++(3.5,0) coordinate (W2){}
+        (W1) ++(1,0) node[circ, label=W]{}
+        
+        (W1) --
+        (0,-3) coordinate(X1) to[nos] ++(1,0)
+        -- ++(0,-1) to[Do] ++(1,0) to[R] ++(1.5,0) node[ground]{}
+        (X1) ++(1,0) -- ++(4,0) node[circ, label=250:X](X2){}
+        (X1) ++(1,0) node[circ, label=X]{}
+        
+        (X1) --
+        (0,-5) coordinate(Y1) to[nos] ++(1,0)
+        -- ++(0,-1) to[Do] ++(1,0) to[R] ++(1.5,0) node[ground]{}
+        (Y1) ++(1,0) -- ++(4.5,0) node[circ, label=250:Y](Y2){}
+        (Y1) ++(1,0) node[circ, label=Y]{}
+        
+        (Y1) --
+        (0,-7) coordinate(Z1) to[nos] ++(1,0)
+        -- ++(0,-1) to[Do] ++(1,0) to[R] ++(1.5,0) node[ground]{}
+        (Z1) ++(1,0) node[circ, label=Z]{}
+        
+        % Right side (Output)
+        (14,0) node [vcc](r5v){5V} --
+        (14,-1) -- (14,-1) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=A]{} -- ++(-0.5,0) coordinate(AD){}
+        (14,-1) -- (14,-3) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=B]{} -- ++(-0.5,0) node[jump crossing, anchor=east](B){}
+        (14,-3) -- (14,-5) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=C]{} -- ++(-0.5,0) node[jump crossing, anchor=east](C){} ++(-0.75,0) coordinate (Cattach)
+        (14,-5) -- (14,-7) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=D]{} -- ++(-0.5,0) coordinate (D){}
+        (14,-7) -- (14,-9) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=E]{} -- ++(-0.5,0) coordinate (E){}
+        (14,-9) -- (14,-11) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=F]{} -- ++(-0.5,0) coordinate(F){}
+        (14,-11) -- (14,-13) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=G]{} -- ++(-0.5,0) coordinate(G){}
+        (B.north) -- (B.north |- AD) -- (AD)
+        (B.south) -- (C.north)
+        (C.south) -- (C.south|-D) -- (D)
+        (C.south|-D) -- (C.south|-E) -- (E)
+        (Cattach) -- (Cattach|-F) -- (F)
+
+        (G) node[ground]{}
+
+
+
+        % Center (Digital circuit)
+        (AD) -- ++(-1.5,0) node[xor port, anchor=out](xor1){86}
+        (xor1.in 2) node[jump crossing, anchor=east](xor1x){}
+        (B.west -| AD) ++(-1.5,0) node[xor port, anchor=out](xor2){86}
+        (B.west) -- (xor2.out)
+        (xor2.in 2) node[jump crossing, anchor=east](xor2x){}
+        (C.west -| AD) ++(-1.5,0) node[xor port, anchor=out](xor3){86}
+        (C.west) -- (xor3.out)
+        (xor3.in 1) node[jump crossing, anchor=east](xor3x){}
+        (xor1x.north) -- (xor1x.north|-xor1.in 1) node[vcc]{5V} -- (xor1.in 1)
+        (xor2x.north) -- (xor2x.north|-xor2.in 1) -- (xor2.in 1) 
+        (xor2x.north|-xor2.in 1) -- (xor1x.south)
+        (xor2x.south) -- (xor3x.north)
+        (xor3x.south) -- (xor3x.south|-xor3.in 2) -- (xor3.in 2)
+        (xor2x.west) node[xor port, anchor=out](xor4){86}
+        
+        (xor1x.west) -- (xor1x.west-|Y2)
+        (xor4.in 1-|Y2) node[jump crossing](xingY1){}
+        (xingY1.west) -- (X2)
+        (xingY1.east) -- (xor4.in 1)
+        (xingY1.north) -- (xor1x.west-|Y2)
+        (xor3.in 1-|Y2) node[jump crossing](xingY2){}
+        (xor4.in 2) -- (xor4.in 2-|Y2)
+        (xingY1.south) -- (xingY2.north)
+        (xingY2.south) -- (Y2)
+        (xingY2.east) -- (xor3x.west)
+        (xingY2.west) -- (xingY2.west-|X2) -- (X2)
+        ;
+    \end{circuitikz}
+\end{center}
+
+\end{document}

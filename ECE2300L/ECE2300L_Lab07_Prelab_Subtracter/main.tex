@@ -1,0 +1,350 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+%\usepackage[landscape]{geometry}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\pagenumbering{gobble}
+\usepackage{comment}
+
+\title{ECE2300L_Prelab3}
+\author{Choi Tim Antony Yung}
+\begin{document}
+\section*{5-bit Subtracter}
+\begin{center}
+\begin{circuitikz}[scale = 1.5, transform shape]
+    \ctikzset{bipoles/nos/width=0.2, bipoles/nos/height=0.2}
+    \ctikzset{resistors/scale = 0.3}
+    \ctikzset{diodes/scale=0.3}
+\draw
+    (0,0) node[dipchip,num pins=16, hide numbers](adder1){283}
+    (adder1.bpin 1) node[right]{$S_2$}
+    (adder1.bpin 2) node[right]{$B_2$}
+    (adder1.bpin 3) node[right]{$A_2$}
+    (adder1.bpin 4) node[right]{$S_1$}
+    (adder1.bpin 5) node[right]{$A_1$}
+    (adder1.bpin 6) node[right]{$B_1$}
+    (adder1.bpin 7) node[right]{$C_i$}
+    (adder1.bpin 8) node[right]{GND}
+    (adder1.bpin 9) node[left]{$C_o$}
+    (adder1.bpin 10) node[left]{$S_4$}
+    (adder1.bpin 11) node[left]{$B_4$}
+    (adder1.bpin 12) node[left]{$A_4$}
+    (adder1.bpin 13) node[left]{$S_3$}
+    (adder1.bpin 14) node[left]{$A_3$}
+    (adder1.bpin 15) node[left]{$B_3$}
+    (adder1.bpin 16) node[left]{$V_{cc}$}
+    (0,-5.5) node[dipchip,num pins=16, hide numbers](adder2){283}
+    (adder2.bpin 1) node[right]{$S_2$}
+    (adder2.bpin 2) node[right]{$B_2$}
+    (adder2.bpin 3) node[right]{$A_2$}
+    (adder2.bpin 4) node[right]{$S_1$}
+    (adder2.bpin 5) node[right]{$A_1$}
+    (adder2.bpin 6) node[right]{$B_1$}
+    (adder2.bpin 7) node[right]{$C_i$}
+    (adder2.bpin 8) node[right]{GND}
+    (adder2.bpin 9) node[left]{$C_o$}
+    (adder2.bpin 10) node[left]{$S_4$}
+    (adder2.bpin 11) node[left]{$B_4$}
+    (adder2.bpin 12) node[left]{$A_4$}
+    (adder2.bpin 13) node[left]{$S_3$}
+    (adder2.bpin 14) node[left]{$A_3$}
+    (adder2.bpin 15) node[left]{$B_3$}
+    (adder2.bpin 16) node[left]{$V_{cc}$}
+    (adder1.pin 7) -- ++(-2.25,0)
+    (adder1.pin 8) --++(0,-0.1)node[tlground]{}
+    (adder2.pin 8) --++(0,-0.1)node[tlground]{}
+    (adder1.pin 16) node[vcc]{\SI{5}{\volt}}
+    (adder2.pin 16) node[vcc]{\SI{5}{\volt}}
+    (adder1.pin 9) -- ++(0.75,0)  -- ++(0,-6.5) -- ++(-4,0) coordinate(temp) -- (temp|-adder2.pin 7) -- (adder2.pin 7)
+    
+    (adder1.pin 1) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$Z_1$}}]{} to[diode]++(-0.75,0) to[resistor]++(-0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    (adder1.pin 4) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$Z_0$}}]{} to[diode]++(-0.75,0) to[resistor]++(-0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    (adder1.pin 10) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$Z_3$}}]{} to[diode]++(0.75,0) to[resistor]++(0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    (adder1.pin 13) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$Z_2$}}]{} to[diode]++(0.75,0) to[resistor]++(0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    (adder2.pin 4) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$Z_4$}}]{} to[diode, fill = black]++(-0.75,0)to[resistor]++(-0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    
+    (adder1.pin 2) ++(-1.5,0) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$Y_1$}}](y1){} to[nos] ++(-0.75,0) node[vcc](vcc){\SI{5}{\volt}}
+    (adder1.pin 2) ++(-1.5,0) -- ++(0,-0.15)to[diode]++(0.75,0) to[resistor]++(0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    (adder1.pin 2) node[not port, scale = 0.2, anchor=out](not2){}
+    (not2.in)--(y1) 
+    (adder1.pin 3) -- ++(-1.5,0) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$X_1$}}]{} to[nos] ++(-0.75,0)
+    (adder1.pin 3) -- ++(-1.5,0) -- ++(0,-0.15)to[diode]++(0.75,0) to[resistor]++(0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    (adder1.pin 6) ++(-1.5,0) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$Y_0$}}](y0){} to[nos] ++(-0.75,0) --(vcc)
+    (adder1.pin 6) ++(-1.5,0) -- ++(0,-0.15)to[diode]++(0.75,0) to[resistor]++(0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    (adder1.pin 6) node[not port, scale = 0.2, anchor=out](not6){}
+    (not6.in)--(y0) 
+    (adder1.pin 5) -- ++(-1.5,0) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$X_0$}}]{} to[nos] ++(-0.75,0)
+    (adder1.pin 5) -- ++(-1.5,0) -- ++(0,-0.15)to[diode]++(0.75,0) to[resistor]++(0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    
+    (adder1.pin 15) ++(1.5,0) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$Y_2$}}](y2){} to[nos] ++(0.75,0) node[vcc](vcc2){\SI{5}{\volt}}
+    (adder1.pin 15) ++(1.5,0) -- ++(0,-0.15)to[diode]++(-0.75,0) to[resistor]++(-0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    (adder1.pin 15) node[not port, scale = -0.2, anchor=out](not15){}
+    (not15.in)--(y2)
+    (adder1.pin 14) -- ++(1.5,0) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$X_2$}}]{} to[nos] ++(0.75,0)
+    (adder1.pin 14) -- ++(1.5,0) -- ++(0,-0.15)to[diode]++(-0.75,0) to[resistor]++(-0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    (adder1.pin 11) ++(1.5,0) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$Y_3$}}](y3){} to[nos] ++(0.75,0) --(vcc2)
+    (adder1.pin 11) ++(1.5,0) -- ++(0,-0.15)to[diode]++(-0.75,0) to[resistor]++(-0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    (adder1.pin 11) node[not port, scale = -0.2, anchor=out](not11){}
+    (not11.in)--(y3)
+    (adder1.pin 12) -- ++(1.5,0) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$X_3$}}]{} to[nos] ++(0.75,0)
+    (adder1.pin 12) -- ++(1.5,0) -- ++(0,-0.15)to[diode]++(-0.75,0) to[resistor]++(-0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    
+    (adder2.pin 6) ++(-1.5,0) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$Y_4$}}](y4){} to[nos] ++(-0.75,0) --(vcc)
+    (adder2.pin 6) ++(-1.5,0) -- ++(0,-0.15)to[diode, fill=black]++(0.75,0) to[resistor]++(0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    (adder2.pin 6) node[not port, scale = 0.2, anchor=out](not26){}
+    (not26.in)--(y4) 
+    (adder2.pin 5) -- ++(-1.5,0) node[circ, scale = 0.75 , label={[label distance = -0.1cm]\tiny{$X_4$}}]{} to[nos] ++(-0.75,0)
+    (adder2.pin 5) -- ++(-1.5,0) -- ++(0,-0.15)to[diode, fill=black]++(0.75,0) to[resistor]++(0.5,0)--++(0,-0.1)node[tlground,scale = 0.5]{}
+    
+    ;
+\end{circuitikz}
+    
+\end{center}
+    
+\begin{comment}
+\begin{circuitikz}[scale = 1, transform shape]
+    \draw
+    (0,0) node[dipchip,num pins=16, hide numbers,font=\tiny](mux){151}
+    (mux.bpin 1) node[right, font=\tiny]{$D_3$}
+    (mux.bpin 2) node[right, font=\tiny]{$D_2$}
+    (mux.bpin 3) node[right, font=\tiny]{$D_1$}
+    (mux.bpin 4) node[right, font=\tiny]{$D_0$}
+    (mux.bpin 5) node[right, font=\tiny]{$Y$}
+    (mux.bpin 6) node[right, font=\tiny]{$\overline{Y}$}
+    (mux.bpin 7) node[right, font=\tiny]{$S$}
+    (mux.bpin 8) node[right, font=\tiny]{GND}
+    (mux.bpin 9) node[left, font=\tiny]{$C$}
+    (mux.bpin 10) node[left, font=\tiny]{$B$}
+    (mux.bpin 11) node[left, font=\tiny]{$A$}
+    (mux.bpin 12) node[left, font=\tiny]{$D_7$}
+    (mux.bpin 13) node[left, font=\tiny]{$D_6$}
+    (mux.bpin 14) node[left, font=\tiny]{$D_5$}
+    (mux.bpin 15) node[left, font=\tiny]{$D_4$}
+    (mux.bpin 16) node[left, font=\tiny]{$V_{cc}$}
+
+    (mux.pin 7) -- (mux.pin 8) node[ground, scale = 0.5]{}
+    (mux.pin 4) node[ground, scale = 0.5]{}
+    (mux.pin 2) node[ground, scale = 0.5]{}
+    (mux.pin 14) node[ground, scale = 0.5]{}
+    (mux.pin 1) -- ++(-0.25,0) coordinate(temp)
+    (mux.pin 3) -- ++(-0.25,0) -- (temp) node[vcc, scale=0.5]{\SI{5}{\volt}}
+    (mux.pin 16) -- ++(0.25,0) node[vcc, scale=0.5](vcc){\SI{5}{\volt}}
+    (mux.pin 15) -- ++(0.25,0)
+    (mux.pin 13) -- ++(0.25,0) -- (vcc)
+    
+    (mux.pin 9) node[circ, scale=0.5, label ={[label distance = -0.08cm]\tiny A}](A){}
+    (mux.pin 10) node[circ, scale=0.5, label ={[label distance = -0.08cm]\tiny B}](B){}
+    (mux.pin 11) node[circ, scale=0.5, label ={[label distance = -0.08cm]\tiny C}](C){}
+    (mux.pin 12) node[circ, scale=0.5, label ={[label distance = -0.08cm]\tiny D}](D){}
+    ;
+    \ctikzset{bipoles/nos/width=0.2, bipoles/nos/height=0.2}
+    \ctikzset{resistors/scale = 0.3}
+    \ctikzset{diodes/scale=0.3}
+    
+    \draw
+    (D) -- ++(1.2,0) to[nos] ++(0.5,0) -- ++(0,0.25) node[vcc, scale=0.5](vcc2){5V}
+    (D) ++(1.2,0) -- ++(0,-0.15) to[diode] ++(-0.4,0) to[R] ++(-0.4,0) node[ground,scale = 0.5]{}
+    (C) -- ++(1.2,0) to[nos] ++(0.5,0)
+    (C) ++(1.2,0) -- ++(0,-0.15) to[diode] ++(-0.4,0) to[R] ++(-0.4,0) node[ground,scale = 0.5]{}
+    (B) -- ++(1.2,0) to[nos] ++(0.5,0)
+    (B) ++(1.2,0) -- ++(0,-0.15) to[diode] ++(-0.4,0) to[R] ++(-0.4,0) node[ground,scale = 0.5]{}
+    (A) -- ++(1.2,0) to[nos] ++(0.5,0) -- (vcc2)
+    (A) ++(1.2,0) -- ++(0,-0.15) to[diode, fill=black] ++(-0.4,0) to[R] ++(-0.4,0) node[ground,scale = 0.5]{}
+    
+    (mux.pin 5) node[circ, scale=0.5, label ={[label distance = -0.08cm]\tiny Y}]{} to[diode] ++(-0.4,0) to[R] ++(-0.4,0) node[ground,scale = 0.5]{}
+
+    ;
+\end{circuitikz}
+
+\begin{circuitikz}[scale = 0.75, transform shape]
+    \draw 
+        (-9,8) node[vcc]{5V} to[nos] ++(0,-1) node[circ,label=0:A](A){} -- ++(-1,0) to [Do] ++(0,-1) to[R] ++(0,-1.5) node[ground]{}
+        
+        (-7,8) node[vcc]{5V} to[nos] ++(0,-1) node[circ,label=0:B](B){} -- ++(-1,0) to [Do] ++(0,-1) to[R] ++(0,-1.5) node[ground]{}
+        
+        (-5,8) node[vcc]{5V} to[nos] ++(0,-1) node[circ,label=0:C](C){} -- ++(-1,0) to [Do] ++(0,-1) to[R] ++(0,-1.5) node[ground]{}
+        
+        (-3,8) node[vcc]{5V} to[nos] ++(0,-1) node[circ,label=0:D](D){} -- ++(-1,0) to [Do] ++(0,-1) to[R] ++(0,-1.5) node[ground]{}
+        
+        (0,0) node[dipchip, num pins=16](dec1){138}
+        ++(0,-6.5)node[dipchip, num pins=16](dec2){138}
+        
+        (dec1.pin 16) node[vcc]{5V}
+        (dec2.pin 16) node[vcc]{5V}
+        
+        (dec1.pin 8) node[ground]{}
+        (dec2.pin 8) node[ground]{}
+        
+        (dec1.pin 5) -- (dec1.pin 4) -- ++(-0.5,0) node[ground]{}
+        (dec2.pin 5) -- (dec2.pin 4) -- ++(-0.5,0) node[ground]{}
+        
+        (dec1.pin 15) node[label=0:$Y_0$]{}
+        (dec1.pin 14) node[label=0:$Y_1$]{}
+        %(dec1.pin 13) node[label=0:$Y_2$]{}
+        (dec1.pin 12) node[label=0:$Y_3$]{}
+        (dec1.pin 11) node[label=0:$Y_4$]{}
+        (dec1.pin 10) node[label=0:$Y_5$]{}
+        (dec1.pin 9) node[label=0:$Y_6$]{}
+        (dec1.pin 7) -- ++(-0.5,0) -- ++(0,-1.5) coordinate(Y7) -- (Y7-|dec1.pin 9) node[label=0:$Y_7$]{}
+        
+        %(dec2.pin 15) node[label=0:$Y_8$]{}
+        (dec2.pin 14) node[label=0:$Y_9$]{}
+        (dec2.pin 13) node[label=0:$Y_{10}$]{}
+        (dec2.pin 12) node[label=0:$Y_{11}$]{}
+        (dec2.pin 11) node[label=0:$Y_{12}$]{}
+        (dec2.pin 10) node[label=0:$Y_{13}$]{}
+        (dec2.pin 9) node[label=0:$Y_{14}$]{}
+        (dec2.pin 7) -- ++(-0.5,0) -- ++(0,-1.5) coordinate(Y15) -- (Y15-|dec2.pin 9) node[label=0:$Y_{15}$]{}
+        
+        (B|-dec1.pin 1)node[jump crossing](B11){}
+        (C|-dec1.pin 1)node[jump crossing](C11){}
+        (D|-dec1.pin 1)node[jump crossing](D11){}
+        (A) -- (A|-dec1.pin 1) node[circ]{} -- (B11.west)
+        (B11.east) -- (C11.west)
+        (C11.east) -- (D11.west)
+        (D11.east) -- (dec1.pin 1)
+        (B) -- (B11.north)
+        (C) -- (C11.north)
+        (D) -- (D11.north)
+        
+        (C|-dec1.pin 2)node[jump crossing](C12){}
+        (D|-dec1.pin 2)node[jump crossing](D12){}
+        (B11.south) -- (B|-dec1.pin 2) node[circ]{} -- (C12.west)
+        (C12.east) -- (D12.west)
+        (D12.east) -- (dec1.pin 2)
+        (C11.south) -- (C12.north)
+        (D11.south) -- (D12.north)
+        
+        (D|-dec1.pin 3)node[jump crossing](D13){}
+        (C12.south) -- (C|-dec1.pin 3) node[circ]{} -- (D13.west)
+        (D13.east) -- (dec1.pin 3)
+        (D12.south) -- (D13.north)
+
+        (D13.south) -- (D|-dec1.pin 6) node[circ]{}
+        (dec1.pin 6) node[not port, anchor=out](not){}
+        (not.in) -- (D|-dec1.pin 6)
+        
+        (B|-dec2.pin 1)node[jump crossing](B11){}
+        (C|-dec2.pin 1)node[jump crossing](C11){}
+        (D|-dec2.pin 1)node[jump crossing](D11){}
+        (A|-dec1.pin 1) -- (A|-dec2.pin 1) node[circ]{} -- (B11.west)
+        (B11.east) -- (C11.west)
+        (C11.east) -- (D11.west)
+        (D11.east) -- (dec2.pin 1)
+        (B|-dec1.pin 2) -- (B11.north)
+        (C|-dec1.pin 3) -- (C11.north)
+        (D|-dec1.pin 6) -- (D11.north)
+        
+        (C|-dec2.pin 2)node[jump crossing](C12){}
+        (D|-dec2.pin 2)node[jump crossing](D12){}
+        (B11.south) -- (B|-dec2.pin 2) node[circ]{} -- (C12.west)
+        (C12.east) -- (D12.west)
+        (D12.east) -- (dec2.pin 2)
+        (C11.south) -- (C12.north)
+        (D11.south) -- (D12.north)
+        
+        (D|-dec2.pin 3)node[jump crossing](D13){}
+        (C12.south) -- (C|-dec2.pin 3) node[circ]{} -- (D13.west)
+        (D13.east) -- (dec2.pin 3)
+        (D12.south) -- (D13.north)
+        
+        (D13.south) -- (D|-dec2.pin 6) node[circ]{} -- (dec2.pin 6)
+
+        (dec1.pin 13) -- ++(1,0) node[not port, anchor=in](not2){}
+        (not2.in) ++(-0.1,0) node[label=$Y_2$]{}
+        (not2.out) -- ++(1,0) node[dipchip, num pins=16, anchor=pin 1, scale=2](dec47){47}
+        (dec2.pin 15) -- ++(1,0) node[not port, anchor=in](not8){}
+        (not8.in) ++(-0.1,0) node[label=$Y_8$]{}
+        (not8.out) -- (not8.out|-dec47.pin 6) ++(0.5,0) node[jump crossing](pin6xing){}
+        (not8.out|-dec47.pin 6) -- (pin6xing.west)
+        (pin6xing.east) -- (dec47.pin 6)
+        (pin6xing.north) -- (pin6xing.north|-dec47.pin 4) -- (dec47.pin 4)
+        (dec47.pin 7) -- (dec47.pin 8) node[ground]{}
+        (dec47.pin 2) -- ++(-0.5,0) node[ground]{}
+        (dec47.pin 16) node[vcc]{\SI{5}{\volt}}
+        
+        (pin6xing.south) -- (pin6xing.south|-Y15) -- ++(0,-2) node[label=45:$\Bar{f}$]{}
+        node[not port, anchor=out](notf){} 
+        (notf.in) -- ++(-0.25,0) coordinate(f) node[label=$f$]{}
+        (f) -- ++(0,-0.5) to[R] ++(0,-1.5) to[Do] ++(0,-1) node[ground]{}
+        (f) -- ++(-0.25,0) node[and port, anchor=out](fand){}
+        (fand.in 1) -- ++(0,0.5) node[or port, number inputs = 3, anchor=out](or1){}
+        (fand.in 2) -- ++(0,-0.5) node[or port, number inputs = 3, anchor=out](or2){}
+        
+        (B|-or1.in 1)node[jump crossing](B11){}
+        (C|-or1.in 1)node[jump crossing](C11){}
+        (D|-or1.in 1)node[jump crossing](D11){}
+        (A|-dec2.pin 1) -- (A|-or1.in 1) node[circ]{} -- (B11.west)
+        (B11.east) -- (C11.west)
+        (C11.east) -- (D11.west)
+        (D11.east) -- (or1.in 1)
+        (B|-dec2.pin 2) -- (B11.north)
+        (C|-dec2.pin 3) -- (C11.north)
+        (D|-dec2.pin 6) -- (D11.north)
+        
+        (C|-or1.in 2)node[jump crossing](C12){}
+        (D|-or1.in 2)node[jump crossing](D12){}
+        (B11.south) -- (B|-or1.in 2) node[circ]{} -- (C12.west)
+        (C12.east) -- (D12.west)
+        (D12.east) -- (or1.in 2)
+        (C11.south) -- (C12.north)
+        (D11.south) -- (D12.north)
+        
+        (D|-or1.in 3)node[jump crossing](D13){}
+        (C12.south) -- (C|-or1.in 3) node[circ]{} -- (D13.west)
+        (D13.east) -- (or1.in 3)
+        (D12.south) -- (D13.north)
+        
+        (C|-or2.in 1)node[jump crossing](C11){}
+        (D|-or2.in 1)node[jump crossing](D11){}
+        (A|-or1.in 1) -- (A|-or2.in 1) node[circ]{} -- (C11.west)
+        (C11.east) -- (D11.west)
+        (D11.east) -- (or2.in 1)
+        (C|-or1.in 3) -- (C11.north)
+        (D13.south) -- (D11.north)
+        
+        (D|-or2.in 2)node[jump crossing](D13){}
+        (C11.south) -- (C|-or2.in 2) node[circ]{} -- (D13.west)
+        (D13.east) -- (or2.in 2)
+        (D11.south) -- (D13.north)
+        
+        (D13.south) -- (D13.south|-or2.in 3) node[circ]{} -- (or2.in 3)
+        
+        (dec47.pin 15) ++(1,0) to[diode] (dec47.pin 15)
+        (dec47.pin 14) ++(1,0) to[diode] (dec47.pin 14)
+        (dec47.pin 13) ++(1,0) to[diode] (dec47.pin 13)
+        (dec47.pin 12) ++(1,0) to[diode] (dec47.pin 12)
+        (dec47.pin 11) ++(1,0) to[diode] (dec47.pin 11)
+        (dec47.pin 10) ++(1,0) to[diode] (dec47.pin 10)
+        (dec47.pin 9) ++(1,0) to[diode] (dec47.pin 9)
+        
+        (dec47.pin 15) ++(1,0) to[resistor] ++(1.5,0)
+        (dec47.pin 14) ++(1,0) to[resistor] ++(1.5,0)
+        (dec47.pin 13) ++(1,0) to[resistor] ++(1.5,0)
+        (dec47.pin 12) ++(1,0) to[resistor] ++(1.5,0)
+        (dec47.pin 11) ++(1,0) to[resistor] ++(1.5,0)
+        (dec47.pin 10) ++(1,0) to[resistor] ++(1.5,0)
+        (dec47.pin 9) ++(1,0) to[resistor] ++(1.5,0)
+        
+        (dec47.pin 15) node[label=f]{}
+        (dec47.pin 14) node[label=g]{}
+        (dec47.pin 13) node[label=a]{}
+        (dec47.pin 12) node[label=b]{}
+        (dec47.pin 11) node[label=c]{}
+        (dec47.pin 10) node[label=d]{}
+        (dec47.pin 9) node[label=e]{}
+        
+        (dec47.pin 15) ++(2.5,0) node[vcc]{\SI{5}{\volt}} coordinate(temp)
+        (dec47.pin 9) ++(2.5,0) -- (temp)
+        ;
+        
+\end{circuitikz}
+\end{comment}
+\end{document}

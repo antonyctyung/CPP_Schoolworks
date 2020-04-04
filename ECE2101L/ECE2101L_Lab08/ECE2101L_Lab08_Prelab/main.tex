@@ -1,0 +1,110 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage{graphics}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{graphicx} 
+\usepackage{steinmetz}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\renewcommand{\thesubsubsection}{\thesubsection.\alph{subsubsection}}
+\newcommand{\equal}{=}
+\ExplSyntaxOn
+\NewDocumentCommand{\defcon}{mm}
+ {
+  \cs_new:Npx #1 { \fp_eval:n { #2 } }
+ }
+\ExplSyntaxOff
+
+\title{ECE2101L\\Electrical Circuit Analysis II Laboratory\\\,\\Lab 8\\ Op Amp in AC Circuits\\\,\\Prelab\\}
+\author{Choi Tim Antony Yung}
+%\author{Choi Tim Antony Yung\\\,\\Willis Nguyen\\Phineas Cozmiuc}
+\date{23 March 2020}
+
+\begin{document}
+
+\clearpage\maketitle
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+\section{Op amp LM 741 }
+\subsection{Pinout and circuit diagram of LM741}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,0) node[dipchip,num pins=8,font=\tiny](opamp){LM741}
+            (opamp.pin 1) node[left]{Offset Null}
+            (opamp.pin 2) node[left]{Inverting Signal Input $V_-$}
+            (opamp.pin 3) node[left]{Non-Inverting Signal Input $V_+$}
+            (opamp.pin 4) node[left]{Negative Supply Voltage $V_{ee}$}
+            (opamp.pin 5) node[right]{Offset Null}
+            (opamp.pin 6) node[right]{Amplified Signal Output}
+            (opamp.pin 7) node[right]{$V_{cc}$ Positive Supply Voltage}
+            (opamp.pin 8) node[right]{No Connect}
+            
+            
+            (0,4) node[op amp, yscale=-1] (opamp) {}
+            (opamp.down) to[short] ++(0,0.4) node[vcc]{$V_{cc}$} %Vcc
+            (opamp.up) to[short] ++(0,-0.4) node[vee]{$V_{ee}$} %Vee
+            
+            % op amp pinout label
+            (opamp.down) to[open] ++ (0,0.15) node[anchor=south east, color=red] {7}
+            (opamp.up) ++ (0,-0.15) node[anchor=north east, color=red] {4}
+            (opamp.+) node[anchor=north west, color=red] {3}
+            (opamp.-) node[anchor=south west, color=red] {2}
+            (opamp.out) ++(-0.15,0) node[anchor=south east, color=red] {6}
+            ;
+    \end{circuitikz}
+\end{center}
+
+\subsection{Specification of LM741}
+\href{http://www.ti.com/lit/ds/symlink/lm741.pdf}{Texas Instrument's LM741 Datasheet} section Absolute Maximum Rating is referenced for the information below:
+\subsubsection{Supply voltage rating: $\pm\SI{22}{\volt}$}
+\subsubsection{Input voltage rating: $\pm\SI{15}{\volt}$}
+\subsubsection{Differential Input voltage rating: $\pm\SI{30}{\volt}$}
+\,\\
+
+
+\section{Voltage and current relation in op amp circuit}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0, 0) node[op amp, yscale=-1] (opamp) {}
+            (opamp.+) to[short] ++(-0.01,0) -- ++(-2.99,0) to[V,l_=$v_s(t)$] ++(0,-5) coordinate (groundnode) node[ground]{}
+            (opamp.-) to[short] ++(-0.01,0) -- ++(-0.34,0) -- ++(0,-2) coordinate (vnnode)
+            -- (vnnode -| opamp.-) to[R,l_=$R_f$] (vnnode -| opamp.out)
+            (groundnode) -- (groundnode -| vnnode) to[R=$R_g$] (vnnode)
+            (opamp.out) -- ++(0.5,0) coordinate (outnode)
+            (vnnode -| opamp.out) -- ++(0.5,0) to[short,i<=$i(t)$] (outnode) -- ++(1.5,0) coordinate (vnaughtplusnode)
+            (groundnode -| vnnode) -- (groundnode -| vnaughtplusnode) to[open, v^<=$v_o(t)$] (vnaughtplusnode)
+            
+            % op amp pinout label
+            (opamp.down) to[open] ++ (0,0.15) node[anchor=south east, color=red] {7}
+            (opamp.up) ++ (0,-0.15) node[anchor=north east, color=red] {4}
+            (opamp.+) node[anchor=north west, color=red] {3}
+            (opamp.-) node[anchor=south west, color=red] {2}
+            (opamp.out) ++(-0.15,0) node[anchor=south east, color=red] {6}
+            ;
+    \end{circuitikz}
+\end{center}
+\subsection{Output voltage $v_o$ and current $i$}
+Assuming ideal op amp, no current is flowing into inverting input and there is no voltage difference between inverting and non-inverting input, therefore i is both the current flowing across $R_f$ and across $R_g$ and voltage at inverting input is $v_s$. Then:
+$$i=\frac{v_s}{R_g}$$
+$$v_o=iR=\frac{v_s}{R_g}(R_f+R_g)=(\frac{R_f}{R_g}+1)v_s$$
+
+\subsection{Gain}
+$$G=\frac{v_o}{v_s}=(\frac{R_f}{R_g}+1)\frac{v_s}{v_s}=\frac{R_f}{R_g}+1$$
+
+
+\end{document}

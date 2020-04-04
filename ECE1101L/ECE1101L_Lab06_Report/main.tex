@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[american,siunitx]{circuitikz}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+
+\title{ECE1101L - LAB 6\\PARALLEL RESISTOR CIRCUITS}
+\author{Choi Tim Antony Yung}
+\date{10 October 2019}
+
+\begin{document}
+
+\maketitle
+
+\section*{Objective}
+The objective of this lab is to explore the behavior of a parallel resistor circuit
+
+\section*{Lab Result}
+Lab Partner: Anthony Nursalim
+
+\section{A circuit as illustrated below was set up with a 4.00 V voltage source}
+
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,3) 
+            to[V, l_=4<\volt>] (0,0)
+            -- (2,0)
+            (2,3) to[R=2<\kilo\ohm>, v=$V_1$, i>^=$I_1$] (2,0)
+            (0,3) to[short, i=I] (2,3)
+            (2,3) -- (4,3)
+            to[R=4.7<\kilo\ohm>, v=$V_2$, i>^=$I_2$] (4,0)
+            -- (2,0)
+            ;
+    \end{circuitikz}
+\end{center}
+\subsection{A resistor measured to have a resistance of 1988$\Omega$ was used in place of the 2000 $\Omega$ resistor. A series of resistor having the total equivalent resistance measured to be 4730 $\Omega$ was used in place of the 4700 $\Omega$ resistor.}
+\subsection{Prelab: The circuit is drawn below with voltage meter to measure the voltage.}
+
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,3) 
+            to[V, l_=4<\volt>] (0,0)
+            -- (2,0)
+            (2,3) to[R=2<\kilo\ohm>, v=$V_1$, i>^=$I_1$] (2,0)
+            (0,3) to[short, i=I] (2,3)
+            (2,3) -- (4,3)
+            to[R=4.7<\kilo\ohm>, v=$V_2$, i>^=$I_2$] (4,0)
+            -- (2,0)
+            (4,3) -- (6,3)
+            to [voltmeter,v=\ ] (6,0)
+            --(4,0)
+            ;
+    \end{circuitikz}
+\end{center}
+\subsection{The voltage is measured to be 4.00V}
+\subsection{The voltage across all electrical elements in this parallel circuit is measured to be 4.00V. All voltages in the parallel circuit are the same.
+}
+\subsection{Prelab: The 2000 $\Omega$ resistor should have the largest current ($I_1$) as epc flow through it against a smaller resistance than the other one.
+}
+\subsection{Prelab: The circuit is drawn below with the current meter inserted.}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (-1,4) 
+            to[V, l_=4<\volt>] (-1,0)
+            -- (2,0)
+            (2,4) to[ammeter, f>^=$I_1$,v=\ ](2,2)
+            to[R=2<\kilo\ohm>, v=$V_1$] (2,0)
+            (-1,4) to[ammeter, f>^=I, v=\ ] (2,4)
+            (2,4) -- (4,4)
+           to[ammeter, f>^=$I_2$,v=\ ] (4,2) to[R=4.7<\kilo\ohm>, v=$V_2$] (4,0)
+            -- (2,0)
+            ;
+    \end{circuitikz}
+\end{center}
+\subsection{$I_1$ was measured to be 1.99mA and $I_2$ was measured to be 0.84mA. The conjecture stated in part (e) was correct.}
+\subsection{I is measured to be $2.82mA$. \\$I_1 + I_2 = 1.99 + 0.84 = 2.83 mA$\\which is roughly the same as $I=2.82mA$, thus the KCL is verified.}
+\subsection{By the Ohm's Law, $V=IR$,\\ $I_1=V_1/R_1=4.00/1988=0.00201A=2.01mA$ and\\ $I_2=V_2/R_2=4.00/4730=0.00846A=8.46mA$}
+\subsection{The measured value of $I_1$ and $I_2$ is roughly the same as the calculated values.}
+\section{A circuit as illustrated below was set up with a 4.00 V voltage source}
+
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (-1,3) 
+            to[V_=4<\volt>] (-1,0)
+            to (2,0)
+            (2,3) to[R=2<\kilo\ohm>, v=$V$, i>^=$I_1$] (2,0)
+            (-1,3) to[R=4.7<\kilo\ohm>, i=I] (2,3)
+            (2,3) -- (4,3)
+            to[R=4.7<\kilo\ohm>, v=$V$, i>^=$I_2$] (4,0)
+            -- (2,0)
+            ;
+    \end{circuitikz}
+\end{center}
+\subsection{A resistor measured to have a resistance of 1988$\Omega$ was used in place of the 2000$\Omega$ resistor. Two series of resistor each having the total equivalent resistance measured to be 4730$\Omega$ were used in place of the 4700$\Omega$ resistors.}
+\subsection{I is measured to be 0.638mA}
+\subsection{The equivalent resistance of the parallel $2k\Omega$ and $4.7k\Omega$ resistors is $\frac{1988\times4730}{1988+4730}=1400\Omega$. V can then be calculated using the measured value of I with Ohm's Law: \\$V = I\cdot R = 0.000638\times1340=0.893V$}
+\subsection{Using the Calculated value of $V = 0.893Volts$, we can calculate the values of $I_1$ and $I_2$ using Ohm's Law:
+\\$I_1=V/R_1=0.893/1988=0.000449A=0.449mA$
+\\$I_2=V/R_2=0.893/4730=0.000189A=0.189mA$}
+\subsection{V is measured to be $0.912V$, \\$I_1$ is measured to be $0.446mA$, and \\$I_2$ is measured to be $0.189mA$}
+\subsection{The measured value of V is 0.912 comparing to the calculated value of 0.893V, a 2.13\% difference which could be resulted from use of leads with a non-zero resistance. \\The measured value of $I_1$ is 0.446mA, which is roughly the same as the calculated value, 0.449mA.\\The measured value of $I_2$ is 0.189mA, which is the same as the calculated value, 0.189mA}
+\end{document}

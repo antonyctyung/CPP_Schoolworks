@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+%\usepackage[landscape]{geometry}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+
+\title{ECE 2300\\Digital Logic Design\\\,\\Homework 5}
+\author{Choi Tim Antony Yung}
+\begin{document}
+\maketitle
+
+\thispagestyle{empty}
+\setcounter{page}{0}
+
+\newpage
+
+\section{Using an 8:1 mux, create a circuit to generate}
+$$f(ABCD)=\overline{W}\cdot\overline{Z}+\overline{X}\cdot\overline{Y}\cdot Z+X\cdot Y\cdot Z$$
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccc|c}
+        \toprule
+        W&X&Y&Z&$f$\\
+        \midrule
+        0&0&0&0&1\\
+        0&0&0&1&1\\
+        0&0&1&0&1\\
+        0&0&1&1&0\\
+        0&1&0&0&1\\
+        0&1&0&1&0\\
+        0&1&1&0&1\\
+        0&1&1&1&1\\
+        \bottomrule
+    \end{tabular}
+    \quad
+    \begin{tabular}{cccc|c}
+        \toprule
+        W&X&Y&Z&$f$\\
+        \midrule
+        1&0&0&0&0\\
+        1&0&0&1&1\\
+        1&0&1&0&0\\
+        1&0&1&1&0\\
+        1&1&0&0&0\\
+        1&1&0&1&0\\
+        1&1&1&0&0\\
+        1&1&1&1&1\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\begin{center}
+    \begin{circuitikz}
+
+        ;
+    \end{circuitikz}
+\end{center}
+
+\end{document}

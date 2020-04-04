@@ -1,0 +1,101 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage{graphics}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg} 
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{graphicx} 
+\usepackage{steinmetz}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\ExplSyntaxOn
+\NewDocumentCommand{\defcon}{mm}
+ {
+  \cs_new:Npx #1 { \fp_eval:n { #2 } }
+ }
+\ExplSyntaxOff
+
+\title{ECE3310\\Data Structure\\\,\\Midterm\\}
+\author{Choi Tim Antony Yung}
+\date{19 March 2020}
+
+\begin{document}
+
+\clearpage\maketitle
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1}
+\section{}
+\subsection{}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{rl}
+            \toprule
+            \#&Letter\\
+            \midrule
+            1&D\\
+            2&B\\
+            3&G\\
+            4&A\\
+            5&C\\
+            6&F\\
+            7&I\\
+            8&E\\
+            9&H\\
+            \bottomrule
+    \end{tabular} 
+\end{table}
+\subsection{}
+Node \#1 must be larger than its left subtree in dictionary order, so it would be larger than the first three letter A, B and C, hence the fourth letter D ($A<B<C<D$). 
+
+Node \#3 must be larger than its left subtree, its parent node and its parent's left subtree in dictionary order. Its left sub tree would also be larger than the parent's node, so it would be larger than the first three letter A, B, C and D, and the next two letter that is larger than D: E and F. Hence the seventh letter G. 
+
+\subsection{}
+We can either replace node \#3 with the rightmost node of its left subtree (node \#6: F can be removed) or with the leftmost node of its right subtree (node \#9: H can be removed)
+
+\subsection{}
+D B A C G F E H I
+
+\section{}
+\subsection{}
+Attached in the back.
+\subsection{}
+Root: 4
+\subsection{}
+Height: 2
+\subsection{}
+4 2 1 3 6 5 7
+
+\section{}
+
+
+\section{}
+\section{}
+Attached in the back.
+\setcounter{subsection}{3}
+\subsection{}
+As the middle one have two neighbor (left and right), it survived. As the left and right one only have one neighbor (the middle one), they dies out. As the top and bottom middle have three neighbors (left, right, middle), they get populated.
+
+\section{}
+\subsection{}
+As n-bytes signed type uses one bit for the sign, 8n bits is used to represents $2^{8n-1}$ negative values, 1 zero and $2^{8n-1}-1$ positive values. Therefore int, a signed 4 bytes range from $-(2^{(4Bytes\times8bits)-1})=2^{31}=-2147483648$ to $2^{(4Bytes\times8bit)-1}-1=2^{31}-1=2147483647$
+\subsection{}
+%The maximum of a single precision is when sign bit is 0 (positive), the exponent is at its maximum ($2^{7}-1$) and 
+\subsection{}
+As n-bytes signed type uses one bit for the sign, 8n bits is used to represents $2^{8n-1}$ negative values, 1 zero and $2^{8n-1}-1$ positive values. Therefore long, a signed 8 bytes range from $-(2^{(8Bytes\times8bits)-1})=2^{63}=-9223372036854775808$ to $2^{(4Bytes\times8bit)-1}-1=2^{63}-1=9223372036854775807$
+
+\section{}
+\subsection{}
+No. Single precision will have less precision when the number is large. For example, it cannot accurately represent 2000000001 while int can. the closest single precision can get to is $2\times10^9$.
+\subsection{}
+If the calculation involves larger number ($>2^{31}$) and the exact precision does not matter as much, such as calculation of distance of astronomical bodies in meter.
+\subsection{}
+If the calculation involves smaller integer (between -2147483648 and 2147483647) and accuracy matters a great deal, such as memory address
+
+
+\end{document}

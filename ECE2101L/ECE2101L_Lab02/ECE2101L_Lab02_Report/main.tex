@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\ExplSyntaxOn
+\NewDocumentCommand{\defcon}{mm}
+ {
+  \cs_new:Npx #1 { \fp_eval:n { #2 } }
+ }
+\ExplSyntaxOff
+
+\title{ECE2101L\\Electrical Circuit Analysis II Laboratory\\\,\\Lab 2\\Introduction to Capacitors and Inductors \\\,\\Report\\\,\\}
+\author{Choi Tim Antony Yung\\\,\\Willis Nguyen\\Phineas Cozmiuc}
+\date{10 February 2020}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\section*{Objective}
+The objective of this lab is to explore the behavior of capacitors and inductors.
+
+%1
+\section{Relation between voltage and current in capacitors}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,0) to[V, l_=$v_s\equal5cos(2\pi60t)$] (0,-2)
+            (0,0) to[R, label=R\equal\SI{3.3}{\kilo\ohm}] ++(2,0)
+            to[short,i=$i_c(t)$] ++(1,0)
+            to[C=C\equal\SI{8.2}{\micro\farad}, v=$v_c(t)$] ++(0,-2) -- (0,-2)
+            ;
+    \end{circuitikz}
+\end{center}
+
+\subsection*{Procedure}
+A circuit was set up following the above schematic. $V_s$ was generated using the FG 503 Function Generator as a \SI{60}{\hertz} sine wave with an amplitude of \SI{5}{\volt}. Both $v_s(t)$ and $v_c(t)$ was measured with Keysight DSOX2022A oscilloscope and $i_c$ was measured with Keysight U3401A digital multimeter. The resistor is measured to be \SI{3300}{\ohm}. 
+
+\subsection*{Result}
+The amplitude of $v_c$ was measured to be \SI{0.44}{\volt} and the phase of $v_c$ relative to $v_s$ was measured to be -81.5. RMS value of $i_c$ was measured to be \SI{0.511}{\milli\ampere}. Replacing $v_s$ with a \SI{5}{\volt} DC voltage supply, $v_c$ was measured to be \SI{5.11}{\volt} and $i_c$ was measured to be \SI{4.56}{\micro\ampere}.
+
+\subsection*{Analysis}
+We can derive, from the result reported by the oscilloscope, the equation $v_c=0.44cos(2\pi60t-81.5)$. $i_c$ can then be determined using the equation $i_c=C\frac{dv_c}{dt}$ to be $v_c=-0.44(2\pi60)Csin(2\pi60t-81.5)=-0.00136sin(2\pi60t-81.5)$. The calculated RMS value should be \SI{0.962}{\milli\ampere}, comparing to the obtained result of \SI{0.511}{\milli\ampere}. In the case when the \SI{5}{\volt} DC voltage source was used and the capacitor was charged, $i_c$ should be close to zero in steady state as the rate of change of the capacitor voltage is close to zero when $v_c$ is close to \SI{5}{\volt}, and we observed that $i_c$ is indeed very close to zero.
+
+\pagebreak
+
+%2
+%1
+\section{Relation between voltage and current in inductors}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,0) to[V, l_=$v_s\equal5cos(2\pi60t)$] (0,-2)
+            (0,0) to[R, label=R\equal\SI{3.3}{\kilo\ohm}] ++(2,0)
+            to[short,i=$i_L(t)$] ++(1,0)
+            to[L=L\equal\SI{0.9}{\henry}, v=$v_L(t)$] ++(0,-2) -- (0,-2)
+            ;
+    \end{circuitikz}
+\end{center}
+
+\subsection*{Procedure}
+A circuit was set up following the above schematic. $V_s$ was generated using the FG 503 Function Generator as a \SI{60}{\hertz} sine wave with an amplitude of \SI{5}{\volt}. Both $v_s(t)$ and $v_L(t)$ was measured with Keysight DSOX2022A oscilloscope and $i_L$ was measured with Keysight U3401A digital multimeter. The resistor is measured to be \SI{3300}{\ohm}. 
+
+\subsection*{Result}
+The amplitude of $v_L$ was measured to be \SI{0.55}{\volt} and the phase of $v_c$ relative to $v_s$ was measured to be 67.6.
+
+\end{document}

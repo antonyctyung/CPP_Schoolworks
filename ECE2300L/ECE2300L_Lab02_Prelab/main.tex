@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+
+\title{ECE2300L_Prelab2}
+\author{Choi Tim Antony Yung}
+\begin{document}
+
+\begin{center}
+    \begin{circuitikz}
+        \draw
+        (0,0) node[xor port](xor1){86}
+        ++(0,-2)node[and port](and){08}
+        (and.in 1) ++(-0.5,0) coordinate (crossing) ++(-0.5,0) coordinate(b4xing)
+        (xor1.in 1) -- ++(-1,0) node[circ,label=A]{} -- (b4xing) to[xing] (and.in 1)
+        (xor1.in 2) -- ++(-0.5,0) coordinate (temp) -- (temp|-and.in 2) node[circ,label=270:B]{} -- (and.in 2)
+        (temp|-and.in 2) -- ++(-1,0) to [nos] ++(0,1) node[vcc] {5V}
+        (temp|-and.in 2) -- ++(-1,0) -- ++(0,-0.5) to[Do] ++(0,-1) to[R=\SI{330}{\ohm}] ++(0,-1.5) node[ground]{}
+        (xor1.in 1) -- ++(-3,0) to [nos] ++(0,1) node[vcc] {5V}
+        (xor1.in 1) -- ++(-3,0) -- ++(0,-0.5) to[Do] ++(0,-1) to[R=\SI{330}{\ohm}] ++(0,-1.5) node[ground]{}
+        (2,-1) node[xor port](xor2){86}
+        (xor1.out) -- (xor1.out-|xor2.in 1) node[circ,label=right:$A\oplus B$]{} -- (xor2.in 1)
+        (and.out) -- (and.out-|xor2.in 2)node[circ,label=right:$AB$]{} -- (xor2.in 2)
+        (xor2.out) -- ++(0.5,0) node[circ,label=right:$AB\oplus (A\oplus B)$]{} -- ++(0,-0.5) to[Do] ++(0,-1) to[R=\SI{330}{\ohm}] ++(0,-1.5) node[ground]{}
+        ;
+    \end{circuitikz}
+\end{center}
+
+\begin{displaymath}
+    \begin{array}{|c c|c|c|c|c|}
+        % |c c|c| means that there are three columns in the table and
+        % a vertical bar ’|’ will be printed on the left and right borders,
+        % and between the second and the third columns.
+        % The letter ’c’ means the value will be centered within the column,
+        % letter ’l’, left-aligned, and ’r’, right-aligned.
+        A & B & A\oplus B & AB & AB\oplus(A\oplus B) & A+B\\ 
+        % Use & to separate the columns
+        \hline  
+        % Put a horizontal line between the table header and the rest.
+        0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 1 & 1 & 0 & 1 & 1\\
+        1 & 0 & 1 & 0 & 1 & 1\\
+        1 & 1 & 0 & 1 & 1 & 1\\
+    \end{array}
+\end{displaymath}
+\,\\
+As seen in the truth table above, $F=AB\oplus(A\oplus B)$ resembles $A+B$, the or gate.
+
+\end{document}

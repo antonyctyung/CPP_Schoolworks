@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage{graphics}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{graphicx} 
+%\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\ExplSyntaxOn
+\NewDocumentCommand{\defcon}{mm}
+ {
+  \cs_new:Npx #1 { \fp_eval:n { #2 } }
+ }
+\ExplSyntaxOff
+
+\title{ECE2101L\\Electrical Circuit Analysis II Laboratory\\\,\\Lab 5\\Complete Response of Series RLC Circuits\\\,\\Prelab\\}
+\author{Choi Tim Antony Yung}
+%\author{Choi Tim Antony Yung\\\,\\Willis Nguyen\\Phineas Cozmiuc}
+\date{2 March 2020}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\section{Simulink Power System Tutorial}
+\subsection{In Simulink Library Browser, the Scope can be found under Simlink/Commomly Used Blocks}
+\subsection{Unfortunately, the resistor, capacitor and inductor was not found in Simulink Library Browser. However, it can be found under Simscape Electrical Specialized Power Systems - Starter palette -> Elements Library Components}
+\subsection{In Simulink Library Browser, voltmeter and ammeter can be found under Simscape/Electrical/Specialized Power System/Fundamental Blocks/Measurements as voltage sensor and current sensor}
+\subsection{The "Phasor" simulation perform a phasor analysis on the circuit, whereas the "continuous" simulation type attempt to solve the differential equation associated with the circuit}
+\subsection{To set the initial states, double click the powergui component, switch to "Tools" tab and clicl the "Initial State button". After the Powergui Initial States Setting Tool popped up in a new window and the calculation of initial states was completed, click to select the variable to set initial state and enter the desired value in the text box under "Set selected electrical state:" and press OK when done.}
+
+\newpage
+
+
+\section{Response of Second Order Series RLC Circuits}
+\subsection{The condition for solution in underdamped, critically damped, and overdamped case in terms of $\alpha$ and $\omega_0$ is the following}
+\[ \begin{cases} 
+      \alpha < \omega_0 & underdamped \\
+      \alpha = \omega_0 & critically\; damped \\
+      \alpha > \omega_0 & overdamped 
+   \end{cases}
+\]
+\subsection{The solution of v(t) for underdamped and overdamped cases are as follows:}
+\[ 
+v(t)=
+    \begin{cases} 
+        e^{-\alpha t}[B_1cos(\sqrt{\omega_0^2-\alpha^2}t)+B_2sin(\sqrt{\omega_0^2-\alpha^2}t)] & underdamped \\
+        A_1e^{-at}+A_2te^{-at} & \textit{critically damped}\\
+        A_1e^{(-\alpha+\sqrt{\alpha^2-\omega_0^2})t} + A_2e^{(-\alpha-\sqrt{\alpha^2-\omega_0^2})t} & overdamped 
+    \end{cases}
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

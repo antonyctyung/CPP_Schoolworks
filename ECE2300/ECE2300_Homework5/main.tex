@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage[table]{xcolor}
 \usepackage[utf8]{inputenc}
 \usepackage{siunitx}
 \usepackage[american,siunitx]{circuitikz}
@@ -10,6 +11,8 @@
 %\usepackage[landscape]{geometry}
 \renewcommand{\thesubsection}{\thesection.\alph{subsection}}
 \newcommand{\equal}{=}
+\newcommand{\greyrule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
+\newcolumntype{:}{@{\hskip\tabcolsep\color{black!30}\vrule\hskip\tabcolsep}}
 
 \title{ECE 2300\\Digital Logic Design\\\,\\Homework 5}
 \author{Choi Tim Antony Yung}
@@ -26,41 +29,283 @@ $$f(ABCD)=\overline{W}\cdot\overline{Z}+\overline{X}\cdot\overline{Y}\cdot Z+X\c
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{cccc|c}
+    \begin{tabular}{ccc:c|c}
         \toprule
         W&X&Y&Z&$f$\\
         \midrule
         0&0&0&0&1\\
         0&0&0&1&1\\
+        \greyrule
         0&0&1&0&1\\
         0&0&1&1&0\\
+        \greyrule
         0&1&0&0&1\\
         0&1&0&1&0\\
+        \greyrule
         0&1&1&0&1\\
         0&1&1&1&1\\
         \bottomrule
     \end{tabular}
     \quad
-    \begin{tabular}{cccc|c}
+    \begin{tabular}{ccc:c|c}
         \toprule
         W&X&Y&Z&$f$\\
         \midrule
         1&0&0&0&0\\
         1&0&0&1&1\\
+        \greyrule
         1&0&1&0&0\\
         1&0&1&1&0\\
+        \greyrule
         1&1&0&0&0\\
         1&1&0&1&0\\
+        \greyrule
         1&1&1&0&0\\
         1&1&1&1&1\\
         \bottomrule
     \end{tabular}
 \end{table}
+\,\\
 \begin{center}
     \begin{circuitikz}
+        \tikzset{mux/.style={muxdemux,muxdemux def={Lh= 10,Rh= 7,NL=10},no input leads}}
+        \draw
+        (0,0) node[mux](mux){}
 
+        (mux.blpin 2) node[right]{$d_0$} -- (mux.lpin 2) coordinate (d0)
+        (mux.blpin 3) node[right]{$d_1$} -- (mux.lpin 3) coordinate (d1)
+        (mux.blpin 4) node[right]{$d_2$} -- (mux.lpin 4) coordinate (d2)
+        (mux.blpin 5) node[right]{$d_3$} -- (mux.lpin 5) coordinate (d3)
+        (mux.blpin 6) node[right]{$d_4$} -- (mux.lpin 6) coordinate (d4)
+        (mux.blpin 7) node[right]{$d_5$} -- (mux.lpin 7) coordinate (d5)
+        (mux.blpin 8) node[right]{$d_6$} -- (mux.lpin 8) coordinate (d6)
+        (mux.blpin 9) node[right]{$d_7$} -- (mux.lpin 9) coordinate (d7)
+
+        (mux.bbpin 1) node[above]{\small{$S_2$}} -- (mux.bpin 1) coordinate (S2)
+        (mux.bbpin 2) node[above]{\small{$S_1$}} -- (mux.bpin 2) coordinate (S1)
+        (mux.bbpin 3) node[above]{\small{$S_0$}} -- (mux.bpin 3) coordinate (S0)
+
+        (mux.brpin 1) node[left]{$Y$} -- (mux.rpin 1) coordinate (Y)
+
+        (d0) node[above]{1}
+        (d1) node[above]{$\overline{Z}$}
+        (d2) node[above]{$\overline{Z}$}
+        (d3) node[above]{1}
+        (d4) node[above]{Z}
+        (d5) node[above]{0}
+        (d6) node[above]{0}
+        (d7) node[above]{Z}
+
+        (S2) node[below]{W}
+        (S1) node[below]{X}
+        (S0) node[below]{Y}
+
+        (Y) node[right]{$f$}
+
+        (d0) -- ++(-0.5,0) node[vcc]{$V_{cc}$}
+        (d1) ++(-0.5,0) node[jump crossing](xing1){}
+        (d2) ++(-0.5,0) node[jump crossing](xing2){}
+        (d3) -- ++(-0.5,0) -- (xing2.south)
+        (xing2.north) -- (xing1.south)
+        (d0) ++(-0.5,0) -- (xing1.north)
+        (xing1.east) -- (d1)
+        (xing2.east) -- (d2)
+        (d6) -- ++(-0.5,0) -- ++(0,-0.2) node[tlground](gnd){}
+        (d5) -- ++(-0.5,0) -- (d6-|gnd)
+        (d7) -- ++(-1,0) coordinate(Z) -- (Z|-d4) node[not port, scale=0.75, anchor=in, rotate=90](not){} -- (d4)
+        (not.out) -- (not.out|-d2) -- (xing2.west)
+        (not.out|-d2) -- (not.out|-d1) -- (xing1.west)
+        (Z) -- ++(0,-1) node[below]{Z}
         ;
     \end{circuitikz}
 \end{center}
+
+\pagebreak
+
+\section{Using two 4:1 muxes, generate the $B_O$ (Borrow-Out) and $C_O$ (Carry-Out) outputs for a 1-bit full subtractor and 1-bit full adder respectively where X is the minuend, Y is the subtrahend or Y and Y are the addends and bc is the borrow-in or carry-in.}
+$$B_O=\overline{X}\cdot b_c+\overline{X}\cdot Y+Y\cdot b_c$$
+$$C_O=X\cdot Y+X\cdot b_c+Y\cdot b_c$$
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cc:c|cc}
+        \toprule
+        X&Y&$b_c$&$B_O$&$C_O$\\
+        \midrule
+        0&0&0&0&0\\
+        0&0&1&1&0\\
+        \greyrule
+        0&1&0&1&0\\
+        0&1&1&1&1\\
+        \bottomrule
+    \end{tabular}
+    \quad
+    \begin{tabular}{cc:c|cc}
+        \toprule
+        X&Y&$b_c$&$B_O$&$C_O$\\
+        \midrule
+        1&0&0&0&0\\
+        1&0&1&0&1\\
+        \greyrule
+        1&1&0&0&1\\
+        1&1&1&1&1\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\,\\
+\begin{center}
+    \begin{circuitikz}
+        \tikzset{mux/.style={muxdemux,muxdemux def={Lh= 6,Rh= 4,NL=6,NB=2,w=2},no input leads}}
+        \draw
+        (0,0) node[mux](mux){}
+
+        (mux.blpin 2) node[right]{$d_0$} -- (mux.lpin 2) coordinate (1d0)
+        (mux.blpin 3) node[right]{$d_1$} -- (mux.lpin 3) coordinate (1d1)
+        (mux.blpin 4) node[right]{$d_2$} -- (mux.lpin 4) coordinate (1d2)
+        (mux.blpin 5) node[right]{$d_3$} -- (mux.lpin 5) coordinate (1d3)
+
+        (mux.bbpin 1) node[above]{\small{$S_1$}} -- (mux.bpin 1) coordinate (1S1)
+        (mux.bbpin 2) node[above]{\small{$S_0$}} -- (mux.bpin 2) coordinate (1S0)
+
+        (mux.brpin 1) node[left]{$Y$} -- (mux.rpin 1) coordinate (1Y)
+
+        (4,0) node[mux](mux2){}
+
+        (mux2.blpin 2) node[right]{$d_0$} -- (mux2.lpin 2) coordinate (2d0)
+        (mux2.blpin 3) node[right]{$d_1$} -- (mux2.lpin 3) coordinate (2d1)
+        (mux2.blpin 4) node[right]{$d_2$} -- (mux2.lpin 4) coordinate (2d2)
+        (mux2.blpin 5) node[right]{$d_3$} -- (mux2.lpin 5) coordinate (2d3)
+
+        (mux2.bbpin 1) node[above]{\small{$S_1$}} -- (mux2.bpin 1) coordinate (2S1)
+        (mux2.bbpin 2) node[above]{\small{$S_0$}} -- (mux2.bpin 2) coordinate (2S0)
+
+        (mux2.brpin 1) node[left]{$Y$} -- (mux2.rpin 1) coordinate (2Y)
+
+        (1S1-|1S0) node[jump crossing](xing){}
+        (xing.north)-- (1S0)
+        (xing.east) -- (2S1)
+        (xing.west) -- (1S1)
+        (xing.south) -- ++(0,-0.25) node[circ](cntk){}
+        (2S0) -- (2S0|-cntk) -- (mux.lpin 1|-cntk) node[left]{Y}
+        (1S1) node[circ]{} -- (mux.lpin 1|-2S1) node[left]{X}
+
+        (1Y) node[right]{$B_O$}
+        (2Y) node[right]{$C_O$}
+
+%        (1d0) node[above]{$b_c$}
+        (1d1) node[left]{1}
+        (1d2) node[above]{0}
+%        (1d3) node[above]{$b_c$}
+        
+        (2d0) node[above]{0}
+        (2d1) node[above]{$b_c$}
+%        (2d2) node[above]{$b_c$}
+        (2d3) node[above]{1}
+        
+        (1d1) node[vcc]{}
+
+        (2d0) -- ++(-0.5,0) node[ground]{}
+        (2d1) -- (2d2)
+        (2d3) -- ++(-0.5,0) node[vcc]{}
+
+        (1d0) -- ++(-0.5,0) node[above](bc){$b_c$} -- (bc|-1d3) -- (1d3)
+        (1d2) -- ++(0,-0.2) node[tlground]{}
+        ;
+    \end{circuitikz}
+\end{center}
+
+\pagebreak
+
+\section{Using an 8:1 mux, create a circuit to generate the segment $g$ outputs for a 7-segment display where $g=\overline{B}\cdot \overline{D}+C\cdot \overline{D}$.}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc:c|c}
+        \toprule
+        A&B&C&D&$g$\\
+        \midrule
+        0&0&0&0&1\\
+        0&0&0&1&0\\
+        \greyrule
+        0&0&1&0&1\\
+        0&0&1&1&0\\
+        \greyrule
+        0&1&0&0&0\\
+        0&1&0&1&0\\
+        \greyrule
+        0&1&1&0&1\\
+        0&1&1&1&0\\
+        \bottomrule
+    \end{tabular}
+    \quad
+    \begin{tabular}{ccc:c|c}
+        \toprule
+        A&B&C&D&$g$\\
+        \midrule
+        1&0&0&0&1\\
+        1&0&0&1&0\\
+        \greyrule
+        1&0&1&0&1\\
+        1&0&1&1&0\\
+        \greyrule
+        1&1&0&1&0\\
+        1&1&0&0&0\\
+        \greyrule
+        1&1&1&0&1\\
+        1&1&1&1&0\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\,\\
+\begin{center}
+    \begin{circuitikz}
+        \tikzset{mux/.style={muxdemux,muxdemux def={Lh= 10,Rh= 7,NL=10},no input leads}}
+        \draw
+        (0,0) node[mux](mux){}
+
+        (mux.blpin 2) node[right]{$d_0$} -- (mux.lpin 2) coordinate (d0)
+        (mux.blpin 3) node[right]{$d_1$} -- (mux.lpin 3) coordinate (d1)
+        (mux.blpin 4) node[right]{$d_2$} -- (mux.lpin 4) coordinate (d2)
+        (mux.blpin 5) node[right]{$d_3$} -- (mux.lpin 5) coordinate (d3)
+        (mux.blpin 6) node[right]{$d_4$} -- (mux.lpin 6) coordinate (d4)
+        (mux.blpin 7) node[right]{$d_5$} -- (mux.lpin 7) coordinate (d5)
+        (mux.blpin 8) node[right]{$d_6$} -- (mux.lpin 8) coordinate (d6)
+        (mux.blpin 9) node[right]{$d_7$} -- (mux.lpin 9) coordinate (d7)
+
+        (mux.bbpin 1) node[above]{\small{$S_2$}} -- (mux.bpin 1) coordinate (S2)
+        (mux.bbpin 2) node[above]{\small{$S_1$}} -- (mux.bpin 2) coordinate (S1)
+        (mux.bbpin 3) node[above]{\small{$S_0$}} -- (mux.bpin 3) coordinate (S0)
+
+        (mux.brpin 1) node[left]{$Y$} -- (mux.rpin 1) coordinate (Y)
+
+        (d0) node[above]{$\overline{D}$}
+        (d1) node[above]{$\overline{D}$}
+        (d2) node[above]{0}
+        (d3) node[above]{$\overline{D}$}
+        (d4) node[above]{$\overline{D}$}
+        (d5) node[above]{$\overline{D}$}
+        (d6) node[above]{0}
+        (d7) node[above]{$\overline{D}$}
+
+        (S2) node[below]{A}
+        (S1) node[below]{B}
+        (S0) node[below]{C}
+
+        (Y) node[right]{$g$}
+
+        (d7) -- ++(-1,0) node[not port,anchor=out, rotate=90](not){}
+        (not.in) node[below]{D}
+        (d6) -- ++(-0.5,0) -- ++(0,-0.2) node[tlground](gnd){}
+        (d2) -- ++(-0.5,0) -- ++(0,-0.2) node[tlground](gnd){}
+        (d0) -- ++(-1,0) -- (not.out)
+        (d1) -- ++(-1,0)
+        (d3) -- ++(-1,0)
+        (d4) -- ++(-1,0)
+        (d5) -- ++(-1,0)
+        ;
+    \end{circuitikz}
+\end{center}
+
+\pagebreak
 
 \end{document}

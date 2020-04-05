@@ -14,6 +14,28 @@
 \newcommand{\greyrule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
 \newcolumntype{:}{@{\hskip\tabcolsep\color{black!30}\vrule\hskip\tabcolsep}}
 
+\ExplSyntaxOn
+\NewExpandableDocumentCommand \groupify { O{\,\allowbreak} m m }
+  { \jakob_groupify:nnn {#1} {#2} {#3} }
+\cs_new:Npn \jakob_groupify:nnn #1 #2 #3
+  { \__jakob_groupify_loop:nnw { 1 } {#2} #3 \q_recursion_tail {#1} \q_recursion_stop }
+\cs_new:Npn \__jakob_groupify_loop:nnw #1 #2 #3
+  {
+    \quark_if_recursion_tail_stop:n {#3}
+    \exp_not:n {#3}
+    \int_compare:nNnTF {#1} = {#2}
+      { \__jakob_groupify_sep:n }
+      { \exp_args:Nf \__jakob_groupify_loop:nnw { \int_eval:n { #1+1 } } }
+          {#2}
+  }
+\cs_new:Npn \__jakob_groupify_sep:n #1 #2 \q_recursion_tail #3
+  {
+    \tl_if_empty:nF {#2} { \exp_not:n {#3} }
+    \__jakob_groupify_loop:nnw { 1 } {#1}
+    #2 \q_recursion_tail {#3}
+  }
+\ExplSyntaxOff
+
 \title{ECE 2300\\Digital Logic Design\\\,\\Homework 5}
 \author{Choi Tim Antony Yung}
 \begin{document}
@@ -25,7 +47,7 @@
 \newpage
 
 \section{Using an 8:1 mux, create a circuit to generate}
-$$f(ABCD)=\overline{W}\cdot\overline{Z}+\overline{X}\cdot\overline{Y}\cdot Z+X\cdot Y\cdot Z$$
+$$f(WXYZ)=\overline{W}\cdot\overline{Z}+\overline{X}\cdot\overline{Y}\cdot Z+X\cdot Y\cdot Z$$
 
 \begin{table}[H]
     \centering
@@ -307,5 +329,763 @@ $$C_O=X\cdot Y+X\cdot b_c+Y\cdot b_c$$
 \end{center}
 
 \pagebreak
+
+\section{Using an 8:1 mux, create a circuit to generate}
+$$f(ABCD)=A\cdot D+\overline{A}\cdot\overline{B}\cdot \overline{D}+\overline{B}\cdot C+\overline{A}\cdot C\cdot\overline{D}$$
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc:c|c}
+        \toprule
+        A&B&C&D&$f$\\
+        \midrule
+        0&0&0&0&1\\
+        0&0&0&1&0\\
+        \greyrule
+        0&0&1&0&1\\
+        0&0&1&1&1\\
+        \greyrule
+        0&1&0&0&0\\
+        0&1&0&1&0\\
+        \greyrule
+        0&1&1&0&1\\
+        0&1&1&1&0\\
+        \bottomrule
+    \end{tabular}
+    \quad
+    \begin{tabular}{ccc:c|c}
+        \toprule
+        A&B&C&D&$f$\\
+        \midrule
+        1&0&0&0&0\\
+        1&0&0&1&1\\
+        \greyrule
+        1&0&1&0&1\\
+        1&0&1&1&1\\
+        \greyrule
+        1&1&0&0&0\\
+        1&1&0&1&1\\
+        \greyrule
+        1&1&1&0&0\\
+        1&1&1&1&1\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\,\\
+\begin{center}
+    \begin{circuitikz}
+        \tikzset{mux/.style={muxdemux,muxdemux def={Lh= 10,Rh= 7,NL=10},no input leads}}
+        \draw
+        (0,0) node[mux](mux){}
+
+        (mux.blpin 2) node[right]{$d_0$} -- (mux.lpin 2) coordinate (d0)
+        (mux.blpin 3) node[right]{$d_1$} -- (mux.lpin 3) coordinate (d1)
+        (mux.blpin 4) node[right]{$d_2$} -- (mux.lpin 4) coordinate (d2)
+        (mux.blpin 5) node[right]{$d_3$} -- (mux.lpin 5) coordinate (d3)
+        (mux.blpin 6) node[right]{$d_4$} -- (mux.lpin 6) coordinate (d4)
+        (mux.blpin 7) node[right]{$d_5$} -- (mux.lpin 7) coordinate (d5)
+        (mux.blpin 8) node[right]{$d_6$} -- (mux.lpin 8) coordinate (d6)
+        (mux.blpin 9) node[right]{$d_7$} -- (mux.lpin 9) coordinate (d7)
+
+        (mux.bbpin 1) node[above]{\small{$S_2$}} -- (mux.bpin 1) coordinate (S2)
+        (mux.bbpin 2) node[above]{\small{$S_1$}} -- (mux.bpin 2) coordinate (S1)
+        (mux.bbpin 3) node[above]{\small{$S_0$}} -- (mux.bpin 3) coordinate (S0)
+
+        (mux.brpin 1) node[left]{$Y$} -- (mux.rpin 1) coordinate (Y)
+
+        (d0) node[above]{$\overline{D}$}
+        (d1) node[above]{1}
+        (d2) node[above]{0}
+        (d3) node[above]{$\overline{D}$}
+        (d4) node[above]{D}
+        (d5) node[above]{1}
+        (d6) node[above]{D}
+        (d7) node[above]{D}
+
+        (S2) node[below]{A}
+        (S1) node[below]{B}
+        (S0) node[below]{C}
+
+        (Y) node[right]{$f$}
+
+        (d0) -- ++(-1.5,0)
+        (d6) -- ++(-1.5,0)
+        (d3) ++(-1,0) node[jump crossing](xing3){}
+        (d4) ++(-1,0) node[jump crossing](xing4){}
+        (xing3.north) -- (xing3|-d1) node[vcc, label=45:$V_{cc}$]{} -- (d1)
+        (xing4.south) -- (xing4|-d5) -- (d5)
+        (xing3.east) -- (d3)
+        (xing4.east) -- (d4)
+        (xing3.south) -- (xing4.north)
+        (d2) -- ++(-0.5,0) -- ++(0,-0.2) node[tlground](gnd){}
+        (d7) -- ++(-1.5,0) coordinate(D) -- (D|-d4) node[not port, scale=0.4, anchor=in, rotate=90](not){} -- (xing4.west)
+        (D) -- ++(0,-1) node[below]{D}
+        (xing3.west) -- (not.out|-d3) -- (not.out)
+        (not.out|-d3) -- (not.out|-d0)
+        ;
+    \end{circuitikz}
+\end{center}
+
+\pagebreak
+
+\section{Using an 8:1 mux, create a circuit to generate the segment b outputs for a 7-segment display.}
+Given ABCD = 0, 1, 2, \dots, F,  the segment $b$ outputs are $(F9C8)_{16}$ \big(e.g. the MSB of $(F)_{16} =$ output for ABCD $= (0000)_2$ and the LSB of $(8)_{16} =$ output for ABCD $= (1111)_2$\big).
+$$(F9C8)_{16}=(\groupify{4}{1111 0101 1100 1000})_2$$
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc:c|c}
+        \toprule
+        A&B&C&D&$b$\\
+        \midrule
+        0&0&0&0&1\\
+        0&0&0&1&1\\
+        \greyrule
+        0&0&1&0&1\\
+        0&0&1&1&1\\
+        \greyrule
+        0&1&0&0&0\\
+        0&1&0&1&1\\
+        \greyrule
+        0&1&1&0&0\\
+        0&1&1&1&1\\
+        \bottomrule
+    \end{tabular}
+    \quad
+    \begin{tabular}{ccc:c|c}
+        \toprule
+        A&B&C&D&$b$\\
+        \midrule
+        1&0&0&0&1\\
+        1&0&0&1&1\\
+        \greyrule
+        1&0&1&0&0\\
+        1&0&1&1&0\\
+        \greyrule
+        1&1&0&0&1\\
+        1&1&0&1&0\\
+        \greyrule
+        1&1&1&0&0\\
+        1&1&1&1&0\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\,\\
+\begin{center}
+    \begin{circuitikz}
+        \tikzset{mux/.style={muxdemux,muxdemux def={Lh= 10,Rh= 7,NL=10},no input leads}}
+        \draw
+        (0,0) node[mux](mux){}
+
+        (mux.blpin 2) node[right]{$d_0$} -- (mux.lpin 2) coordinate (d0)
+        (mux.blpin 3) node[right]{$d_1$} -- (mux.lpin 3) coordinate (d1)
+        (mux.blpin 4) node[right]{$d_2$} -- (mux.lpin 4) coordinate (d2)
+        (mux.blpin 5) node[right]{$d_3$} -- (mux.lpin 5) coordinate (d3)
+        (mux.blpin 6) node[right]{$d_4$} -- (mux.lpin 6) coordinate (d4)
+        (mux.blpin 7) node[right]{$d_5$} -- (mux.lpin 7) coordinate (d5)
+        (mux.blpin 8) node[right]{$d_6$} -- (mux.lpin 8) coordinate (d6)
+        (mux.blpin 9) node[right]{$d_7$} -- (mux.lpin 9) coordinate (d7)
+
+        (mux.bbpin 1) node[above]{\small{$S_2$}} -- (mux.bpin 1) coordinate (S2)
+        (mux.bbpin 2) node[above]{\small{$S_1$}} -- (mux.bpin 2) coordinate (S1)
+        (mux.bbpin 3) node[above]{\small{$S_0$}} -- (mux.bpin 3) coordinate (S0)
+
+        (mux.brpin 1) node[left]{$Y$} -- (mux.rpin 1) coordinate (Y)
+
+        (d0) node[above]{1}
+        (d1) node[above]{1}
+        (d2) node[above]{D}
+        (d3) node[above]{D}
+        (d4) node[above]{1}
+        (d5) node[above]{0}
+        (d6) node[above]{$\overline{D}$}
+        (d7) node[above]{0}
+
+        (S2) node[below]{A}
+        (S1) node[below]{B}
+        (S0) node[below]{C}
+
+        (Y) node[right]{$b$}
+
+        (d2) -- ++(-0.5,0) node[jump crossing, anchor=east](xing2){}
+        (d3) -- ++(-0.5,0) node[jump crossing, anchor=east](xing3){}
+        (d6) -- ++(-0.5,0) node[jump crossing, anchor=east](xing6){}
+        (d4) -- (d4-|xing3.south) -- (xing3.south)
+        (xing2.south) -- (xing3.north)
+        (xing2.north) -- (xing2.north|-d0) node[vcc](vcc){$V_{cc}$}
+        (d0) -- (d0-|vcc)
+        (d1) -- (d1-|vcc)
+        (xing6.north) -- (xing6.north|-d5) -- (d5)
+        (d7) -- (d7-|xing6.south) node[ground]{} -- (xing6.south)
+        (xing2.west) -- ++(-1.5,0) coordinate(Dup) -- (Dup|-S2) node[below]{D}
+        (xing3.west) -- ++(-1.5,0)
+        (Dup|-S2) ++(0,0.25) -- ++(0.75,0) node[not port, anchor=in, scale=0.9, rotate=90](not){}
+        (not.out) -- (not.out|-xing6.west) -- (xing6.west)
+        ;
+    \end{circuitikz}
+\end{center}
+
+\pagebreak
+
+\section{Given inputs A, B, and C where A is the MSB, use a 3:8 demux to generate $X=\sum(m_0,m_1,m_2,m_4,m_6)$}
+
+\,\\
+
+\begin{center}
+    \begin{circuitikz}
+        \tikzset{demux/.style={muxdemux, muxdemux def={Lh=6, Rh=8, NL=5, NB=0, NR=10},no input leads}}
+        \ctikzset{tripoles/american or port/height=1.6}
+        \draw
+        (0,0) node[demux](demux){}
+
+        (demux.brpin 2) node[left]{$Y_0$} -- (demux.rpin 2) coordinate (Y0)
+        (demux.brpin 3) node[left]{$Y_1$} -- (demux.rpin 3) coordinate (Y1)
+        (demux.brpin 4) node[left]{$Y_2$} -- (demux.rpin 4) coordinate (Y2)
+        (demux.brpin 5) node[left]{$Y_3$} -- (demux.rpin 5) coordinate (Y3)
+        (demux.brpin 6) node[left]{$Y_4$} -- (demux.rpin 6) coordinate (Y4)
+        (demux.brpin 7) node[left]{$Y_5$} -- (demux.rpin 7) coordinate (Y5)
+        (demux.brpin 8) node[left]{$Y_6$} -- (demux.rpin 8) coordinate (Y6)
+        (demux.brpin 9) node[left]{$Y_7$} -- (demux.rpin 9) coordinate (Y7)
+        (demux.blpin 2) node[right]{$S_2$} -- (demux.lpin 2) coordinate (S2)
+        (demux.blpin 3) node[right]{$S_1$} -- (demux.lpin 3) coordinate (S1)
+        (demux.blpin 4) node[right]{$S_0$} -- (demux.lpin 4) coordinate (S0)
+
+        (demux.brpin 2) node[ocirc,right]{}
+        (demux.brpin 3) node[ocirc,right]{}
+        (demux.brpin 4) node[ocirc,right]{}
+        (demux.brpin 5) node[ocirc,right]{}
+        (demux.brpin 6) node[ocirc,right]{}
+        (demux.brpin 7) node[ocirc,right]{}
+        (demux.brpin 8) node[ocirc,right]{}
+        (demux.brpin 9) node[ocirc,right]{}
+
+        (S2) node[left]{A}
+        (S1) node[left]{B}
+        (S0) node[left]{C}
+
+        (Y0) ++(0.5,0.5) node[or port, number inputs=5, anchor=in 1, rotate=90](nand1){}
+        (nand1.out) node[above]{X}
+        (nand1.bin 1) node[ocirc,below]{}
+        (nand1.bin 2) node[ocirc,below]{}
+        (nand1.bin 3) node[ocirc,below]{}
+        (nand1.bin 4) node[ocirc,below]{}
+        (nand1.bin 5) node[ocirc,below]{}
+        
+        (nand1.in 1) -- (nand1.bin 1|-Y0) -- (Y0)
+        (nand1.in 2) -- (nand1.bin 2|-Y1) -- (Y1)
+        (nand1.in 3) -- (nand1.bin 3|-Y2) -- (Y2)
+        (nand1.in 4) -- (nand1.bin 4|-Y4) -- (Y4)
+        (nand1.in 5) -- (nand1.bin 5|-Y6) -- (Y6)
+        ;
+
+
+
+    \end{circuitikz}
+\end{center}
+
+\pagebreak
+
+\section{Using a 3:8 demux, generate a complemented Gray code}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccc|cccc}
+        \toprule
+        A&B&C&D&W&X&Y&Z\\
+        \midrule
+        0&0&0&0&1&1&1&1\\
+        0&0&0&1&1&1&1&0\\
+        0&0&1&0&1&1&0&0\\
+        0&0&1&1&1&1&0&1\\
+        0&1&0&0&1&0&0&1\\
+        0&1&0&1&1&0&0&0\\
+        0&1&1&0&1&0&1&0\\
+        0&1&1&1&1&0&1&1\\
+        \bottomrule
+    \end{tabular}
+    \quad
+    \begin{tabular}{cccc|cccc}
+        \toprule
+        A&B&C&D&W&X&Y&Z\\
+        \midrule
+        1&0&0&0&0&0&1&1\\
+        1&0&0&1&0&0&1&0\\
+        1&0&1&0&0&0&0&0\\
+        1&0&1&1&0&0&0&1\\
+        1&1&0&0&0&1&0&1\\
+        1&1&0&1&0&1&0&0\\
+        1&1&1&0&0&1&1&0\\
+        1&1&1&1&0&1&1&1\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+Observe that $\sum(m_0,m_1,m_2,m_3)=\overline{B}$, it can be decuced that $X=\overline{B}\otimes W$
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cc|c}
+        \toprule
+        $\overline{B}$&W&X\\
+        \midrule
+        0&0&1\\
+        0&1&0\\
+        1&0&0\\
+        1&1&1\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\,\\
+\begin{center}
+    \begin{circuitikz}
+        \tikzset{demux/.style={muxdemux, muxdemux def={Lh=6, Rh=8, NL=5, NB=0, NR=10},no input leads}}
+        \ctikzset{tripoles/american or port/height=1.25}
+        \draw
+        (0,0) node[demux](demux){}
+
+        (demux.brpin 2) node[left]{$Y_0$} -- (demux.rpin 2) coordinate (Y0)
+        (demux.brpin 3) node[left]{$Y_1$} -- (demux.rpin 3) coordinate (Y1)
+        (demux.brpin 4) node[left]{$Y_2$} -- (demux.rpin 4) coordinate (Y2)
+        (demux.brpin 5) node[left]{$Y_3$} -- (demux.rpin 5) coordinate (Y3)
+        (demux.brpin 6) node[left]{$Y_4$} -- (demux.rpin 6) coordinate (Y4)
+        (demux.brpin 7) node[left]{$Y_5$} -- (demux.rpin 7) coordinate (Y5)
+        (demux.brpin 8) node[left]{$Y_6$} -- (demux.rpin 8) coordinate (Y6)
+        (demux.brpin 9) node[left]{$Y_7$} -- (demux.rpin 9) coordinate (Y7)
+        (demux.blpin 2) node[right]{$S_2$} -- (demux.lpin 2) coordinate (S2)
+        (demux.blpin 3) node[right]{$S_1$} -- (demux.lpin 3) coordinate (S1)
+        (demux.blpin 4) node[right]{$S_0$} -- (demux.lpin 4) coordinate (S0)
+
+        (demux.brpin 2) node[ocirc,right]{}
+        (demux.brpin 3) node[ocirc,right]{}
+        (demux.brpin 4) node[ocirc,right]{}
+        (demux.brpin 5) node[ocirc,right]{}
+        (demux.brpin 6) node[ocirc,right]{}
+        (demux.brpin 7) node[ocirc,right]{}
+        (demux.brpin 8) node[ocirc,right]{}
+        (demux.brpin 9) node[ocirc,right]{}
+
+        (S2) node[left]{B}
+        (S1) node[left]{C}
+        (S0) node[left]{D}
+
+        (Y0) ++(0.5,0.5) node[or port, number inputs=4, anchor=in 1, rotate=90](nand1){}
+        (nand1.out) node[circ,label=0:$\overline{B}$](notB){}
+        (nand1.bin 1) node[ocirc,below]{}
+        (nand1.bin 2) node[ocirc,below]{}
+        (nand1.bin 3) node[ocirc,below]{}
+        (nand1.bin 4) node[ocirc,below]{}
+        
+        (nand1.in 1) -- (nand1.bin 1|-Y0) node[circ](XY0){} -- (Y0)
+        (nand1.in 2) -- (nand1.bin 2|-Y1) node[circ](XY1){} -- (Y1)
+        (nand1.in 3) -- (nand1.bin 3|-Y2) node[circ](XY2){} -- (Y2)
+        (nand1.in 4) -- (nand1.bin 4|-Y3) node[circ](XY3){} -- (Y3)
+        
+        (nand1.in 4) ++(0.45,0) node[or port, number inputs=4, anchor=in 1, rotate=90](nand2){}
+        (nand2.out) node[above]{Y}
+        (nand2.bin 1) node[ocirc,below]{}
+        (nand2.bin 2) node[ocirc,below]{}
+        (nand2.bin 3) node[ocirc,below]{}
+        (nand2.bin 4) node[ocirc,below]{}
+
+        (nand2.in 1) -- (nand2.in 1|-Y0) node[circ](YY0){} -- (XY0)
+        (nand2.in 2) -- (nand2.in 2|-Y1) node[circ](YY1){} -- (XY1)
+        (nand2.in 3) -- (nand2.in 3|-Y6) node[circ](YY6){} -- (Y6)
+        (nand2.in 4) -- (nand2.in 4|-Y7) node[circ](YY7){} -- (Y7)
+
+        (nand2.in 4) ++(0.45,0) node[or port, number inputs=4, anchor=in 1, rotate=90](nand3){}
+        (nand3.out) node[above]{Z}
+        (nand3.bin 1) node[ocirc,below]{}
+        (nand3.bin 2) node[ocirc,below]{}
+        (nand3.bin 3) node[ocirc,below]{}
+        (nand3.bin 4) node[ocirc,below]{}
+        (nand3.in 1) -- (nand3.in 1|-Y0) node[circ]{} -- (YY0)
+        (nand3.in 2) -- (nand3.in 2|-Y3) node[circ]{} -- (XY3)
+        (nand3.in 3) -- (nand3.in 3|-Y4) node[circ]{} -- (Y4)
+        (nand3.in 4) -- (nand3.in 4|-Y7) node[circ]{} -- (YY7)
+
+        (S2) ++(0,0.75) coordinate(S3) node[circ,label=180:A]{} -- ++(0,0.5) node[not port,anchor=in, rotate=90](not){}
+        (not.out) -- (S3|-nand1.out) -- ++(1.5,0) node[circ,label=90:W](W){}
+        
+        (notB) node[xor port,anchor=in 2,rotate=90](xnor){}
+        (W) -- (xnor.in 1)
+        (xnor.bout) node[ocirc,above]{}
+        (xnor.out) node[above]{X}
+        ;
+    \end{circuitikz}
+\end{center}
+
+\pagebreak
+
+
+\section{Using a 3:8 demux, generate these functions of A, B and C:}
+$$f=\sum(m_0,m_1,m_3,m_7)$$
+$$g=\sum(m_1,m_2,m_5,m_6)$$
+$$h=\sum(m_0,m_2,m_4,m_5,m_6)$$
+
+\,\\
+\begin{center}
+    \begin{circuitikz}
+        \tikzset{demux/.style={muxdemux, muxdemux def={Lh=6, Rh=8, NL=5, NB=0, NR=10},no input leads}}
+        \ctikzset{tripoles/american or port/height=1.25}
+        \draw
+        (0,0) node[demux](demux){}
+
+        (demux.brpin 2) node[left]{$Y_0$} -- (demux.rpin 2) coordinate (Y0)
+        (demux.brpin 3) node[left]{$Y_1$} -- (demux.rpin 3) coordinate (Y1)
+        (demux.brpin 4) node[left]{$Y_2$} -- (demux.rpin 4) coordinate (Y2)
+        (demux.brpin 5) node[left]{$Y_3$} -- (demux.rpin 5) coordinate (Y3)
+        (demux.brpin 6) node[left]{$Y_4$} -- (demux.rpin 6) coordinate (Y4)
+        (demux.brpin 7) node[left]{$Y_5$} -- (demux.rpin 7) coordinate (Y5)
+        (demux.brpin 8) node[left]{$Y_6$} -- (demux.rpin 8) coordinate (Y6)
+        (demux.brpin 9) node[left]{$Y_7$} -- (demux.rpin 9) coordinate (Y7)
+        (demux.blpin 2) node[right]{$S_2$} -- (demux.lpin 2) coordinate (S2)
+        (demux.blpin 3) node[right]{$S_1$} -- (demux.lpin 3) coordinate (S1)
+        (demux.blpin 4) node[right]{$S_0$} -- (demux.lpin 4) coordinate (S0)
+
+        (demux.brpin 2) node[ocirc,right]{}
+        (demux.brpin 3) node[ocirc,right]{}
+        (demux.brpin 4) node[ocirc,right]{}
+        (demux.brpin 5) node[ocirc,right]{}
+        (demux.brpin 6) node[ocirc,right]{}
+        (demux.brpin 7) node[ocirc,right]{}
+        (demux.brpin 8) node[ocirc,right]{}
+        (demux.brpin 9) node[ocirc,right]{}
+
+        (S2) node[left]{A}
+        (S1) node[left]{B}
+        (S0) node[left]{C}
+
+        (Y0) ++(0.5,0.5) node[or port, number inputs=4, anchor=in 1, rotate=90](nand1){}
+        (nand1.out) node[above]{$f$}
+        (nand1.bin 1) node[ocirc,below]{}
+        (nand1.bin 2) node[ocirc,below]{}
+        (nand1.bin 3) node[ocirc,below]{}
+        (nand1.bin 4) node[ocirc,below]{}
+        
+        (nand1.in 1) -- (nand1.bin 1|-Y0) node[circ](fY0){} -- (Y0)
+        (nand1.in 2) -- (nand1.bin 2|-Y1) node[circ](fY1){} -- (Y1)
+        (nand1.in 3) -- (nand1.bin 3|-Y3) node[circ](fY3){} -- (Y3)
+        (nand1.in 4) -- (nand1.bin 4|-Y7) node[circ](fY7){} -- (Y7)
+        
+        (nand1.in 4) ++(0.45,0) node[or port, number inputs=4, anchor=in 1, rotate=90](nand2){}
+        (nand2.out) node[above]{$g$}
+        (nand2.bin 1) node[ocirc,below]{}
+        (nand2.bin 2) node[ocirc,below]{}
+        (nand2.bin 3) node[ocirc,below]{}
+        (nand2.bin 4) node[ocirc,below]{}
+
+        (nand2.in 1) -- (nand2.in 1|-Y1) node[circ](gY1){} -- (fY1)
+        (nand2.in 2) -- (nand2.in 2|-Y2) node[circ](gY2){} -- (Y2)
+        (nand2.in 3) -- (nand2.in 3|-Y5) node[circ](gY5){} -- (Y5)
+        (nand2.in 4) -- (nand2.in 4|-Y6) node[circ](gY6){} -- (Y6)
+        ;
+        \ctikzset{tripoles/american or port/height=1.5}
+        \draw
+        (nand2.in 4) ++(0.45,0) node[or port, number inputs=5, anchor=in 1, rotate=90](nand3){}
+        (nand3.out) node[above]{$h$}
+        (nand3.bin 1) node[ocirc,below]{}
+        (nand3.bin 2) node[ocirc,below]{}
+        (nand3.bin 3) node[ocirc,below]{}
+        (nand3.bin 4) node[ocirc,below]{}
+        (nand3.bin 5) node[ocirc,below]{}
+        (nand3.in 1) -- (nand3.in 1|-fY0) node[circ]{} -- (fY0)
+        (nand3.in 2) -- (nand3.in 2|-gY2) node[circ]{} -- (gY2)
+        (nand3.in 3) -- (nand3.in 3|-Y4) node[circ]{} -- (Y4)
+        (nand3.in 4) -- (nand3.in 4|-gY5) node[circ]{} -- (gY5)
+        (nand3.in 5) -- (nand3.in 5|-gY6) node[circ]{} -- (gY6)
+        
+        ;
+    \end{circuitikz}
+\end{center}
+
+\pagebreak
+
+\section{Using a 3:8 demux generate the following truth table:}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc|c:c}
+        \toprule
+        A&B&C&$X$&$e$\\
+        \midrule
+        0&0&0&1&1\\
+        0&0&1&0&0\\
+        0&1&0&0&1\\
+        0&1&1&0&1\\
+        \bottomrule
+    \end{tabular}
+    \quad
+    \begin{tabular}{ccc|c:c}
+        \toprule
+        A&B&C&$X$&$e$\\
+        \midrule
+        1&0&0&1&1\\
+        1&0&1&1&1\\
+        1&1&0&0&0\\
+        1&1&1&1&1\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\,\\
+\begin{center}
+    \begin{circuitikz}
+        
+        \tikzset{demux/.style={muxdemux, muxdemux def={Lh=6, Rh=8, NL=5, NB=0, NR=10},no input leads}}
+        \ctikzset{tripoles/american or port/height=1.25}
+
+        \draw
+        (0,0) node[demux](demux){}
+
+        (demux.brpin 2) node[left]{$Y_0$} -- (demux.rpin 2) coordinate (Y0)
+        (demux.brpin 3) node[left]{$Y_1$} -- (demux.rpin 3) coordinate (Y1)
+        (demux.brpin 4) node[left]{$Y_2$} -- (demux.rpin 4) coordinate (Y2)
+        (demux.brpin 5) node[left]{$Y_3$} -- (demux.rpin 5) coordinate (Y3)
+        (demux.brpin 6) node[left]{$Y_4$} -- (demux.rpin 6) coordinate (Y4)
+        (demux.brpin 7) node[left]{$Y_5$} -- (demux.rpin 7) coordinate (Y5)
+        (demux.brpin 8) node[left]{$Y_6$} -- (demux.rpin 8) coordinate (Y6)
+        (demux.brpin 9) node[left]{$Y_7$} -- (demux.rpin 9) coordinate (Y7)
+        (demux.blpin 2) node[right]{$S_2$} -- (demux.lpin 2) coordinate (S2)
+        (demux.blpin 3) node[right]{$S_1$} -- (demux.lpin 3) coordinate (S1)
+        (demux.blpin 4) node[right]{$S_0$} -- (demux.lpin 4) coordinate (S0)
+
+        (demux.brpin 2) node[ocirc,right]{}
+        (demux.brpin 3) node[ocirc,right]{}
+        (demux.brpin 4) node[ocirc,right]{}
+        (demux.brpin 5) node[ocirc,right]{}
+        (demux.brpin 6) node[ocirc,right]{}
+        (demux.brpin 7) node[ocirc,right]{}
+        (demux.brpin 8) node[ocirc,right]{}
+        (demux.brpin 9) node[ocirc,right]{}
+
+        (S2) node[left]{A}
+        (S1) node[left]{B}
+        (S0) node[left]{C}
+
+        (Y0) ++(0.5,0.5) node[or port, number inputs=4, anchor=in 1, rotate=90](nand1){}
+        (nand1.out) node[above]{$X$}
+        (nand1.bin 1) node[ocirc,below]{}
+        (nand1.bin 2) node[ocirc,below]{}
+        (nand1.bin 3) node[ocirc,below]{}
+        (nand1.bin 4) node[ocirc,below]{}
+        
+        (nand1.in 1) -- (nand1.bin 1|-Y0) node[circ](XY0){} -- (Y0)
+        (nand1.in 2) -- (nand1.bin 2|-Y4) node[circ](XY4){} -- (Y4)
+        (nand1.in 3) -- (nand1.bin 3|-Y5) node[circ](XY5){} -- (Y5)
+        (nand1.in 4) -- (nand1.bin 4|-Y7) node[circ](XY7){} -- (Y7)
+        ;
+
+        \ctikzset{tripoles/american or port/height=1.85}
+
+        \draw
+        (nand1.in 4) ++(0.45,0) node[or port, number inputs=6, anchor=in 1, rotate=90](nand2){}
+        (nand2.out) node[above]{$e$}
+        (nand2.bin 1) node[ocirc,below]{}
+        (nand2.bin 2) node[ocirc,below]{}
+        (nand2.bin 3) node[ocirc,below]{}
+        (nand2.bin 4) node[ocirc,below]{}
+        (nand2.bin 5) node[ocirc,below]{}
+        (nand2.bin 6) node[ocirc,below]{}
+
+        (nand2.in 1) -- (nand2.in 1|-Y0) node[circ]{} -- (XY0)
+        (nand2.in 2) -- (nand2.in 2|-Y2) node[circ]{} -- (Y2)
+        (nand2.in 3) -- (nand2.in 3|-Y3) node[circ]{} -- (Y3)
+        (nand2.in 4) -- (nand2.in 4|-Y4) node[circ]{} -- (XY4)
+        (nand2.in 5) -- (nand2.in 5|-Y5) node[circ]{} -- (XY5)
+        (nand2.in 6) -- (nand2.in 6|-Y7) node[circ]{} -- (XY7)
+        ;
+    \end{circuitikz}
+\end{center}
+
+\pagebreak
+
+\setcounter{section}{10}
+\subsection{Using a 3:8 demux, transpose input ABCD then add two, modulo 16 to created output WXYZ.\\(i.e. WXYZ = (DCBA + 2)mod 16).}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccc|cccc}
+        \toprule
+        A&B&C&D&W&X&Y&Z\\
+        \midrule
+        0&0&0&0&0&0&1&0\\
+        0&0&0&1&1&0&1&0\\
+        0&0&1&0&0&1&1&0\\
+        0&0&1&1&1&1&1&0\\
+        0&1&0&0&0&1&0&0\\
+        0&1&0&1&1&1&0&0\\
+        0&1&1&0&1&0&0&0\\
+        0&1&1&1&0&0&0&0\\
+        \bottomrule
+    \end{tabular}
+    \quad
+    \begin{tabular}{cccc|cccc}
+        \toprule
+        A&B&C&D&W&X&Y&Z\\
+        \midrule
+        1&0&0&0&0&0&1&1\\
+        1&0&0&1&1&0&1&1\\
+        1&0&1&0&0&1&1&1\\
+        1&0&1&1&1&1&1&1\\
+        1&1&0&0&0&1&0&1\\
+        1&1&0&1&1&1&0&1\\
+        1&1&1&0&1&0&0&1\\
+        1&1&1&1&0&0&0&1\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Observing the truth table:
+$$W=(B\cdot C)\oplus D$$
+\begin{center}
+    \begin{circuitikz}
+        \tikzset{demux/.style={muxdemux, muxdemux def={Lh=6, Rh=8, NL=5, NB=0, NR=10},no input leads}}
+        \ctikzset{tripoles/american or port/height=1.25}
+        \draw
+        (0,0) node[demux](demux){}
+
+        (demux.brpin 2) node[left]{$Y_0$} -- (demux.rpin 2) coordinate (Y0)
+        (demux.brpin 3) node[left]{$Y_1$} -- (demux.rpin 3) coordinate (Y1)
+        (demux.brpin 4) node[left]{$Y_2$} -- (demux.rpin 4) coordinate (Y2)
+        (demux.brpin 5) node[left]{$Y_3$} -- (demux.rpin 5) coordinate (Y3)
+        (demux.brpin 6) node[left]{$Y_4$} -- (demux.rpin 6) coordinate (Y4)
+        (demux.brpin 7) node[left]{$Y_5$} -- (demux.rpin 7) coordinate (Y5)
+        (demux.brpin 8) node[left]{$Y_6$} -- (demux.rpin 8) coordinate (Y6)
+        (demux.brpin 9) node[left]{$Y_7$} -- (demux.rpin 9) coordinate (Y7)
+        (demux.blpin 2) node[right]{$S_2$} -- (demux.lpin 2) coordinate (S2)
+        (demux.blpin 3) node[right]{$S_1$} -- (demux.lpin 3) coordinate (S1)
+        (demux.blpin 4) node[right]{$S_0$} -- (demux.lpin 4) coordinate (S0)
+
+        (demux.brpin 2) node[ocirc,right]{}
+        (demux.brpin 3) node[ocirc,right]{}
+        (demux.brpin 4) node[ocirc,right]{}
+        (demux.brpin 5) node[ocirc,right]{}
+        (demux.brpin 6) node[ocirc,right]{}
+        (demux.brpin 7) node[ocirc,right]{}
+        (demux.brpin 8) node[ocirc,right]{}
+        (demux.brpin 9) node[ocirc,right]{}
+
+        (S2) node[circ](A){} node[above]{A}
+        (S1) node[circ](B){} node[above]{B}
+        (S0) node[circ](C){} node[above]{C}
+        (C) ++(0,-0.65) node[circ](D){} node[above]{D}
+
+        (Y0) ++(0.5,0.5) node[or port, number inputs=4, anchor=in 1, rotate=90](nand1){}
+        (nand1.out) node[above]{X}
+        (nand1.bin 1) node[ocirc,below]{}
+        (nand1.bin 2) node[ocirc,below]{}
+        (nand1.bin 3) node[ocirc,below]{}
+        (nand1.bin 4) node[ocirc,below]{}
+        
+        (nand1.in 1) -- (nand1.bin 1|-Y1) node[circ](XY1){} -- (Y1)
+        (nand1.in 2) -- (nand1.bin 2|-Y2) node[circ](XY2){} -- (Y2)
+        (nand1.in 3) -- (nand1.bin 3|-Y5) node[circ](XY5){} -- (Y5)
+        (nand1.in 4) -- (nand1.bin 4|-Y6) node[circ](XY6){} -- (Y6)
+        
+        (nand1.in 4) ++(0.45,0) node[or port, number inputs=4, anchor=in 1, rotate=90](nand2){}
+        (nand2.out) node[above]{Y}
+        (nand2.bin 1) node[ocirc,below]{}
+        (nand2.bin 2) node[ocirc,below]{}
+        (nand2.bin 3) node[ocirc,below]{}
+        (nand2.bin 4) node[ocirc,below]{}
+
+        (nand2.in 1) -- (nand2.in 1|-Y0) node[circ](YY0){} -- (Y0)
+        (nand2.in 2) -- (nand2.in 2|-Y1) node[circ](YY1){} -- (XY1)
+        (nand2.in 3) -- (nand2.in 3|-Y4) node[circ](YY4){} -- (Y4)
+        (nand2.in 4) -- (nand2.in 4|-Y5) node[circ](YY5){} -- (XY5)
+
+        (nand2.in 4) ++(0.45,0) node[or port, number inputs=4, anchor=in 1, rotate=90](nand3){}
+        (nand3.out) node[above]{Z}
+        (nand3.bin 1) node[ocirc,below]{}
+        (nand3.bin 2) node[ocirc,below]{}
+        (nand3.bin 3) node[ocirc,below]{}
+        (nand3.bin 4) node[ocirc,below]{}
+        (nand3.in 1) -- (nand3.in 1|-Y4) node[circ]{} -- (YY4)
+        (nand3.in 2) -- (nand3.in 2|-Y5) node[circ]{} -- (YY5)
+        (nand3.in 3) -- (nand3.in 3|-Y6) node[circ]{} -- (XY6)
+        (nand3.in 4) -- (nand3.in 4|-Y7) node[circ]{} -- (Y7)
+
+        (C) node[and port, rotate=180, anchor=in 1,scale=1.2](and){}
+        (and.out) node[xor port, rotate=180, anchor=in 2,scale=1](xor){}
+        (D) -- (D-|xor.in 1) -- (xor.in 1)
+        (xor.out) node[left]{W}
+        ;
+    \end{circuitikz}
+\end{center}
+
+\pagebreak
+
+\subsection{This circuit can be simplified to remove the 3:8 demux.  Draw the schematic for each output (W, X, Y and Z) using only the six basic Gates:}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccc|cccc}
+        \toprule
+        A&B&C&D&W&X&Y&Z\\
+        \midrule
+        0&0&0&0&0&0&1&0\\
+        0&0&0&1&1&0&1&0\\
+        0&0&1&0&0&1&1&0\\
+        0&0&1&1&1&1&1&0\\
+        0&1&0&0&0&1&0&0\\
+        0&1&0&1&1&1&0&0\\
+        0&1&1&0&1&0&0&0\\
+        0&1&1&1&0&0&0&0\\
+        \bottomrule
+    \end{tabular}
+    \quad
+    \begin{tabular}{cccc|cccc}
+        \toprule
+        A&B&C&D&W&X&Y&Z\\
+        \midrule
+        1&0&0&0&0&0&1&1\\
+        1&0&0&1&1&0&1&1\\
+        1&0&1&0&0&1&1&1\\
+        1&0&1&1&1&1&1&1\\
+        1&1&0&0&0&1&0&1\\
+        1&1&0&1&1&1&0&1\\
+        1&1&1&0&1&0&0&1\\
+        1&1&1&1&0&0&0&1\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Observing the truth table:
+$$W=(B\cdot C)\oplus D$$
+$$X=B\oplus C$$
+$$Y=\overline{B}$$
+$$Z=A$$
+
+\,\\
+
+\begin{circuitikz}
+    \draw
+    (0,-8) node[circ,label=180:A](A){}
+    (0,-6) node[circ,label=180:B](B){}
+    (0,-4) node[circ,label=180:C](C){}
+    (0,-2) node[circ,label=180:D](D){}
+
+    (2,0) node[circ,label=180:W](W){}
+    (4,0) node[circ,label=180:X](X){}
+    (6,0) node[circ,label=180:Y](Y){}
+    (8,0) node[circ,label=180:Z](Z){}
+    
+    (W) -- ++(0,-0.25) node[xor port, rotate=90, anchor=out](xor){}
+    (D) -- (D-|xor.in 1) -- (xor.in 1)
+    (xor.in 2) node[and port, rotate=90, anchor=out](and){}
+    (C) -- (C-|and.in 1)node[circ](WC){} -- (and.in 1)
+    (B) -- (B-|and.in 2)node[circ](WB){} -- (and.in 2)
+    
+    (X) -- ++(0,-0.25) node[xor port, rotate=90, anchor=out](xor){}
+    (WC) -- (C-|xor.in 1) -- (xor.in 1)
+    (WB) -- (B-|xor.in 2)node[circ](XB){} -- (xor.in 2)
+    
+    (Y) -- ++(0,-0.25) node[not port, rotate=90, anchor=out](not){}
+    (XB) -- (B-|not.in) -- (not.in)
+    
+    (A) -- (A-|Z) -- (Z)
+
+
+    ;
+\end{circuitikz}
 
 \end{document}

@@ -430,7 +430,7 @@ $$f(ABCD)=A\cdot D+\overline{A}\cdot\overline{B}\cdot \overline{D}+\overline{B}\
 
 \section{Using an 8:1 mux, create a circuit to generate the segment b outputs for a 7-segment display.}
 Given ABCD = 0, 1, 2, \dots, F,  the segment $b$ outputs are $(F9C8)_{16}$ \big(e.g. the MSB of $(F)_{16} =$ output for ABCD $= (0000)_2$ and the LSB of $(8)_{16} =$ output for ABCD $= (1111)_2$\big).
-$$(F9C8)_{16}=(\groupify{4}{1111 0101 1100 1000})_2$$
+$$(F9C8)_{16}=(\groupify{4}{1111 1001 1100 1000})_2$$
 
 
 \begin{table}[H]
@@ -445,8 +445,8 @@ $$(F9C8)_{16}=(\groupify{4}{1111 0101 1100 1000})_2$$
         0&0&1&0&1\\
         0&0&1&1&1\\
         \greyrule
-        0&1&0&0&0\\
-        0&1&0&1&1\\
+        0&1&0&0&1\\
+        0&1&0&1&0\\
         \greyrule
         0&1&1&0&0\\
         0&1&1&1&1\\
@@ -495,7 +495,7 @@ $$(F9C8)_{16}=(\groupify{4}{1111 0101 1100 1000})_2$$
 
         (d0) node[above]{1}
         (d1) node[above]{1}
-        (d2) node[above]{D}
+        (d2) node[above]{$\overline{D}$}
         (d3) node[above]{D}
         (d4) node[above]{1}
         (d5) node[above]{0}
@@ -518,10 +518,15 @@ $$(F9C8)_{16}=(\groupify{4}{1111 0101 1100 1000})_2$$
         (d1) -- (d1-|vcc)
         (xing6.north) -- (xing6.north|-d5) -- (d5)
         (d7) -- (d7-|xing6.south) node[ground]{} -- (xing6.south)
-        (xing2.west) -- ++(-1.5,0) coordinate(Dup) -- (Dup|-S2) node[below]{D}
-        (xing3.west) -- ++(-1.5,0)
+        (xing3.west) ++(-1.5,0) coordinate(Dup) -- (Dup|-S2) node[below]{D}
         (Dup|-S2) ++(0,0.25) -- ++(0.75,0) node[not port, anchor=in, scale=0.9, rotate=90](not){}
         (not.out) -- (not.out|-xing6.west) -- (xing6.west)
+        (d3-|not.out) node[jump crossing](xing3l){}
+        (xing3l.east) -- (xing3.west)
+        (xing3l.west) -- (Dup)
+        (xing3l.north) -- (xing3l.north|-xing2.west) -- (xing2.west)
+        (xing3l.south) -- (not.out)
+        
         ;
     \end{circuitikz}
 \end{center}
@@ -590,52 +595,46 @@ $$(F9C8)_{16}=(\groupify{4}{1111 0101 1100 1000})_2$$
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{cccc|cccc}
+    \begin{tabular}{ccc:c|ccc:c}
         \toprule
         A&B&C&D&W&X&Y&Z\\
         \midrule
         0&0&0&0&1&1&1&1\\
         0&0&0&1&1&1&1&0\\
+        \greyrule
         0&0&1&0&1&1&0&0\\
         0&0&1&1&1&1&0&1\\
+        \greyrule
         0&1&0&0&1&0&0&1\\
         0&1&0&1&1&0&0&0\\
+        \greyrule
         0&1&1&0&1&0&1&0\\
         0&1&1&1&1&0&1&1\\
         \bottomrule
     \end{tabular}
     \quad
-    \begin{tabular}{cccc|cccc}
+    \begin{tabular}{ccc:c|ccc:c}
         \toprule
         A&B&C&D&W&X&Y&Z\\
         \midrule
         1&0&0&0&0&0&1&1\\
         1&0&0&1&0&0&1&0\\
+        \greyrule
         1&0&1&0&0&0&0&0\\
         1&0&1&1&0&0&0&1\\
+        \greyrule
         1&1&0&0&0&1&0&1\\
         1&1&0&1&0&1&0&0\\
+        \greyrule
         1&1&1&0&0&1&1&0\\
         1&1&1&1&0&1&1&1\\
         \bottomrule
     \end{tabular}
 \end{table}
-Observe that $\sum(m_0,m_1,m_2,m_3)=\overline{B}$, it can be decuced that $X=\overline{B}\otimes W$
-\begin{table}[H]
-    \centering
-    \begin{tabular}{cc|c}
-        \toprule
-        $\overline{B}$&W&X\\
-        \midrule
-        0&0&1\\
-        0&1&0\\
-        1&0&0\\
-        1&1&1\\
-        \bottomrule
-    \end{tabular}
-\end{table}
 
-\,\\
+Observing the truth table:
+$$Z=C\otimes  D$$
+
 \begin{center}
     \begin{circuitikz}
         \tikzset{demux/.style={muxdemux, muxdemux def={Lh=6, Rh=8, NL=5, NB=0, NR=10},no input leads}}
@@ -664,12 +663,13 @@ Observe that $\sum(m_0,m_1,m_2,m_3)=\overline{B}$, it can be decuced that $X=\ov
         (demux.brpin 8) node[ocirc,right]{}
         (demux.brpin 9) node[ocirc,right]{}
 
-        (S2) node[left]{B}
-        (S1) node[left]{C}
-        (S0) node[left]{D}
+        (S2) coordinate(A) node[above]{A}
+        (S1) coordinate(B) node[above]{B}
+        (S0) coordinate(C) node[above]{C}
+        (C) ++(0,-0.65) coordinate(D) node[above]{D}
 
         (Y0) ++(0.5,0.5) node[or port, number inputs=4, anchor=in 1, rotate=90](nand1){}
-        (nand1.out) node[circ,label=0:$\overline{B}$](notB){}
+        (nand1.out) node[above]{W}
         (nand1.bin 1) node[ocirc,below]{}
         (nand1.bin 2) node[ocirc,below]{}
         (nand1.bin 3) node[ocirc,below]{}
@@ -681,7 +681,7 @@ Observe that $\sum(m_0,m_1,m_2,m_3)=\overline{B}$, it can be decuced that $X=\ov
         (nand1.in 4) -- (nand1.bin 4|-Y3) node[circ](XY3){} -- (Y3)
         
         (nand1.in 4) ++(0.45,0) node[or port, number inputs=4, anchor=in 1, rotate=90](nand2){}
-        (nand2.out) node[above]{Y}
+        (nand2.out) node[above]{X}
         (nand2.bin 1) node[ocirc,below]{}
         (nand2.bin 2) node[ocirc,below]{}
         (nand2.bin 3) node[ocirc,below]{}
@@ -693,7 +693,7 @@ Observe that $\sum(m_0,m_1,m_2,m_3)=\overline{B}$, it can be decuced that $X=\ov
         (nand2.in 4) -- (nand2.in 4|-Y7) node[circ](YY7){} -- (Y7)
 
         (nand2.in 4) ++(0.45,0) node[or port, number inputs=4, anchor=in 1, rotate=90](nand3){}
-        (nand3.out) node[above]{Z}
+        (nand3.out) node[above]{Y}
         (nand3.bin 1) node[ocirc,below]{}
         (nand3.bin 2) node[ocirc,below]{}
         (nand3.bin 3) node[ocirc,below]{}
@@ -702,14 +702,10 @@ Observe that $\sum(m_0,m_1,m_2,m_3)=\overline{B}$, it can be decuced that $X=\ov
         (nand3.in 2) -- (nand3.in 2|-Y3) node[circ]{} -- (XY3)
         (nand3.in 3) -- (nand3.in 3|-Y4) node[circ]{} -- (Y4)
         (nand3.in 4) -- (nand3.in 4|-Y7) node[circ]{} -- (YY7)
-
-        (S2) ++(0,0.75) coordinate(S3) node[circ,label=180:A]{} -- ++(0,0.5) node[not port,anchor=in, rotate=90](not){}
-        (not.out) -- (S3|-nand1.out) -- ++(1.5,0) node[circ,label=90:W](W){}
         
-        (notB) node[xor port,anchor=in 2,rotate=90](xnor){}
-        (W) -- (xnor.in 1)
-        (xnor.bout) node[ocirc,above]{}
-        (xnor.out) node[above]{X}
+        (C) node[xor port, rotate=180, anchor=in 2,scale=1.2](xor){}
+        (xor.bout) node[ocirc,left]{}
+        (xor.out) node[left]{Z}
         ;
     \end{circuitikz}
 \end{center}
@@ -903,31 +899,37 @@ $$h=\sum(m_0,m_2,m_4,m_5,m_6)$$
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{cccc|cccc}
+    \begin{tabular}{ccc:c|c:ccc}
         \toprule
         A&B&C&D&W&X&Y&Z\\
         \midrule
         0&0&0&0&0&0&1&0\\
         0&0&0&1&1&0&1&0\\
+        \greyrule
         0&0&1&0&0&1&1&0\\
         0&0&1&1&1&1&1&0\\
+        \greyrule
         0&1&0&0&0&1&0&0\\
         0&1&0&1&1&1&0&0\\
+        \greyrule
         0&1&1&0&1&0&0&0\\
         0&1&1&1&0&0&0&0\\
         \bottomrule
     \end{tabular}
     \quad
-    \begin{tabular}{cccc|cccc}
+    \begin{tabular}{ccc:c|c:ccc}
         \toprule
         A&B&C&D&W&X&Y&Z\\
         \midrule
         1&0&0&0&0&0&1&1\\
         1&0&0&1&1&0&1&1\\
+        \greyrule
         1&0&1&0&0&1&1&1\\
         1&0&1&1&1&1&1&1\\
+        \greyrule
         1&1&0&0&0&1&0&1\\
         1&1&0&1&1&1&0&1\\
+        \greyrule
         1&1&1&0&1&0&0&1\\
         1&1&1&1&0&0&0&1\\
         \bottomrule
@@ -964,10 +966,10 @@ $$W=(B\cdot C)\oplus D$$
         (demux.brpin 8) node[ocirc,right]{}
         (demux.brpin 9) node[ocirc,right]{}
 
-        (S2) node[circ](A){} node[above]{A}
-        (S1) node[circ](B){} node[above]{B}
-        (S0) node[circ](C){} node[above]{C}
-        (C) ++(0,-0.65) node[circ](D){} node[above]{D}
+        (S2) coordinate(A) node[above]{A}
+        (S1) coordinate(B) node[above]{B}
+        (S0) coordinate(C) node[above]{C}
+        (C) ++(0,-0.65) coordinate(D) node[above]{D}
 
         (Y0) ++(0.5,0.5) node[or port, number inputs=4, anchor=in 1, rotate=90](nand1){}
         (nand1.out) node[above]{X}
@@ -1018,31 +1020,37 @@ $$W=(B\cdot C)\oplus D$$
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{cccc|cccc}
+    \begin{tabular}{ccc:c|c:ccc}
         \toprule
         A&B&C&D&W&X&Y&Z\\
         \midrule
         0&0&0&0&0&0&1&0\\
         0&0&0&1&1&0&1&0\\
+        \greyrule
         0&0&1&0&0&1&1&0\\
         0&0&1&1&1&1&1&0\\
+        \greyrule
         0&1&0&0&0&1&0&0\\
         0&1&0&1&1&1&0&0\\
+        \greyrule
         0&1&1&0&1&0&0&0\\
         0&1&1&1&0&0&0&0\\
         \bottomrule
     \end{tabular}
     \quad
-    \begin{tabular}{cccc|cccc}
+    \begin{tabular}{ccc:c|c:ccc}
         \toprule
         A&B&C&D&W&X&Y&Z\\
         \midrule
         1&0&0&0&0&0&1&1\\
         1&0&0&1&1&0&1&1\\
+        \greyrule
         1&0&1&0&0&1&1&1\\
         1&0&1&1&1&1&1&1\\
+        \greyrule
         1&1&0&0&0&1&0&1\\
         1&1&0&1&1&1&0&1\\
+        \greyrule
         1&1&1&0&1&0&0&1\\
         1&1&1&1&0&0&0&1\\
         \bottomrule
@@ -1055,19 +1063,17 @@ $$X=B\oplus C$$
 $$Y=\overline{B}$$
 $$Z=A$$
 
-\,\\
-
 \begin{circuitikz}
     \draw
-    (0,-8) node[circ,label=180:A](A){}
-    (0,-6) node[circ,label=180:B](B){}
-    (0,-4) node[circ,label=180:C](C){}
-    (0,-2) node[circ,label=180:D](D){}
+    (0,-8) node[left](A){A}
+    (0,-6) node[left](B){B}
+    (0,-4) node[left](C){C}
+    (0,-2) node[left](D){D}
 
-    (2,0) node[circ,label=180:W](W){}
-    (4,0) node[circ,label=180:X](X){}
-    (6,0) node[circ,label=180:Y](Y){}
-    (8,0) node[circ,label=180:Z](Z){}
+    (2,0) node[above](W){W}
+    (4,0) node[above](X){X}
+    (6,0) node[above](Y){Y}
+    (8,0) node[above](Z){Z}
     
     (W) -- ++(0,-0.25) node[xor port, rotate=90, anchor=out](xor){}
     (D) -- (D-|xor.in 1) -- (xor.in 1)

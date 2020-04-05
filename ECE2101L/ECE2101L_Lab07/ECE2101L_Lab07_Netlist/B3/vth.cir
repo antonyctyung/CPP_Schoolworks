@@ -1,0 +1,11 @@
+ECE2101L Lab7 Part B2: Measuring OUTPUT impedance of a black box with A to B open
+* Author: Choi Tim Antony Yung
+* Simulation with A to B open
+
+.INCLUDE blackbox.cir
+
+XBOX vth 0 BOX
+.AC LIN 1 60 60
+.PRINT AC v(vth)
+
+.END

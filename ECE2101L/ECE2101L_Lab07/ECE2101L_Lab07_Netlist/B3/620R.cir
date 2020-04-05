@@ -1,0 +1,12 @@
+ECE2101L Lab7 Part B2: Measuring OUTPUT impedance of a black box with 620 Ohm resistor
+* Author: Choi Tim Antony Yung
+* Simulation using 620ohm resistor
+
+.INCLUDE blackbox.cir
+
+XBOX v0 0 BOX
+R0 v0 0 620
+.AC LIN 1 60 60
+.PRINT AC v(v0)
+
+.END

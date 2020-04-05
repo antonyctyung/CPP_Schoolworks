@@ -1,0 +1,13 @@
+* ECE2101L Lab7 Part B2: Measuring OUTPUT impedance of a black box
+* Author: Choi Tim Antony Yung
+* Definition of blackbox subcircuit
+
+.SUBCKT BOX A B
+V1 1 B AC 6 0
+Ra 1 2 43
+C1 2 B 10p
+C2 2 3 1000u
+Rb 3 4 51
+C3 4 B 20p
+C4 3 A 470u
+.ENDS

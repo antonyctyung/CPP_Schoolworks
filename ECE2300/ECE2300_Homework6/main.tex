@@ -58,9 +58,11 @@
 
         (#1bA) -- ++(-1.2,1.2) -- ++(0,-0.8) -- ++(-1.8,0)
         (#1bA) -- ++(-1.2,-1.2) -- ++(0,+0.8) -- ++(-1.8,0)
+        (#1bA) ++(-1.2,0) node[left]{4-bits}
 
         (#1bB) -- ++(-1.2,1.2) -- ++(0,-0.8) -- ++(-1.8,0)
         (#1bB) -- ++(-1.2,-1.2) -- ++(0,+0.8) -- ++(-1.8,0)
+        (#1bB) ++(-1.2,0) node[left]{4-bits}
 
     ;
 }
@@ -112,15 +114,15 @@ $$Round=N>5=(N_3N_2N_1N_0)_2>(0101)_2$$
         (A1) node[left]{$N_1$}
         (A0) node[left]{$N_0$}
 
-        (B2) node[above]{$1$} to[crossing] ++(-1,0) node[vcc](vcc){+V}
+        (B2) node[above]{$1$} ++(-1,0) to[crossing] ++(1,0) ++(-1,0) node[vcc](vcc){+V}
         (asb) node[above]{$0$} -- ++(-0.5,0) node[ground](gnd){}
 
         (B3) node[above]{$0$} -- ++(-0.5,0)  -- (gnd)
         (B1) node[above]{$0$} -- ++(-0.5,0)
-        (B0) node[above]{$1$} to[crossing] ++(-1,0) -- (vcc)
+        (B0) node[above]{$1$} ++(-1,0) to[crossing] ++(1,0) ++(-1,0) -- (vcc)
 
         (alb) node[above]{$0$} -- ++(-0.5,0)
-        (aeb) node[above]{$1$} to[crossing] ++(-1,0)  -- (vcc)
+        (aeb) node[above]{$1$} ++(-1,0) to[crossing] ++(1,0) ++(-1,0)  -- (vcc)
         
         (ALB) node[right]{Round}
         ;
@@ -166,7 +168,7 @@ $$Round=N>5=(N_3N_2N_1N_0)_2>(0101)_2$$
 
         (asb) node[above]{$0$} -- ++(-0.5,0) node[ground](gnd){}
         (alb) node[above]{$0$} -- ++(-0.5,0) -- (gnd)
-        (aeb) node[above]{$1$} to[crossing] ++(-1,0) node[vcc](vcc){+V}
+        (aeb) node[above]{$1$} ++(-1,0) to[crossing] ++(1,0) ++(-1,0) node[vcc](vcc){+V}
 
         (ALB) -- (mux.blpin 2) node[right]{\large$d_0$}
         (ASB) -- (mux.blpin 8) node[right]{\large$d_1$}
@@ -202,7 +204,7 @@ $$Round=N>5=(N_3N_2N_1N_0)_2>(0101)_2$$
 
             (asb) node[above]{$0$} -- ++(-0.5,0) node[ground](gnd){}
             (alb) node[above]{$0$} -- ++(-0.5,0) -- (gnd)
-            (aeb) node[above]{$1$} to[crossing] ++(-1,0) node[vcc](vcc){+V}
+            (aeb) node[above]{$1$} ++(-1,0) to[crossing] ++(1,0) ++(-1,0) node[vcc](vcc){+V}
             
             (ALB) node[right]{$X>Y$}
             (AEB) node[right]{$X=Y$}
@@ -252,7 +254,7 @@ $$Round=N>5=(N_3N_2N_1N_0)_2>(0101)_2$$
 
             (1asb) node[above]{$0$} -- ++(-0.5,0) node[ground](gnd){}
             (1alb) node[above]{$0$} -- ++(-0.5,0) -- (gnd)
-            (1aeb) node[above]{$1$} to[crossing] ++(-1,0) node[vcc](vcc){+V}
+            (aeb) node[above]{$1$} ++(-1,0) to[crossing] ++(1,0) ++(-1,0) node[vcc](vcc){+V}
             
             (1ALB) -- ++(0.5,0) -- (\currcoor|-2alb) -- (2alb)
             (1AEB) -- ++(1  ,0) -- (\currcoor|-2aeb) -- (2aeb)
@@ -264,6 +266,41 @@ $$Round=N>5=(N_3N_2N_1N_0)_2>(0101)_2$$
             ;
     \end{circuitikz}
     \end{adjustbox}
+\end{center}
+
+\newpage
+
+\section{Using two 2:1 muxes and a magnitude comparator, design a circuit to compare 4-bit inputs X and Y as unsigned numbers when S=0 or as two’s complement numbers when S=1.}
+\,\\
+\begin{center}
+    \begin{circuitikz}
+        \getamag{}{(0,0)}
+        \tikzset{mux 2x1/.style={muxdemux,muxdemux def={Lh= 3,Rh= 3,NL=3,NR=1,NB=1, w=2},no input leads}}
+        \draw
+            (A2) node[left]{$X_2$}
+            (A1) node[left]{$X_1$}
+            (A0) node[left]{$X_0$}
+            (B2) node[left]{$Y_2$}
+            (B1) node[left]{$Y_1$}
+            (B0) node[left]{$Y_0$}
+            (A3) -- ++(-0.75,0) node[mux 2x1, anchor=brpin 1](mux1){} node[left]{Y}
+            (B3) -- ++(-0.75,0) node[mux 2x1, anchor=brpin 1](mux2){} node[left]{Y}
+
+            (mux1.bbpin 1) node[above]{S} -- ++(0,-0.5) -- (\currcoor-|mux1.blpin 1) -- ++(-1,0) -- (\currcoor|-mux2.bbpin 1) -- ++(0,-0.5) -- (\currcoor-|mux2.bbpin 1) -- (mux2.bbpin 1) node[above]{S}
+
+            (mux1.blpin 1) node[right]{$d_0$} ++(-2,0) to[crossing] ++(1,0) -- ++(1,0) ++(-2,0.5) node[above](X3){$X_3$} -- (\currcoor|-mux2.blpin 2) -- ++(0.5,0) to[crossing] ++(1,0) -- (mux2.blpin 2) node[right]{$d_1$}
+
+            (mux1.blpin 2) node[right]{$d_1$} -- ++(-1.5,0) (\currcoor|-mux1.blpin 1) ++(0,0.5) node[above](Y3){$Y_3$} -- (\currcoor|-mux2.blpin 1) to[crossing] ++(1,0) -- (mux2.blpin 1) node[right]{$d_0$}
+
+            (asb) node[above]{$0$} -- ++(-0.5,0) node[ground](gnd){}
+            (alb) node[above]{$0$} -- ++(-0.5,0) -- (gnd)
+            (aeb) node[above]{$1$} ++(-1,0) to[crossing] ++(1,0) ++(-1,0) node[vcc](vcc){+V}
+            
+            (ALB) node[right]{$X>Y$}
+            (AEB) node[right]{$X=Y$}
+            (ASB) node[right]{$X<Y$}
+            ;
+    \end{circuitikz}
 \end{center}
 
 \end{document}

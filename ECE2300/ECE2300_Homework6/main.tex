@@ -66,6 +66,59 @@
 
     ;
 }
+\newcommand{\getanadder}[2]{
+    \tikzset{adder/.style={muxdemux,muxdemux def={Lh= 11,Rh= 11,NL=11,NR=10,NB=1,NT=1, w=4},no input leads}}
+    \draw
+        #2 node[adder](adder#1){}
+        
+        (adder#1.blpin  2) node[right]{\large$A_3$}  -- (adder#1.lpin  2) coordinate (#1A3)
+        (adder#1.blpin  3) node[right]{\large$A_2$}  -- (adder#1.lpin  3) coordinate (#1A2)
+        (adder#1.blpin  4) node[right]{\large$A_1$}  -- (adder#1.lpin  4) coordinate (#1A1)
+        (adder#1.blpin  5) node[right]{\large$A_0$}  -- (adder#1.lpin  5) coordinate (#1A0)
+
+        (adder#1.blpin  7) node[right]{\large$B_3$}  -- (adder#1.lpin  7) coordinate (#1B3)
+        (adder#1.blpin  8) node[right]{\large$B_2$}  -- (adder#1.lpin  8) coordinate (#1B2)
+        (adder#1.blpin  9) node[right]{\large$B_1$}  -- (adder#1.lpin  9) coordinate (#1B1)
+        (adder#1.blpin 10) node[right]{\large$B_0$}  -- (adder#1.lpin 10) coordinate (#1B0)
+        
+        (adder#1.brpin 4) node[left]{\large$S_3$}  -- (adder#1.rpin 4) coordinate (#1S3)
+        (adder#1.brpin 5) node[left]{\large$S_2$}  -- (adder#1.rpin 5) coordinate (#1S2)
+        (adder#1.brpin 6) node[left]{\large$S_1$}  -- (adder#1.rpin 6) coordinate (#1S1)
+        (adder#1.brpin 7) node[left]{\large$S_0$}  -- (adder#1.rpin 7) coordinate (#1S0)
+
+        (adder#1.btpin 1) node[below]{\large{$C_{i}$}} -- (adder#1.tpin  1) coordinate (#1Ci)
+
+        (adder#1.bbpin 1) node[above]{\large{$C_{o}$}} -- (adder#1.bpin  1) coordinate (#1Co)
+    ;
+}
+\newcommand{\getabigfatadder}[2]{
+    \tikzset{adder/.style={muxdemux,muxdemux def={Lh= 10,Rh= 10,NL=10,NR=1,NB=1,NT=1, w=4},no input leads}}
+    \draw
+        #2 node[adder](adder#1){}
+        
+        (adder#1.blpin  3) node[right]{\large$A_0-A_3$} coordinate (#1bA) ++(-3,0) coordinate(#1A)
+        (adder#1.blpin  8) node[right]{\large$B_0-B_3$} coordinate (#1bB) ++(-3,0) coordinate(#1B)
+
+        (adder#1.brpin 1) node[left]{\large{$S_0-S_3$}} ++(3,0) coordinate(#1S)
+
+        (adder#1.btpin 1) node[below]{\large{$C_{i}$}} -- (adder#1.tpin  1) coordinate (#1Ci)
+
+        (adder#1.bbpin 1) node[above]{\large{$C_{o}$}} -- (adder#1.bpin  1) coordinate (#1Co)
+
+        (#1bA) -- ++(-1.2,1.2) -- ++(0,-0.8) -- ++(-1.8,0)
+        (#1bA) -- ++(-1.2,-1.2) -- ++(0,+0.8) -- ++(-1.8,0)
+        (#1bA) ++(-1.2,0) node[left]{4-bits}
+
+        (#1bB) -- ++(-1.2,1.2) -- ++(0,-0.8) -- ++(-1.8,0)
+        (#1bB) -- ++(-1.2,-1.2) -- ++(0,+0.8) -- ++(-1.8,0)
+        (#1bB) ++(-1.2,0) node[left]{4-bits}
+
+        (#1S) -- ++(-1.2,1.2) -- ++(0,-0.8) -- ++(-1.8,0)
+        (#1S) -- ++(-1.2,-1.2) -- ++(0,+0.8) -- ++(-1.8,0)
+        (#1S) ++(-1.2,0) node[left]{4-bits}
+    ;
+}
+
 \newcommand{\greyrule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
 \newcolumntype{:}{@{\hskip\tabcolsep\color{black!30}\vrule\hskip\tabcolsep}}
 \ExplSyntaxOn
@@ -213,6 +266,7 @@ $$Round=N>5=(N_3N_2N_1N_0)_2>(0101)_2$$
     \end{circuitikz}
 \end{center}
 
+% Q3b
 \subsection{Complete the following chartgiving the outputs for the corresponding inputs (the leftmost X and Y bits are the MSBs). Indicate whether the output is correct (i.e.“OK”) and give the true relationship of thesignedinputs.}
 
 \begin{table}[H]
@@ -238,6 +292,7 @@ $$Round=N>5=(N_3N_2N_1N_0)_2>(0101)_2$$
 
 \newpage
 
+% Q4
 \section{Using magnitude comparators, create a circuit to compare two 8-bit unsigned numbers, X and Y.  Let X connect to the comparator A inputs.}
 
 \begin{center}
@@ -270,8 +325,19 @@ $$Round=N>5=(N_3N_2N_1N_0)_2>(0101)_2$$
 
 \newpage
 
+% Q5
 \section{Using two 2:1 muxes and a magnitude comparator, design a circuit to compare 4-bit inputs X and Y as unsigned numbers when S=0 or as two’s complement numbers when S=1.}
-\,\\
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c:cc}
+        \toprule
+        S&$A_3$&$B_3$\\
+        \midrule
+        0&$X_3$&$Y_3$\\
+        1&$Y_3$&$X_3$\\
+        \bottomrule
+    \end{tabular}
+\end{table}
 \begin{center}
     \begin{circuitikz}
         \getamag{}{(0,0)}
@@ -292,6 +358,12 @@ $$Round=N>5=(N_3N_2N_1N_0)_2>(0101)_2$$
 
             (mux1.blpin 2) node[right]{$d_1$} -- ++(-1.5,0) (\currcoor|-mux1.blpin 1) ++(0,0.5) node[above](Y3){$Y_3$} -- (\currcoor|-mux2.blpin 1) to[crossing] ++(1,0) -- (mux2.blpin 1) node[right]{$d_0$}
 
+            (mux1.lpin 1) node[above]{$X_3$}
+            (mux1.lpin 2) node[above]{$Y_3$}
+
+            (mux2.lpin 1) node[above]{$Y_3$}
+            (mux2.lpin 2) node[above]{$X_3$}
+
             (asb) node[above]{$0$} -- ++(-0.5,0) node[ground](gnd){}
             (alb) node[above]{$0$} -- ++(-0.5,0) -- (gnd)
             (aeb) node[above]{$1$} ++(-1,0) to[crossing] ++(1,0) ++(-1,0) node[vcc](vcc){+V}
@@ -302,5 +374,108 @@ $$Round=N>5=(N_3N_2N_1N_0)_2>(0101)_2$$
             ;
     \end{circuitikz}
 \end{center}
+
+\newpage
+
+%Q6
+\section{Draw a circuit to add two 8-bit unsigned binary numbers, X and Y. Include acarry-in, $CY_I$, and carry-out, $CY_O$.  Let X connect to the adder A inputs and Y to the adder B inputs. The sum is S. Hint: Use fat arrows for each nybble with subscript “L” or “H” for the low and high nybbles respectively.}
+
+\begin{center}
+    \begin{circuitikz}
+        \getabigfatadder{1}{(0,0)}
+        \getabigfatadder{2}{(0,-6.5)}
+        \draw
+        (1A) node[left]{\Large$X_L$}
+        (2A) node[left]{\Large$X_H$}
+
+        (1B) node[left]{\Large$Y_L$}
+        (2B) node[left]{\Large$Y_H$}
+        
+        (1S) node[right]{\Large$S_L$}
+        (2S) node[right]{\Large$S_H$}
+        
+        (1Ci) node[above]{\Large$CY_I$}
+
+        (2Co) node[below]{\Large$CY_O$}
+        
+        (1Co) -- (2Ci)
+
+        ;
+    \end{circuitikz}
+\end{center}
+
+\newpage
+
+% Q7
+\section{Using an adder, draw a circuit to increment or decrement an unsigned 4-bit number, $X = \{X_3 X_2 X_1 X_0\}$. Let X connect to the adder A inputs and let the result be $N = \{N_3 N_2 N_1 N_0\}$. Ignore the carry-out. Let ID be the increment or decrement signal (0 = increment, 1 = decrement). Hint: Do not use the carry-in input.}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c:c:r:cccc}
+        \toprule
+        &ID&B&$B_3$&$B_2$&$B_1$&$B_0$\\
+        \midrule
+        Increment&0 & 1& 0 & 0 & 0 & 1\\
+        Decrement&1 &-1& 1 & 1 & 1 & 1\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{center}
+    \begin{circuitikz}
+        \getanadder{}{(0,0)}
+        \draw
+        (A3) node[left]{$X_3$}
+        (A2) node[left]{$X_2$}
+        (A1) node[left]{$X_1$}
+        (A0) node[left]{$X_0$}
+
+        (S3) node[right]{$N_3$}
+        (S2) node[right]{$N_2$}
+        (S1) node[right]{$N_1$}
+        (S0) node[right]{$N_0$}
+
+        (B3) node[left]{ID} -- (B2) -- (B1)
+        (B0) -- ++(-1,0) node[vcc]{+V}
+        ;
+    \end{circuitikz}
+\end{center}
+
+\newpage
+
+% Q8
+\section{Using an adder, draw a circuit to subtract Y from X where X connects to the A input. The format is two’s complement. Let the result be $N = \{N_3 N_2 N_1 N_0\}$. Ignore the carry-out. Hint: This is only a subtractor so complements can be done with inverters.}
+
+\,\\
+
+\begin{center}
+    \begin{circuitikz}
+        \getanadder{}{(0,0)}
+        \draw
+        (A3) node[left]{$X_3$}
+        (A2) node[left]{$X_2$}
+        (A1) node[left]{$X_1$}
+        (A0) node[left]{$X_0$}
+
+        (S3) node[right]{$N_3$}
+        (S2) node[right]{$N_2$}
+        (S1) node[right]{$N_1$}
+        (S0) node[right]{$N_0$}
+
+        (B3) node[not port, anchor=out, scale=0.4](not3){}
+        (B2) node[not port, anchor=out, scale=0.4](not2){}
+        (B1) node[not port, anchor=out, scale=0.4](not1){}
+        (B0) node[not port, anchor=out, scale=0.4](not0){}
+
+        (not3.in) -- ++(-0.25,0) node[left]{$Y_3$}
+        (not2.in) -- ++(-0.25,0) node[left]{$Y_2$}
+        (not1.in) -- ++(-0.25,0) node[left]{$Y_1$}
+        (not0.in) -- ++(-0.25,0) node[left]{$Y_0$}
+
+        (Ci) node[vcc]{+V}
+        ;
+    \end{circuitikz}
+\end{center}
+
 
 \end{document}

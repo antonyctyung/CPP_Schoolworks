@@ -18,26 +18,50 @@
 %\usepackage[landscape]{geometry}
 \renewcommand{\thesubsection}{\thesection.\alph{subsection}}
 \newcommand{\equal}{=}
-\newcommand{\getamag}{
+\newcommand{\getamag}[2]{
     \tikzset{magcomp/.style={muxdemux,muxdemux def={Lh= 15,Rh= 15,NL=15,NR=9, w=6},no input leads}}
     \draw
-        (0,0) node[magcomp](mag){}
+        #2 node[magcomp](mag#1){}
         
-        (mag.blpin  2) node[right]{\large$A_3$}  -- (mag.lpin  2) coordinate (A3)
-        (mag.blpin  3) node[right]{\large$A_2$}  -- (mag.lpin  3) coordinate (A2)
-        (mag.blpin  4) node[right]{\large$A_1$}  -- (mag.lpin  4) coordinate (A1)
-        (mag.blpin  5) node[right]{\large$A_0$}  -- (mag.lpin  5) coordinate (A0)
-        (mag.blpin  7) node[right]{\large$B_3$}  -- (mag.lpin  7) coordinate (B3)
-        (mag.blpin  8) node[right]{\large$B_2$}  -- (mag.lpin  8) coordinate (B2)
-        (mag.blpin  9) node[right]{\large$B_1$}  -- (mag.lpin  9) coordinate (B1)
-        (mag.blpin 10) node[right]{\large$B_0$}  -- (mag.lpin 10) coordinate (B0)
-        (mag.blpin 12) node[right]{\large$a>b$} -- (mag.lpin 12) coordinate (alb)
-        (mag.blpin 13) node[right]{\large$a=b$} -- (mag.lpin 13) coordinate (aeb)
-        (mag.blpin 14) node[right]{\large$a<b$} -- (mag.lpin 14) coordinate (asb)
+        (mag#1.blpin  2) node[right]{\large$A_3$}  -- (mag#1.lpin  2) coordinate (#1A3)
+        (mag#1.blpin  3) node[right]{\large$A_2$}  -- (mag#1.lpin  3) coordinate (#1A2)
+        (mag#1.blpin  4) node[right]{\large$A_1$}  -- (mag#1.lpin  4) coordinate (#1A1)
+        (mag#1.blpin  5) node[right]{\large$A_0$}  -- (mag#1.lpin  5) coordinate (#1A0)
+        (mag#1.blpin  7) node[right]{\large$B_3$}  -- (mag#1.lpin  7) coordinate (#1B3)
+        (mag#1.blpin  8) node[right]{\large$B_2$}  -- (mag#1.lpin  8) coordinate (#1B2)
+        (mag#1.blpin  9) node[right]{\large$B_1$}  -- (mag#1.lpin  9) coordinate (#1B1)
+        (mag#1.blpin 10) node[right]{\large$B_0$}  -- (mag#1.lpin 10) coordinate (#1B0)
+        (mag#1.blpin 12) node[right]{\large$a>b$} -- (mag#1.lpin 12) coordinate (#1alb)
+        (mag#1.blpin 13) node[right]{\large$a=b$} -- (mag#1.lpin 13) coordinate (#1aeb)
+        (mag#1.blpin 14) node[right]{\large$a<b$} -- (mag#1.lpin 14) coordinate (#1asb)
 
-        (mag.brpin 4) node[left]{\Large{$A>B$}} -- (mag.rpin 4) coordinate (ALB)
-        (mag.brpin 5) node[left]{\Large{$A=B$}} -- (mag.rpin 5) coordinate (AEB)
-        (mag.brpin 6) node[left]{\Large{$A<B$}} -- (mag.rpin 6) coordinate (ASB)
+        (mag#1.brpin 4) node[left]{\Large{$A>B$}} -- (mag#1.rpin 4) coordinate (#1ALB)
+        (mag#1.brpin 5) node[left]{\Large{$A=B$}} -- (mag#1.rpin 5) coordinate (#1AEB)
+        (mag#1.brpin 6) node[left]{\Large{$A<B$}} -- (mag#1.rpin 6) coordinate (#1ASB)
+    ;
+}
+\newcommand{\getabigfatmag}[2]{
+    \tikzset{magcomp/.style={muxdemux,muxdemux def={Lh= 15,Rh= 15,NL=15,NR=9, w=6},no input leads}}
+    \draw
+        #2 node[magcomp](mag#1){}
+        
+        (mag#1.blpin  3) node[right]{\large$A_0-A_3$} coordinate (#1bA) ++(-3,0) coordinate(#1A)
+        (mag#1.blpin  8) node[right]{\large$B_0-B_3$} coordinate (#1bB) ++(-3,0) coordinate(#1B)
+
+        (mag#1.blpin 12) node[right]{\large$a>b$} -- (mag#1.lpin 12) coordinate (#1alb)
+        (mag#1.blpin 13) node[right]{\large$a=b$} -- (mag#1.lpin 13) coordinate (#1aeb)
+        (mag#1.blpin 14) node[right]{\large$a<b$} -- (mag#1.lpin 14) coordinate (#1asb)
+
+        (mag#1.brpin 4) node[left]{\large{$A>B$}} -- (mag#1.rpin 4) coordinate (#1ALB)
+        (mag#1.brpin 5) node[left]{\large{$A=B$}} -- (mag#1.rpin 5) coordinate (#1AEB)
+        (mag#1.brpin 6) node[left]{\large{$A<B$}} -- (mag#1.rpin 6) coordinate (#1ASB)
+
+        (#1bA) -- ++(-1.2,1.2) -- ++(0,-0.8) -- ++(-1.8,0)
+        (#1bA) -- ++(-1.2,-1.2) -- ++(0,+0.8) -- ++(-1.8,0)
+
+        (#1bB) -- ++(-1.2,1.2) -- ++(0,-0.8) -- ++(-1.8,0)
+        (#1bB) -- ++(-1.2,-1.2) -- ++(0,+0.8) -- ++(-1.8,0)
+
     ;
 }
 \newcommand{\greyrule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
@@ -76,12 +100,12 @@
 
 % Q1
 \section{Using a magnitude comparator, generate a logic one “Round” signal (to rounda number up by one) if the base 12 input, $N={N_3,N_2,N_1,N_0}$, is six or higher. Let N connect to the comparator's A input.}
-$$Round=N>5=(0101)_2$$
+$$Round=N>5=(N_3N_2N_1N_0)_2>(0101)_2$$
 \,\\
 
 \begin{center}
 \begin{circuitikz}
-    \getamag
+    \getamag{}{(0,0)}
     \draw
         (A3) node[left]{$N_3$}
         (A2) node[left]{$N_2$}
@@ -120,11 +144,11 @@ $$Round=N>5=(0101)_2$$
     \end{tabular}
 \end{table}
 
-
+\,\\
 
 \begin{center}
 \begin{circuitikz}
-    \getamag
+    \getamag{}{(0,0)}
     \tikzset{mux 2x1/.style={muxdemux,muxdemux def={Lh= 5,Rh= 5,NL=9,NR=1,NB=1, w=3},no input leads}}
     \draw
         (4,0) node[mux 2x1](mux){}
@@ -163,7 +187,7 @@ $$Round=N>5=(0101)_2$$
 \,\\
 \begin{center}
     \begin{circuitikz}
-        \getamag
+        \getamag{}{(0,0)}
         \draw
             (A2) -- ++(-1.75,0) node[left]{$X_2$}
             (A1) -- ++(-1.75,0) node[left]{$X_1$}
@@ -212,6 +236,34 @@ $$Round=N>5=(0101)_2$$
 
 \newpage
 
+\section{Using magnitude comparators, create a circuit to compare two 8-bit unsigned numbers, X and Y.  Let X connect to the comparator A inputs.}
 
+\begin{center}
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{circuitikz}[scale=1]
+        \getabigfatmag{1}{(0,0)}
+        \getabigfatmag{2}{(6,6)}
+        \draw
+            (1A) node[left]{\Large$X_0-X_3$}
+            (2A) node[left]{\Large$X_4-X_7$}
+
+            (1B) node[left]{\Large$Y_0-Y_3$}
+            (2B) node[left]{\Large$Y_4-Y_7$}
+
+            (1asb) node[above]{$0$} -- ++(-0.5,0) node[ground](gnd){}
+            (1alb) node[above]{$0$} -- ++(-0.5,0) -- (gnd)
+            (1aeb) node[above]{$1$} to[crossing] ++(-1,0) node[vcc](vcc){+V}
+            
+            (1ALB) -- ++(0.5,0) -- (\currcoor|-2alb) -- (2alb)
+            (1AEB) -- ++(1  ,0) -- (\currcoor|-2aeb) -- (2aeb)
+            (1ASB) -- ++(1.5,0) -- (\currcoor|-2asb) -- (2asb)
+
+            (2ALB) node[right]{\Large$X>Y$}
+            (2AEB) node[right]{\Large$X=Y$}
+            (2ASB) node[right]{\Large$X<Y$}
+            ;
+    \end{circuitikz}
+    \end{adjustbox}
+\end{center}
 
 \end{document}

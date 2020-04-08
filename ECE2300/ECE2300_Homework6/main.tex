@@ -1,0 +1,217 @@
+\documentclass{article}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage[table]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\makeatletter
+\newcommand\currcoor{\the\tikz@lastxsaved,\the\tikz@lastysaved}
+\makeatother
+%\usepackage[landscape]{geometry}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\newcommand{\getamag}{
+    \tikzset{magcomp/.style={muxdemux,muxdemux def={Lh= 15,Rh= 15,NL=15,NR=9, w=6},no input leads}}
+    \draw
+        (0,0) node[magcomp](mag){}
+        
+        (mag.blpin  2) node[right]{\large$A_3$}  -- (mag.lpin  2) coordinate (A3)
+        (mag.blpin  3) node[right]{\large$A_2$}  -- (mag.lpin  3) coordinate (A2)
+        (mag.blpin  4) node[right]{\large$A_1$}  -- (mag.lpin  4) coordinate (A1)
+        (mag.blpin  5) node[right]{\large$A_0$}  -- (mag.lpin  5) coordinate (A0)
+        (mag.blpin  7) node[right]{\large$B_3$}  -- (mag.lpin  7) coordinate (B3)
+        (mag.blpin  8) node[right]{\large$B_2$}  -- (mag.lpin  8) coordinate (B2)
+        (mag.blpin  9) node[right]{\large$B_1$}  -- (mag.lpin  9) coordinate (B1)
+        (mag.blpin 10) node[right]{\large$B_0$}  -- (mag.lpin 10) coordinate (B0)
+        (mag.blpin 12) node[right]{\large$a>b$} -- (mag.lpin 12) coordinate (alb)
+        (mag.blpin 13) node[right]{\large$a=b$} -- (mag.lpin 13) coordinate (aeb)
+        (mag.blpin 14) node[right]{\large$a<b$} -- (mag.lpin 14) coordinate (asb)
+
+        (mag.brpin 4) node[left]{\Large{$A>B$}} -- (mag.rpin 4) coordinate (ALB)
+        (mag.brpin 5) node[left]{\Large{$A=B$}} -- (mag.rpin 5) coordinate (AEB)
+        (mag.brpin 6) node[left]{\Large{$A<B$}} -- (mag.rpin 6) coordinate (ASB)
+    ;
+}
+\newcommand{\greyrule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
+\newcolumntype{:}{@{\hskip\tabcolsep\color{black!30}\vrule\hskip\tabcolsep}}
+\ExplSyntaxOn
+\NewExpandableDocumentCommand \groupify { O{\,\allowbreak} m m }
+  { \jakob_groupify:nnn {#1} {#2} {#3} }
+\cs_new:Npn \jakob_groupify:nnn #1 #2 #3
+  { \__jakob_groupify_loop:nnw { 1 } {#2} #3 \q_recursion_tail {#1} \q_recursion_stop }
+\cs_new:Npn \__jakob_groupify_loop:nnw #1 #2 #3
+  {
+    \quark_if_recursion_tail_stop:n {#3}
+    \exp_not:n {#3}
+    \int_compare:nNnTF {#1} = {#2}
+      { \__jakob_groupify_sep:n }
+      { \exp_args:Nf \__jakob_groupify_loop:nnw { \int_eval:n { #1+1 } } }
+          {#2}
+  }
+\cs_new:Npn \__jakob_groupify_sep:n #1 #2 \q_recursion_tail #3
+  {
+    \tl_if_empty:nF {#2} { \exp_not:n {#3} }
+    \__jakob_groupify_loop:nnw { 1 } {#1}
+    #2 \q_recursion_tail {#3}
+  }
+\ExplSyntaxOff
+
+\title{ECE 2300\\Digital Logic Design\\\,\\Homework 6}
+\author{Choi Tim Antony Yung}
+\begin{document}
+\maketitle
+
+\thispagestyle{empty}
+\setcounter{page}{0}
+
+\newpage
+
+% Q1
+\section{Using a magnitude comparator, generate a logic one “Round” signal (to rounda number up by one) if the base 12 input, $N={N_3,N_2,N_1,N_0}$, is six or higher. Let N connect to the comparator's A input.}
+$$Round=N>5=(0101)_2$$
+\,\\
+
+\begin{center}
+\begin{circuitikz}
+    \getamag
+    \draw
+        (A3) node[left]{$N_3$}
+        (A2) node[left]{$N_2$}
+        (A1) node[left]{$N_1$}
+        (A0) node[left]{$N_0$}
+
+        (B2) node[above]{$1$} to[crossing] ++(-1,0) node[vcc](vcc){+V}
+        (asb) node[above]{$0$} -- ++(-0.5,0) node[ground](gnd){}
+
+        (B3) node[above]{$0$} -- ++(-0.5,0)  -- (gnd)
+        (B1) node[above]{$0$} -- ++(-0.5,0)
+        (B0) node[above]{$1$} to[crossing] ++(-1,0) -- (vcc)
+
+        (alb) node[above]{$0$} -- ++(-0.5,0)
+        (aeb) node[above]{$1$} to[crossing] ++(-1,0)  -- (vcc)
+        
+        (ALB) node[right]{Round}
+        ;
+\end{circuitikz}
+\end{center}
+
+\newpage
+
+% Q2
+\section{A simple mechanism moves between positions $P=(0000)_2$ and $P=(1111)_2$. Using a magnitude comparator, generate an enable signal, MV\_OK,that is one if the position, P, is 12 or lower or if it is three or higher.}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c:cccc:l}
+        \toprule
+        $P_3$&\multicolumn{4}{c}{Threshold}& Relationship\\
+        \midrule
+        0&0&0&1&0&P valid if greater than threshold\\
+        1&1&1&0&1&P valid if less than threshold\\
+        &$P_3$&$P_3$&$\overline{P_3}$&$P_3$&\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+
+\begin{center}
+\begin{circuitikz}
+    \getamag
+    \tikzset{mux 2x1/.style={muxdemux,muxdemux def={Lh= 5,Rh= 5,NL=9,NR=1,NB=1, w=3},no input leads}}
+    \draw
+        (4,0) node[mux 2x1](mux){}
+        
+        (A3) -- ++(-1.5,0) node[circ](A3cntk){} -- ++(-0.5,0) node[left]{$P_3$}
+        (A2) -- ++(-1,0) to[crossing] ++(-1,0)  node[left]{$P_2$}
+        (A1) -- ++(-1,0) to[crossing] ++(-1,0) node[left]{$P_1$}
+        (A0) -- ++(-1,0) to[crossing] ++(-1,0) node[left]{$P_0$}
+
+        (B3) -- ++(-1.5,0) node[circ]{}
+        (B2) -- ++(-1.5,0) node[circ]{}
+        (B1) node[not port, anchor=out, scale=0.75](not){}
+        (not.in) -- (B1-|A3cntk) node[circ]{}
+        (B0) -- ++(-1.5,0) node[circ]{}
+
+        (asb) node[above]{$0$} -- ++(-0.5,0) node[ground](gnd){}
+        (alb) node[above]{$0$} -- ++(-0.5,0) -- (gnd)
+        (aeb) node[above]{$1$} to[crossing] ++(-1,0) node[vcc](vcc){+V}
+
+        (ALB) -- (mux.blpin 2) node[right]{\large$d_0$}
+        (ASB) -- (mux.blpin 8) node[right]{\large$d_1$}
+        
+        (A3cntk) -- ++(0,-8.5) -- (\currcoor-|mux.bbpin 1) -- (mux.bbpin 1) node[above]{\large S}
+        (mux.brpin 1) node[left]{Y} -- (mux.rpin 1) node[right]{MV\_OK}
+        ;
+
+\end{circuitikz}
+\end{center}
+
+\newpage
+
+% Q3
+\setcounter{section}{3}
+% Q3a
+\subsection{Design a magnitude comparator to compare two 4-bit two's complement numbers, X and Y.}
+\,\\
+\begin{center}
+    \begin{circuitikz}
+        \getamag
+        \draw
+            (A2) -- ++(-1.75,0) node[left]{$X_2$}
+            (A1) -- ++(-1.75,0) node[left]{$X_1$}
+            (A0) -- ++(-1.75,0) node[left]{$X_0$}
+            (B2) -- ++(-1.75,0) node[left]{$Y_2$}
+            (B1) -- ++(-1.75,0) node[left]{$Y_1$}
+            (B0) -- ++(-1.75,0) node[left]{$Y_0$}
+            (A3) -- ++(-0.25,0) coordinate(A3r) ++(-1,0) coordinate(A3l) -- ++(-0.5,0) node[left]{$X_3$}
+            (B3) -- ++(-0.25,0) coordinate(B3r) ++(-1,0) coordinate(B3l) -- ++(-0.5,0) node[left]{$Y_3$}
+            (A3l) -- (B3r)
+            (B3l) -- (A3r)
+
+            (asb) node[above]{$0$} -- ++(-0.5,0) node[ground](gnd){}
+            (alb) node[above]{$0$} -- ++(-0.5,0) -- (gnd)
+            (aeb) node[above]{$1$} to[crossing] ++(-1,0) node[vcc](vcc){+V}
+            
+            (ALB) node[right]{$X>Y$}
+            (AEB) node[right]{$X=Y$}
+            (ASB) node[right]{$X<Y$}
+            ;
+    \end{circuitikz}
+\end{center}
+
+\subsection{Complete the following chartgiving the outputs for the corresponding inputs (the leftmost X and Y bits are the MSBs). Indicate whether the output is correct (i.e.“OK”) and give the true relationship of thesignedinputs.}
+
+\begin{table}[H]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{cccc:cccc|cccc:cccc|c:c:c|l}
+        \toprule
+        \multicolumn{4}{c:}{X (in)}&\multicolumn{4}{c|}{Y (in)}&\multicolumn{4}{c:}{A}&\multicolumn{4}{c|}{B}&\multirow{2}{*}{$X>Y$}&\multirow{2}{*}{$X=Y$}&\multirow{2}{*}{$X<Y$}& OK\\
+        \multicolumn{4}{c:}{signed}&\multicolumn{4}{c|}{signed}&\multicolumn{4}{c:}{unsigned}&\multicolumn{4}{c|}{unsigned}&&&&(Signed Result)\\
+        \midrule
+        1&1&0&0 & 0&1&0&1 & 0&1&0&0 & 1&1&0&1 & 0&0&1 & OK ($-4 < +5$)  \\
+        1&0&1&0 & 1&0&0&1 & 1&0&1&0 & 1&0&0&1 & 1&0&0 & OK ($-6 > -7$)  \\
+        1&0&0&0 & 0&1&0&1 & 0&0&0&0 & 1&1&0&1 & 0&0&1 & OK ($-8 < +5$)  \\
+        1&1&0&1 & 1&1&0&1 & 1&1&0&1 & 1&1&0&1 & 0&1&0 & OK ($-3 = -3$)  \\
+        0&0&1&1 & 1&1&0&1 & 1&0&1&1 & 0&1&0&1 & 1&0&0 & OK ($+3 > -5$)  \\
+        1&1&0&1 & 1&1&0&0 & 1&1&0&1 & 1&1&0&0 & 1&0&0 & OK ($-3 > -4$)  \\
+        0&1&1&1 & 0&1&0&1 & 0&1&1&1 & 0&1&0&1 & 1&0&0 & OK ($+7 > +5$)  \\
+        0&0&1&1 & 0&1&0&0 & 0&1&0&0 & 1&1&0&1 & 0&0&1 & OK ($+3 < +4$)  \\
+        \bottomrule
+    \end{tabular}
+    \end{adjustbox}
+\end{table}
+
+\newpage
+
+
+
+\end{document}

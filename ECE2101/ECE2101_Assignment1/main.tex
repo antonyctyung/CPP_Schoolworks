@@ -29,6 +29,40 @@
 \setcounter{page}{1}
 
 \section{}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0, 0) node[op amp] (opamp) {}
+            (opamp.-) -- ++(-0.5,0) ++(-7.5,0) to[C,l_=$C\equal\SI{50}{\nano\farad}$] ++(2.5,0) to[L,l_=$L\equal\SI{1.25}{\henry}$] ++(2.5,0) to[R,l_=$R\equal\SI{1}{\kilo\ohm}$] ++(2.5,0) ++(-7.5,0)  to[sinusoidal voltage source,l_=$V_i$] ++(0,-2) node[ground]{}
+            (opamp.+) node[ground]{}
+            (opamp.-) ++(-0.5,0) -- ++(0,1.5) coordinate (tempcoor) to[R,l_=$R_f\equal\SI{5}{\kilo\ohm}$] (tempcoor -| opamp.out) -- (opamp.out) -- ++(1.5,0) coordinate (voplus) node[right]{$V_o$}
+            ;
+    \end{circuitikz}
+\end{center}
 
+$$H(j\omega)=\frac{V_o}{V_i}=-\frac{Z_f}{Z_i}=\frac{-5000}{1000+1.25j\omega-\frac{1}{50\times10^{-6}\omega}j}$$
+
+$$H(j\omega)=\frac{-5000}{1000+(1.25\omega-\frac{20000}{\omega})j}\times\frac{1000-(1.25\omega-\frac{20000}{\omega})j}{1000-(1.25\omega-\frac{20000}{\omega})j}$$
+
+$$H(j\omega)=\frac{-5000}{1000^2+(1.25\omega-\frac{20000}{\omega})^2}\left(1000-(1.25\omega-\frac{20000}{\omega})j\right)$$
+
+$$H(j\omega)=\frac{-5000}{1000^2+(1.25\omega-\frac{20000}{\omega})^2}\sqrt{1000^2+(1.25\omega-\frac{20000}{\omega})^2}\phase{tan^{-1}(\frac{20}{\omega}-0.00125\omega)}$$
+
+$$H(j\omega)=\frac{-5000}{\sqrt{1000^2+(1.25\omega-\frac{20000}{\omega})^2}}\phase{tan^{-1}(\frac{20}{\omega}-0.00125\omega)}$$
+
+
+
+\section{}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0, 0) node[op amp] (opamp) {}
+            (opamp.-) -- ++(-0.5,0) to[R,l_=$R_1\equal\SI{1.3}{\kilo\ohm}$] ++(-2.5,0) to[V,l_=$V_s$] ++(0,-2) -- ++(2,0) node[circ]{} node[ground](groundnode){} -- (groundnode |- opamp.+) -- (opamp.+)
+            (opamp.-) ++(-0.5,0) -- ++(0,1) coordinate (tempcoor) 
+            (tempcoor -| opamp.out) to[R,l_=$R_2\equal\SI{4.3}{\kilo\ohm}$] (tempcoor) -- ++(0,1.25) coordinate(temptempcoor) to[C,l=$C_2\equal\SI{0.1}{\micro\farad}$]  (temptempcoor -| opamp.out) -- (tempcoor -| opamp.out)
+            (tempcoor -| opamp.out) -- (opamp.out) -- ++(1.5,0) coordinate (voplus) to[open, v=$V_o$] (voplus |- groundnode) -- (groundnode)
+            ;
+    \end{circuitikz}
+\end{center}
 
 \end{document}

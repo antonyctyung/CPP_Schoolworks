@@ -1,0 +1,12 @@
+* C:\Users\Antony Yung\workspace\CPP_Schoolworks\ECE2101L\ECE2101L_Lab09\ECE2101L_Lab09_Schematics\ECE2101L_Lab09_B1.asc
+Vs s 0 AC 4.94974746831 0
+R1 s 2 8.2
+C1 2 0 10p
+R2 2 P001 92
+L1 P001 0 0.1
+C2 P002 0 0.1µ
+R3 P001 P002 130
+.ac list 60
+.print i(R2) i(R3)
+.backanno
+.end

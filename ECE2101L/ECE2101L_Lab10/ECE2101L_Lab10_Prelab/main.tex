@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{siunitx}
+\usepackage{graphics}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{graphicx} 
+\usepackage{steinmetz}
+\usepackage{hyperref}
+\usepackage{scalerel}
+\usepackage{biblatex}
+\addbibresource{Fundamentals_of_Electric_Circuits.bib}
+\usetikzlibrary{angles,quotes}
+\renewcommand{\thesubsubsection}{\thesubsection.\alph{subsubsection}}
+\newcommand{\equal}{=}
+
+\title{ECE 2101L\\Electrical Circuit Analysis II Laboratory\\\,\\Lab 10\\Resonance Circuits\\\,\\Prelab\\}
+\author{Choi Tim Antony Yung}
+%\author{Choi Tim Antony Yung\\\,\\Willis Nguyen\\Phineas Cozmiuc}
+
+\begin{document}
+
+\clearpage\maketitle
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+\section{Theory of electrical resonance}
+
+According to \textit{Fundamentals of Electric Circuits (2017)}, \textbf{Resonance} is a condition in an RLC circuit in which the capacitive and inductive reactances are equal in magnitude, thereby resulting in a purely resistive impedance. \textbf{Series Resonance} is therefore resonance in a series RLC circuit while \textbf{Parallel Resonance} is resonance in a parallel RLC circuit. The \textbf{Resonance Frequency} for both series and parallel RLC circuit is $\omega_0=\frac{1}{\sqrt{LC}}$\,rad/s. \cite{alexander2017fundamentals}
+
+\section{Series and parallel resonance in RLC circuits}
+\begin{center}
+    \begin{circuitikz}
+        \draw
+        (0,0) to[voltage source, v_=$v$] (0,-4)
+        (0,0) to[short,i=$i$] ++(1,0) node[ocirc]{}
+            to[R=$R$] ++(3,0)
+            to[L=$L$] ++(1.25,0) -- ++(1,0)
+            to[C=$C$] ++(0,-4) -- (0,-4)
+        (1,-4) node[ocirc]{}
+        ;
+    \end{circuitikz}
+\end{center}
+The input impedance of the above circuit is 
+$$Z=R+\left(\omega L-\frac{1}{\omega C}\right)j$$
+The resonance frequency is
+$$f_0=\frac{1}{\sqrt{LC}}\text{\,rad/s}=\frac{1}{2\pi\sqrt{LC}}\text{\,Hz}$$
+The current under resonance is
+$$i(t)=\frac{v(t)}{Z}=\frac{v(t)}{R+\left(\omega_0 L-\frac{1}{\omega_0 C}\right)j}=\frac{v(t)}{R+\left(\sqrt{\frac{L}{C}}-\sqrt{\frac{L}{C}}\right)j}=\frac{v(t)}{R}$$
+The magnitude of $i(t)$ under resonance will be smaller comparing to normal condition as the magnitude of Z is at its largest value, therefore $i(t)$ is smallest at resonance frequency comparing to other frequencies.
+
+\newpage
+
+\begin{center}
+    \begin{circuitikz}
+        \draw
+        (0,-3) to[current source, l=$i$] (0,0)
+        (0,0) -- ++(1,0) node[ocirc]{} -- ++(1,0) node[circ](R){} -- ++(1.5,0) node[circ](L){} -- ++(1.5,0) to[C=$C$] ++(0,-3) -- (0,-3)
+        (1,-0.25) node[below]{$+$}
+        (1,-1.5) node{$v$}
+        (1,-2.75) node[above]{$-$}
+        (1,-3)node[ocirc]{}
+        (R) to[R=$R$] ++(0,-3) node[circ]{}
+        (L) to[L=$L$] ++(0,-3) node[circ]{}
+            
+        ;
+    \end{circuitikz}
+\end{center}
+The input impedance of the above circuit is 
+$$Z=\frac{1}{\frac{1}{R}+\left(\omega C-\frac{1}{\omega L}\right)j}$$
+The resonance frequency is
+$$f_0=\frac{1}{\sqrt{LC}}\text{\,rad/s}=\frac{1}{2\pi\sqrt{LC}}\text{\,Hz}$$
+The voltage under resonance is
+$$v(t)=i(t)Z=\frac{i(t)}{\frac{1}{R}+\left(\omega_0 C-\frac{1}{\omega_0 L}\right)j}=\frac{i(t)}{\frac{1}{R}+\left(\sqrt{\frac{C}{L}}-\sqrt{\frac{C}{L}}\right)j}=i(t)R$$
+The magnitude of $v(t)$ under resonance will be larger comparing to normal condition as the magnitude of Z is at its largest value, therefore $v(t)$ is largest at resonance frequency comparing to other frequencies.
+
+\printbibliography
+
+\end{document}

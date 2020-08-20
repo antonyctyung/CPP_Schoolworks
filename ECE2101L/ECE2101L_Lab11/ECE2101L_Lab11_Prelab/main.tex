@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{siunitx}
+\usepackage{graphics}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{graphicx} 
+\usepackage{steinmetz}
+\usepackage{hyperref}
+\usepackage{scalerel}
+\usepackage{biblatex}
+\addbibresource{Fundamentals_of_Electric_Circuits.bib}
+\usetikzlibrary{angles,quotes}
+\renewcommand{\thesubsubsection}{\thesubsection.\alph{subsubsection}}
+\newcommand{\equal}{=}
+
+\title{ECE 2101L\\Electrical Circuit Analysis II Laboratory\\\,\\Lab 11\\Transfer Function of AC Circuits\\\,\\Prelab\\}
+\author{Choi Tim Antony Yung}
+%\author{Choi Tim Antony Yung\\\,\\Willis Nguyen\\Phineas Cozmiuc}
+
+\begin{document}
+
+\clearpage\maketitle
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+\section{Theory of transfer function}
+
+According to \textit{Fundamentals of Electric Circuits (2017)}, The transfer function $H(\omega)$ of a circuit is the frequency-dependent ratio of a phasor output $Y(\omega)$ (an element voltage or current) to a phasor input $X(\omega)$ (source voltage or current). \cite{alexander2017fundamentals} As $Y(\omega)$ may have a non-zero phase shift relative to $X(\omega)$, $H(\omega)$ is either real if they have the same phase, or complex otherwise. Given a transfer function $H(\omega)$ and an input voltage $V_{in}(\omega)$, the output voltage $V_{out}(\omega)$ can be calculated:
+$$ V_{out}(\omega)=H(\omega)\cdot V_{in}(\omega)$$
+
+
+\section{Transfer function of AC circuit with op amp}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0, 0) node[op amp] (opamp) {}
+            (opamp.-) -- ++(-0.5,0) to[R,l_=$R_1\equal\SI{100}{\ohm}$] ++(-2.5,0) to[V,l_=$V_{in}(\omega)$] ++(0,-2) -- ++(2,0) node[circ]{} node[ground](groundnode){} -- (groundnode |- opamp.+) -- (opamp.+)
+            (opamp.-) ++(-0.5,0) -- ++(0,1) coordinate (tempcoor) 
+            (tempcoor -| opamp.out) to[R,l_=$R_2\equal\SI{2.2}{\kilo\ohm}$] (tempcoor) -- ++(0,1.25) coordinate(temptempcoor) to[C,l=$C_2\equal\SI{22}{\micro\farad}$]  (temptempcoor -| opamp.out) -- (tempcoor -| opamp.out)
+            (tempcoor -| opamp.out) -- (opamp.out) -- ++(1.5,0) coordinate (voplus) to[R=$R_3\equal\SI{560}{\ohm}$, v=$V_{out}(\omega)$] (voplus |- groundnode) -- (groundnode)
+            ;
+    \end{circuitikz}
+\end{center}
+Assuming the op amp is ideal, the transfer function $H(\omega)$ can be determined as follow:
+$$H(\omega)=\frac{V_{out}}{V_{in}}=-\frac{Z_2}{Z_1}=-\frac{R_2||Z_{C_2}}{R_1}=-\frac{\frac{1}{\frac{1}{R_2}+Z_{C_2}}}{R_1}=-\frac{1}{\frac{R_1}{R_2}+R_1Z_{C_2}}=\frac{-\frac{R_1}{R_2}+R_1\omega C_2j}{(\frac{R_1}{R_2})^2+(R_1\omega C_2)^2}$$
+$V_{out}(\omega)$ can then be determined as follow:
+$$V_{out}(\omega)=\frac{-\frac{R_1}{R_2}+R_1\omega C_2j}{(\frac{R_1}{R_2})^2+(R_1\omega C_2)^2}V_{in}(\omega)$$
+
+The magnitude of $H(\omega)$ can be determined as follow:
+$$|H(\omega)|=\sqrt{\left(\frac{-\frac{R_1}{R_2}}{(\frac{R_1}{R_2})^2+(R_1\omega C_2)^2}\right)^2+\left(\frac{R_1\omega C_2}{(\frac{R_1}{R_2})^2+(R_1\omega C_2)^2}\right)^2}=\frac{1}{\sqrt{(\frac{R_1}{R_2})^2+(R_1\omega C_2)^2}}$$
+
+\newpage
+
+The phase of $H(\omega)$ can be determined as follow:
+$$arg\left(H(\omega)\right)=tan^{-1}\left(\frac{\frac{R_1\omega C_2}{(\frac{R_1}{R_2})^2+(R_1\omega C_2)^2}}{\frac{-\frac{R_1}{R_2}}{(\frac{R_1}{R_2})^2+(R_1\omega C_2)^2}}\right)=tan^{-1}\left(\frac{R_1\omega C_2}{-\frac{R_1}{R_2}}\right)=tan^{-1}\left(-R_2\omega C_2\right)$$
+
+When $R_1 =$ \SI{100}{\ohm}, $R_2 = $ \SI{2.2}{\kilo\ohm}, $R_3 = $ \SI{560}{\ohm}, $C_2 = $ \SI{22}{\micro\farad}, $\omega = 2\pi60$ rad/s:
+$$H(\omega)=\frac{1}{\sqrt{(\frac{R_1}{R_2})^2+(R_1\omega C_2)^2}}\phase{tan^{-1}\left(-R_2\omega C_2\right)}$$
+$$H(2\pi60)=\frac{1}{\sqrt{(\frac{100}{2200})^2+((100)(2\pi60)(22)\times10^{-6})^2}}\phase{tan^{-1}\left(-(2200)(2\pi60)(22)\times10^{-6}\right)}$$
+$$H(2\pi60)=1.203913\phase{-86.8630^{\circ}}$$
+
+
+\printbibliography
+
+\end{document}

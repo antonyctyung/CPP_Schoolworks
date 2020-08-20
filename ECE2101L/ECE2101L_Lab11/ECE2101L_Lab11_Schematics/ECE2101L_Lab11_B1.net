@@ -1,0 +1,12 @@
+* D:\Documents\workspace\CPP_Schoolworks\ECE2101L\ECE2101L_Lab11\ECE2101L_Lab11_Schematics\ECE2101L_Lab11_B1.asc
+Vin N002 0 AC 1.5 0
+XU1 N001 0 out opamp Aol=100K GBW=10Meg
+R1 N002 N001 3.3k
+R2 N001 out 18k
+C2 N001 out 0.33µ
+R3 out 0 1.3k
+.lib opamp.sub
+.ac list 640
+.print v(out)
+.backanno
+.end

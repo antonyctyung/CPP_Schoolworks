@@ -1,0 +1,5 @@
+* PSpice Model Editor - Version 17.2.0
+
+*$
+.model Mbreakn NMOS Kp=9m Vto=0.7V
+*$

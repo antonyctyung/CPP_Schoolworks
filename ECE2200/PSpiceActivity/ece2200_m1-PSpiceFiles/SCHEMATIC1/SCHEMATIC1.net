@@ -1,0 +1,8 @@
+* source ECE2200_M1
+R_R1         0 N00208  150 TC=0,0 
+M_M1         VO VIN N00208 N00208 Mbreakn           
+R_R2         VO VDD  470 TC=0,0 
+V_V2         VDD 0 DC 15V  
+V_V3         VIN 0  
++SIN 5V 5V 1K 0 0 0
+.PARAM  ving=1

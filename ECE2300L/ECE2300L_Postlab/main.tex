@@ -1,0 +1,262 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{multirow}
+\usepackage{tikz}
+\usepackage{karnaugh-map}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\usetikzlibrary{calc}
+%\usepackage[landscape]{geometry}
+%\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\newcommand{\greyrule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
+\makeatletter
+\newcommand\currcoor{\the\tikz@lastxsaved,\the\tikz@lastysaved}
+\makeatother
+\newcolumntype{:}{@{\hskip\tabcolsep\color{black!30}\vrule\hskip\tabcolsep}}
+
+\ExplSyntaxOn
+\NewExpandableDocumentCommand \groupify { O{\,\allowbreak} m m }
+  { \jakob_groupify:nnn {#1} {#2} {#3} }
+\cs_new:Npn \jakob_groupify:nnn #1 #2 #3
+  { \__jakob_groupify_loop:nnw { 1 } {#2} #3 \q_recursion_tail {#1} \q_recursion_stop }
+\cs_new:Npn \__jakob_groupify_loop:nnw #1 #2 #3
+  {
+    \quark_if_recursion_tail_stop:n {#3}
+    \exp_not:n {#3}
+    \int_compare:nNnTF {#1} = {#2}
+      { \__jakob_groupify_sep:n }
+      { \exp_args:Nf \__jakob_groupify_loop:nnw { \int_eval:n { #1+1 } } }
+          {#2}
+  }
+\cs_new:Npn \__jakob_groupify_sep:n #1 #2 \q_recursion_tail #3
+  {
+    \tl_if_empty:nF {#2} { \exp_not:n {#3} }
+    \__jakob_groupify_loop:nnw { 1 } {#1}
+    #2 \q_recursion_tail {#3}
+  }
+\ExplSyntaxOff
+
+\title{ECE 2300L\\Digital Logic Design Laboratory\\\,\\End of Semester Package}
+\author{Choi Tim Antony Yung}
+\begin{document}
+\maketitle
+
+\thispagestyle{empty}
+\setcounter{page}{0}
+
+\newpage
+
+\section{Postlab}
+\subsection{}
+To prevent the LED from drawing too much current and power.
+\subsection{}
+Two separate toggle switch that can toggle the same light;\\
+Clear register e.g. XOR eax, eax
+\subsection{}
+\begin{center}
+  \begin{circuitikz}
+    \draw
+    (0,0) node[nand port](nand1){}
+    (nand1.out) -- ++(1,0) -- ++(0,1) node[nand port, anchor=in 2](nand2){}
+    (nand1.out) ++(1,0) -- ++(0,-1) node[nand port, anchor=in 1](nand3){}
+    (nand1) ++(5,0) node[nand port](nand4){}
+    (nand2.out) -- ++(0.5,0) -- (\currcoor|-nand4.in 1) -- (nand4.in 1)
+    (nand3.out) -- ++(0.5,0) -- (\currcoor|-nand4.in 2) -- (nand4.in 2)
+    (nand2.in 1) -- (\currcoor-|nand1.in 1) node[circ](A){} -- (nand1.in 1)
+    (nand3.in 2) -- (\currcoor-|nand1.in 2) node[circ](B){} -- (nand1.in 2)
+    (A) -- ++(-0.5,0) node[left]{A}
+    (B) -- ++(-0.5,0) node[left]{B}
+    (nand4.out) -- ++(0.5,0) node[right]{$A\oplus B$}
+    ;
+  \end{circuitikz}
+\end{center}
+\section{Postlab}
+\subsection{}
+Assuming $(561374)_{16}$, equivalent unpacked BCD would be $(050601030704)_{16}$\\
+The ASCII equivalent is V for 56, Device Control 3 for 13, t for 74.
+\subsection{}
+It is used in rotary encoder.
+\subsection{}
+\begin{displaymath}
+  \begin{array}{c c|c|c}
+      % |c c|c| means that there are three columns in the table and
+      % a vertical bar ’|’ will be printed on the left and right borders,
+      % and between the second and the third columns.
+      % The letter ’c’ means the value will be centered within the column,
+      % letter ’l’, left-aligned, and ’r’, right-aligned.
+      A & B & A\oplus B & A\oplus(A\oplus B) \\ 
+      % Use & to separate the columns
+      \hline  
+      % Put a horizontal line between the table header and the rest.
+      0 & 0 & 0 & 0 \\
+      0 & 1 & 1 & 1 \\
+      1 & 0 & 1 & 0 \\
+      1 & 1 & 0 & 1 \\
+  \end{array}
+\end{displaymath}
+\,\\
+As seen in the truth table above, $F=A\oplus(A\oplus B)$ resembles $B$.
+
+\newpage
+
+\section{Postlab}
+\subsection{}
+As common cathode display have the positive terminal of the LED as input, the output of the decoder would be active high instead of active low.
+\subsection{}
+Common Anode
+\begin{center}
+  \begin{circuitikz}
+    \draw
+% Right side (Output)
+(18,0) node [vcc](r5v){5V} --
+(18,-1) -- (18,-1) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=A]{}
+(18,-1) -- (18,-3) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=B]{}
+(18,-3) -- (18,-5) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=C]{}
+(18,-5) -- (18,-7) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=D]{}
+(18,-7) -- (18,-9) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=E]{}
+(18,-9) -- (18,-11) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=F]{}
+(18,-11) -- (18,-13) to[R] ++(-1.5,0) to [Do] ++(-1,0) -- ++(-0.5,0) node[circ, label=G]{}
+;
+\end{circuitikz}
+\end{center}
+\newpage
+
+Common Cathode
+\begin{center}
+  \begin{circuitikz}
+    \draw
+% Right side (Output)
+(18,-1) -- (18,-1) to[R] ++(-1.5,0) ++(-1,0) to [Do] ++(1,0) ++(-1,0) -- ++(-0.5,0) node[circ, label=A]{}
+(18,-1) -- (18,-3) to[R] ++(-1.5,0) ++(-1,0) to [Do] ++(1,0) ++(-1,0) -- ++(-0.5,0) node[circ, label=B]{}
+(18,-3) -- (18,-5) to[R] ++(-1.5,0) ++(-1,0) to [Do] ++(1,0) ++(-1,0) -- ++(-0.5,0) node[circ, label=C]{}
+(18,-5) -- (18,-7) to[R] ++(-1.5,0) ++(-1,0) to [Do] ++(1,0) ++(-1,0) -- ++(-0.5,0) node[circ, label=D]{}
+(18,-7) -- (18,-9) to[R] ++(-1.5,0) ++(-1,0) to [Do] ++(1,0) ++(-1,0) -- ++(-0.5,0) node[circ, label=E]{}
+(18,-9) -- (18,-11) to[R] ++(-1.5,0) ++(-1,0) to [Do] ++(1,0) ++(-1,0) -- ++(-0.5,0) node[circ, label=F]{}
+(18,-11) -- (18,-13) node[ground]{} to[R] ++(-1.5,0) ++(-1,0) to [Do] ++(1,0) ++(-1,0) -- ++(-0.5,0) node[circ, label=G]{}
+;
+\end{circuitikz}
+\end{center}
+\subsection{}
+7447 drives common anode display while 7448 drive common cathode display
+
+\section{Postlab}
+
+\begin{center}
+  \begin{circuitikz}
+      \tikzset{demux/.style={muxdemux, muxdemux def={Lh=6, Rh=8, NL=5, NB=0, NR=10},no input leads}}
+      \ctikzset{tripoles/american or port/height=1.25}
+      \draw
+      (0,0) node[demux](demux){}
+
+      (demux.brpin 2) node[left]{$Y_0$} -- (demux.rpin 2) coordinate (Y0)
+      (demux.brpin 3) node[left]{$Y_1$} -- (demux.rpin 3) coordinate (Y1)
+      (demux.brpin 4) node[left]{$Y_2$} -- (demux.rpin 4) coordinate (Y2)
+      (demux.brpin 5) node[left]{$Y_3$} -- (demux.rpin 5) coordinate (Y3)
+      (demux.brpin 6) node[left]{$Y_4$} -- (demux.rpin 6) coordinate (Y4)
+      (demux.brpin 7) node[left]{$Y_5$} -- (demux.rpin 7) coordinate (Y5)
+      (demux.brpin 8) node[left]{$Y_6$} -- (demux.rpin 8) coordinate (Y6)
+      (demux.brpin 9) node[left]{$Y_7$} -- (demux.rpin 9) coordinate (Y7)
+      (demux.blpin 2) node[right]{$S_2$} -- (demux.lpin 2) coordinate (S2)
+      (demux.blpin 3) node[right]{$S_1$} -- (demux.lpin 3) coordinate (S1)
+      (demux.blpin 4) node[right]{$S_0$} -- (demux.lpin 4) coordinate (S0)
+
+      (demux.brpin 2) node[ocirc,right]{}
+      (demux.brpin 3) node[ocirc,right]{}
+      (demux.brpin 4) node[ocirc,right]{}
+      (demux.brpin 5) node[ocirc,right]{}
+      (demux.brpin 6) node[ocirc,right]{}
+      (demux.brpin 7) node[ocirc,right]{}
+      (demux.brpin 8) node[ocirc,right]{}
+      (demux.brpin 9) node[ocirc,right]{}
+
+      (S2) coordinate(A) node[above]{A}
+      (S1) coordinate(B) node[above]{B}
+      (S0) coordinate(C) node[above]{C}
+
+      (Y0) ++(0.5,0.5) node[or port, number inputs=4, anchor=in 1, rotate=90](nand1){}
+      (nand1.out) node[above]{W}
+      (nand1.bin 1) node[ocirc,below]{}
+      (nand1.bin 2) node[ocirc,below]{}
+      (nand1.bin 3) node[ocirc,below]{}
+      (nand1.bin 4) node[ocirc,below]{}
+      
+      (nand1.in 1) -- (nand1.bin 1|-Y0) node[circ]{}
+      (nand1.in 2) -- (nand1.bin 2|-Y1) node[circ]{}
+      (nand1.in 3) -- (nand1.bin 3|-Y3) node[circ]{}
+      (nand1.in 4) -- (nand1.bin 4|-Y4) node[circ]{}
+      ;
+      \ctikzset{tripoles/american or port/height=1}
+      \draw
+      (nand1.in 4) ++(0.45,0) node[or port, number inputs=3, anchor=in 1, rotate=90](nand2){}
+      (nand2.out) node[above]{X}
+      (nand2.bin 1) node[ocirc,below]{}
+      (nand2.bin 2) node[ocirc,below]{}
+      (nand2.bin 3) node[ocirc,below]{}
+
+      (nand2.in 1) -- (nand2.in 1|-Y0) node[circ]{} -- (Y0)
+      (nand2.in 2) -- (nand2.in 2|-Y2) node[circ]{} 
+      (nand2.in 3) -- (nand2.in 3|-Y4) node[circ]{} -- (Y4)
+      ;
+      \ctikzset{tripoles/american or port/height=1.5}
+      \draw
+      (nand2.in 3) ++(0.45,0) node[or port, number inputs=5, anchor=in 1, rotate=90](nand3){}
+      (nand3.out) node[above]{$h$}
+      (nand3.bin 1) node[ocirc,below]{}
+      (nand3.bin 2) node[ocirc,below]{}
+      (nand3.bin 3) node[ocirc,below]{}
+      (nand3.bin 4) node[ocirc,below]{}
+      (nand3.bin 5) node[ocirc,below]{}
+      (nand3.in 1) -- (nand3.in 1|-Y1) node[circ]{} -- (Y1)
+      (nand3.in 2) -- (nand3.in 2|-Y3) node[circ]{} -- (Y3)
+      (nand3.in 3) -- (nand3.in 3|-Y5) node[circ]{} -- (Y5)
+      (nand3.in 4) -- (nand3.in 4|-Y6) node[circ]{}
+      (nand3.in 5) -- (nand3.in 5|-Y7) node[circ]{} -- (Y7)
+      ;
+      \ctikzset{tripoles/american or port/height=0.6}
+      \draw
+      (nand3.in 5) ++(0.45,0) node[or port, number inputs=2, anchor=in 1, rotate=90](nand4){}
+      (nand4.out) node[above]{X}
+      (nand4.bin 1) node[ocirc,below]{}
+      (nand4.bin 2) node[ocirc,below]{}
+
+      (nand4.in 1) -- (nand4.in 1|-Y2) node[circ]{} -- (Y2)
+      (nand4.in 2) -- (nand4.in 2|-Y6) node[circ]{} -- (Y6)
+      ;
+  \end{circuitikz}
+\end{center}
+\setcounter{section}{10}
+\section{Postlab}
+\begin{center}
+  \begin{circuitikz}
+    \draw
+    (0,0) node[flipflop JK](JK){}
+    (JK.pin 3) to[crossing] (JK.pin 1) -- ++(-0.5,0) node[left]{T}
+    (JK.pin 2) -- ++(-0.5,0) node[left]{CLK}
+    (8,0) node[flipflop D](D){}
+    (D.pin 3) -- ++(-0.5,0) node[left]{CLK}
+    (D.pin 1) node[xor port, anchor = out](xor){}
+    (xor.in 2) node[left]{T}
+    (D.pin 6) ++(-0.15,0) -- ++(0,1) --(\currcoor-|xor.in 1) -- (xor.in 1)
+    ;
+  \end{circuitikz}
+\end{center}
+\setcounter{section}{10}
+\section{Postlab}
+As the maximum number 20 need at least 5 bits to be represented in binary, at least 5 flipflops is needed.
+\end{document}

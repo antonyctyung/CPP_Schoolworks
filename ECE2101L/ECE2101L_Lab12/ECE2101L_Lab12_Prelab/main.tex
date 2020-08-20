@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{siunitx}
+\usepackage{graphics}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{graphicx} 
+\usepackage{steinmetz}
+\usepackage{hyperref}
+\usepackage{scalerel}
+\usepackage{biblatex}
+\addbibresource{Fundamentals_of_Electric_Circuits.bib}
+\usetikzlibrary{angles,quotes}
+\renewcommand{\thesubsubsection}{\thesubsection.\alph{subsubsection}}
+\newcommand{\equal}{=}
+
+\title{ECE 2101L\\Electrical Circuit Analysis II Laboratory\\\,\\Lab 12\\Maximum Power Transfer and Power Factor Correction\\\,\\Prelab\\}
+\author{Choi Tim Antony Yung}
+%\author{Choi Tim Antony Yung\\\,\\Willis Nguyen\\Phineas Cozmiuc}
+
+\begin{document}
+
+\clearpage\maketitle
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+\section{Maximum power transfer}
+\begin{center}
+    \begin{circuitikz}
+        \draw 
+        (0,0) to[V,l_=$V_s$] (0,-4)
+        (0,0) to[C=$-j20\,\Omega$] (2,0)
+        node[circ]{} to[L=$j80\,\Omega$] ++(0,-2) to[R=$80\,\Omega$] ++(0,-2) node[circ]{}
+        (2,0) -- ++(2,0) node[ocirc]{} to[generic=$Z_L$, fill=pink] ++(0,-4) node[ocirc]{} -- (0,-4)
+        ;
+    \end{circuitikz}
+\end{center}
+
+$Z_L$ required to maximize power transfer is the complex conjugate of the Thevenin impedance between the two terminal of the load impedance.
+$$Z_L=(\frac{1}{\frac{1}{80+j80}+\frac{1}{-j20}})^*=3.2+j22.4\,\Omega$$
+$$S_{max}=\frac{|V_{L}|^2}{Z_L^*}=\frac{\left|\frac{\frac{200\sqrt{2}}{\sqrt{2}}\frac{1}{\frac{1}{80+j80}+\frac{1}{3.2+j22.4}}}{\frac{1}{\frac{1}{80+j80}+\frac{1}{3.2+j22.4}}-j20}\right|^2}{3.2-j22.4}=\frac{640000}{3.2-j22.4}=4000+j28000\,\text{VA}$$
+$$P_{max}=4000\,W$$
+
+\section{Power factor correction}
+Given $I=10\phase{9.2^{\circ}}$ and $V=240\phase{62^{\circ}}$
+$$S=\frac{1}{2}V_mI_m\phase{\theta_v-\theta_i}=\frac{1}{2}(240)(10)\phase{62^{\circ}-9.2^{\circ}}$$
+$$S=1200\phase{52.8^{\circ}}=725.5+j955.8\,\text{VA}$$
+\subsubsection*{Apparent Power}
+$$|S|=1200\,\text{VA}$$
+\subsubsection*{Real Power}
+$$P=725.5\,\text{W}$$
+\subsubsection*{Reactive Power}
+$$Q=955.8\,\text{VAR}$$
+\subsubsection*{Power Factor}
+$$PF=cos(\theta_v-\theta_i)=cos(52.8^{\circ})=0.6046$$
+The capacitance required to 0.97 lagging can be determined as follow,
+$$C=\frac{1}{\omega|Z_C|}=\frac{Q_c}{\omega V^2_{rms}}=\frac{Q-P\,tan(cos^{-1}(0.97))}{\omega V^2_{rms}}$$
+$$C=\frac{955.8-(725.5)(0.2506)}{28800\omega}=\frac{0.02687}{\omega}\text{\,F}$$
+
+\end{document}

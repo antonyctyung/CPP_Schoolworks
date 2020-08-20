@@ -1,0 +1,337 @@
+\documentclass{article}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage[table]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\makeatletter
+\newcommand\currcoor{\the\tikz@lastxsaved,\the\tikz@lastysaved}
+\makeatother
+\usepackage[landscape]{geometry}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\newcommand{\getamag}[2]{
+    \tikzset{magcomp/.style={muxdemux,muxdemux def={Lh= 15,Rh= 15,NL=15,NR=9, w=6},no input leads}}
+    \draw
+        #2 node[magcomp](mag#1){}
+        
+        (mag#1.blpin  2) node[right]{\large$A_3$}  -- (mag#1.lpin  2) coordinate (#1A3)
+        (mag#1.blpin  3) node[right]{\large$A_2$}  -- (mag#1.lpin  3) coordinate (#1A2)
+        (mag#1.blpin  4) node[right]{\large$A_1$}  -- (mag#1.lpin  4) coordinate (#1A1)
+        (mag#1.blpin  5) node[right]{\large$A_0$}  -- (mag#1.lpin  5) coordinate (#1A0)
+        (mag#1.blpin  7) node[right]{\large$B_3$}  -- (mag#1.lpin  7) coordinate (#1B3)
+        (mag#1.blpin  8) node[right]{\large$B_2$}  -- (mag#1.lpin  8) coordinate (#1B2)
+        (mag#1.blpin  9) node[right]{\large$B_1$}  -- (mag#1.lpin  9) coordinate (#1B1)
+        (mag#1.blpin 10) node[right]{\large$B_0$}  -- (mag#1.lpin 10) coordinate (#1B0)
+        (mag#1.blpin 12) node[right]{\large$a>b$} -- (mag#1.lpin 12) coordinate (#1alb)
+        (mag#1.blpin 13) node[right]{\large$a=b$} -- (mag#1.lpin 13) coordinate (#1aeb)
+        (mag#1.blpin 14) node[right]{\large$a<b$} -- (mag#1.lpin 14) coordinate (#1asb)
+
+        (mag#1.brpin 4) node[left]{\Large{$A>B$}} -- (mag#1.rpin 4) coordinate (#1ALB)
+        (mag#1.brpin 5) node[left]{\Large{$A=B$}} -- (mag#1.rpin 5) coordinate (#1AEB)
+        (mag#1.brpin 6) node[left]{\Large{$A<B$}} -- (mag#1.rpin 6) coordinate (#1ASB)
+    ;
+}
+\newcommand{\getabigfatmag}[2]{
+    \tikzset{magcomp/.style={muxdemux,muxdemux def={Lh= 15,Rh= 15,NL=15,NR=9, w=6},no input leads}}
+    \draw
+        #2 node[magcomp](mag#1){}
+        
+        (mag#1.blpin  3) node[right]{\large$A_0-A_3$} coordinate (#1bA) ++(-3,0) coordinate(#1A)
+        (mag#1.blpin  8) node[right]{\large$B_0-B_3$} coordinate (#1bB) ++(-3,0) coordinate(#1B)
+
+        (mag#1.blpin 12) node[right]{\large$a>b$} -- (mag#1.lpin 12) coordinate (#1alb)
+        (mag#1.blpin 13) node[right]{\large$a=b$} -- (mag#1.lpin 13) coordinate (#1aeb)
+        (mag#1.blpin 14) node[right]{\large$a<b$} -- (mag#1.lpin 14) coordinate (#1asb)
+
+        (mag#1.brpin 4) node[left]{\large{$A>B$}} -- (mag#1.rpin 4) coordinate (#1ALB)
+        (mag#1.brpin 5) node[left]{\large{$A=B$}} -- (mag#1.rpin 5) coordinate (#1AEB)
+        (mag#1.brpin 6) node[left]{\large{$A<B$}} -- (mag#1.rpin 6) coordinate (#1ASB)
+
+        (#1bA) -- ++(-1.2,1.2) -- ++(0,-0.8) -- ++(-1.8,0)
+        (#1bA) -- ++(-1.2,-1.2) -- ++(0,+0.8) -- ++(-1.8,0)
+        (#1bA) ++(-1.2,0) node[left]{4-bits}
+
+        (#1bB) -- ++(-1.2,1.2) -- ++(0,-0.8) -- ++(-1.8,0)
+        (#1bB) -- ++(-1.2,-1.2) -- ++(0,+0.8) -- ++(-1.8,0)
+        (#1bB) ++(-1.2,0) node[left]{4-bits}
+
+    ;
+}
+\newcommand{\getanadder}[2]{
+    \tikzset{adder/.style={muxdemux,muxdemux def={Lh= 11,Rh= 11,NL=11,NR=10,NB=1,NT=1, w=4},no input leads}}
+    \draw
+        #2 node[adder](adder#1){}
+        
+        (adder#1.blpin  2) node[right]{\large$A_3$}  -- (adder#1.lpin  2) coordinate (#1A3)
+        (adder#1.blpin  3) node[right]{\large$A_2$}  -- (adder#1.lpin  3) coordinate (#1A2)
+        (adder#1.blpin  4) node[right]{\large$A_1$}  -- (adder#1.lpin  4) coordinate (#1A1)
+        (adder#1.blpin  5) node[right]{\large$A_0$}  -- (adder#1.lpin  5) coordinate (#1A0)
+
+        (adder#1.blpin  7) node[right]{\large$B_3$}  -- (adder#1.lpin  7) coordinate (#1B3)
+        (adder#1.blpin  8) node[right]{\large$B_2$}  -- (adder#1.lpin  8) coordinate (#1B2)
+        (adder#1.blpin  9) node[right]{\large$B_1$}  -- (adder#1.lpin  9) coordinate (#1B1)
+        (adder#1.blpin 10) node[right]{\large$B_0$}  -- (adder#1.lpin 10) coordinate (#1B0)
+        
+        (adder#1.brpin 4) node[left]{\large$S_3$}  -- (adder#1.rpin 4) coordinate (#1S3)
+        (adder#1.brpin 5) node[left]{\large$S_2$}  -- (adder#1.rpin 5) coordinate (#1S2)
+        (adder#1.brpin 6) node[left]{\large$S_1$}  -- (adder#1.rpin 6) coordinate (#1S1)
+        (adder#1.brpin 7) node[left]{\large$S_0$}  -- (adder#1.rpin 7) coordinate (#1S0)
+
+        (adder#1.btpin 1) node[below]{\large{$C_{i}$}} -- (adder#1.tpin  1) coordinate (#1Ci)
+
+        (adder#1.bbpin 1) node[above]{\large{$C_{o}$}} -- (adder#1.bpin  1) coordinate (#1Co)
+    ;
+}
+\newcommand{\getabigfatadder}[2]{
+    \tikzset{adder/.style={muxdemux,muxdemux def={Lh= 10,Rh= 10,NL=10,NR=1,NB=1,NT=1, w=4},no input leads}}
+    \draw
+        #2 node[adder](adder#1){}
+        
+        (adder#1.blpin  3) node[right]{\large$A_0-A_3$} coordinate (#1bA) ++(-3,0) coordinate(#1A)
+        (adder#1.blpin  8) node[right]{\large$B_0-B_3$} coordinate (#1bB) ++(-3,0) coordinate(#1B)
+
+        (adder#1.brpin 1) node[left]{\large{$S_0-S_3$}} ++(3,0) coordinate(#1S)
+
+        (adder#1.btpin 1) node[below]{\large{$C_{i}$}} -- (adder#1.tpin  1) coordinate (#1Ci)
+
+        (adder#1.bbpin 1) node[above]{\large{$C_{o}$}} -- (adder#1.bpin  1) coordinate (#1Co)
+
+        (#1bA) -- ++(-1.2,1.2) -- ++(0,-0.8) -- ++(-1.8,0)
+        (#1bA) -- ++(-1.2,-1.2) -- ++(0,+0.8) -- ++(-1.8,0)
+        (#1bA) ++(-1.2,0) node[left]{4-bits}
+
+        (#1bB) -- ++(-1.2,1.2) -- ++(0,-0.8) -- ++(-1.8,0)
+        (#1bB) -- ++(-1.2,-1.2) -- ++(0,+0.8) -- ++(-1.8,0)
+        (#1bB) ++(-1.2,0) node[left]{4-bits}
+
+        (#1S) -- ++(-1.2,1.2) -- ++(0,-0.8) -- ++(-1.8,0)
+        (#1S) -- ++(-1.2,-1.2) -- ++(0,+0.8) -- ++(-1.8,0)
+        (#1S) ++(-1.2,0) node[left]{4-bits}
+    ;
+}
+
+\newcommand{\greyrule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
+\newcolumntype{:}{@{\hskip\tabcolsep\color{black!30}\vrule\hskip\tabcolsep}}
+\ExplSyntaxOn
+\NewExpandableDocumentCommand \groupify { O{\,\allowbreak} m m }
+  { \jakob_groupify:nnn {#1} {#2} {#3} }
+\cs_new:Npn \jakob_groupify:nnn #1 #2 #3
+  { \__jakob_groupify_loop:nnw { 1 } {#2} #3 \q_recursion_tail {#1} \q_recursion_stop }
+\cs_new:Npn \__jakob_groupify_loop:nnw #1 #2 #3
+  {
+    \quark_if_recursion_tail_stop:n {#3}
+    \exp_not:n {#3}
+    \int_compare:nNnTF {#1} = {#2}
+      { \__jakob_groupify_sep:n }
+      { \exp_args:Nf \__jakob_groupify_loop:nnw { \int_eval:n { #1+1 } } }
+          {#2}
+  }
+\cs_new:Npn \__jakob_groupify_sep:n #1 #2 \q_recursion_tail #3
+  {
+    \tl_if_empty:nF {#2} { \exp_not:n {#3} }
+    \__jakob_groupify_loop:nnw { 1 } {#1}
+    #2 \q_recursion_tail {#3}
+  }
+\ExplSyntaxOff
+
+\title{ECE 2300\\Digital Logic Design\\\,\\Homework 8}
+\author{Choi Tim Antony Yung}
+\begin{document}
+\maketitle
+
+\thispagestyle{empty}
+\setcounter{page}{0}
+
+\newpage
+
+\subsubsection*{2a}
+\begin{center}
+    \begin{circuitikz}
+        \draw
+        (0,0) node[flipflop D](A){A}
+        (3,0) node[flipflop D](B){B}
+        (6,0) node[flipflop D](C){C}
+        (9,0) node[flipflop D](D){D}
+        (12,0) node[flipflop D](E){E}
+        (A.pin 6) -- (B.pin 1)
+        (B.pin 6) -- (C.pin 1)
+        (C.pin 6) -- (D.pin 1)
+        (D.pin 6) -- (E.pin 1)
+        (B.pin 6) node[circ]{} -- ++(0,1)
+        node[xnor port, anchor=in 1,rotate=180](xnor){}
+        (E.pin 6) -- (E.pin 6|-xnor.in 2) -- (xnor.in 2)
+        (xnor.out) -- (xnor.out-|A.pin 1) -- (A.pin 1)
+        (A.pin 3) -- ++(0,-1.5) node[circ](clk){} -- ++(-0.5,0) node[left]{CLK}
+        (E.pin 3) -- (E.pin 3|-clk) -- (clk)
+        (D.pin 3) -- (D.pin 3|-clk) node[circ]{}
+        (C.pin 3) -- (C.pin 3|-clk) node[circ]{}
+        (B.pin 3) -- (B.pin 3|-clk) node[circ]{}
+        ;       
+    \end{circuitikz}
+\end{center}
+\newpage
+\subsubsection*{3a}
+\begin{center}
+    \begin{circuitikz}
+        \draw
+        (0,0) node[flipflop JK](A){A}
+        (5,0) node[flipflop JK](B){B}
+
+        (A.pin 6) -- (B.pin 1)
+        (B.pin 6) node[xor port, anchor=in 2,scale=1.5](xor){}
+        (A.pin 6) node[circ]{} -- (A.pin 6|-xor.in 1) -- (xor.in 1)
+        (A.pin 2) -- ++(-1,0) to[crossing] ++(-1,0) -- ++(0,-2) node[circ](clk){} -- ++(-0.5,0) node[left]{CLK}
+        (B.pin 2) -- ++(-1,0)to[crossing] ++(-1,0) -- (\currcoor|-clk) -- (clk)
+        (xor.out) node[right]{Pe}
+        (A.pin 1) -- (A.pin 1-|clk) -- ++(-0.5,0) node[left]{X}
+        (A.pin 3) node[not port, anchor=out](not1){}
+        (B.pin 3) node[not port, anchor=out](not2){}
+        (A.pin 1) ++(-1.5,0) node[circ]{} -- (\currcoor|-not1.in) -- (not1.in)
+        (B.pin 1) ++(-1.5,0) node[circ]{} -- (\currcoor|-not2.in) -- (not2.in)
+        ;       
+    \end{circuitikz}
+\end{center}
+\newpage
+\subsubsection*{5a}
+\begin{center}
+    \begin{circuitikz}
+        \draw
+        (0,0) node[flipflop JK](A){A}
+        (2.5,0) node[flipflop JK](B){B}
+        (5,0) node[flipflop JK](C){C}
+        (7.5,0) node[flipflop JK](D){D}
+        (10,0) node[flipflop JK](E){E}
+        (12.5,0) node[flipflop JK](F){F}
+        (A.pin 6) -- (B.pin 1)
+        (B.pin 6) -- (C.pin 1)
+        (C.pin 6) -- (D.pin 1)
+        (D.pin 6) -- (E.pin 1)
+        (E.pin 6) -- (F.pin 1)
+        (A.pin 2) -- ++(-0.125,0) -- ++(0,-2.5) node[circ](clk){} -- ++(-0.5,0) node[left]{CLK}
+        (F.pin 2) -- ++(-0.125,0) -- (\currcoor|-clk) -- (clk)
+        (E.pin 2) -- ++(-0.125,0) -- (\currcoor|-clk) node[circ]{}
+        (D.pin 2) -- ++(-0.125,0) -- (\currcoor|-clk) node[circ]{}
+        (C.pin 2) -- ++(-0.125,0) -- (\currcoor|-clk) node[circ]{}
+        (B.pin 2) -- ++(-0.125,0) -- (\currcoor|-clk) node[circ]{}
+        (F.pin 3) -- (E.pin 4)
+        (E.pin 3) -- (D.pin 4)
+        (D.pin 3) -- (C.pin 4)
+        (C.pin 3) -- (B.pin 4)
+        (B.pin 3) -- (A.pin 4)
+        (F.pin 6) -- ++(0,1) -- (\currcoor-|D) coordinate(bot)
+        (F.pin 4) -- ++(1,0) -- ++(0,4) -- (\currcoor-|D) coordinate(top)
+        (top) -- (bot-|C) -- (\currcoor-|A.pin 1) -- (A.pin 1)
+        (bot) -- (top-|C) -- (\currcoor-|A.pin 1) -- ++(-1,0) -- (\currcoor|-A.pin 3) -- (A.pin 3) 
+        ;       
+    \end{circuitikz}
+\end{center}
+\newpage
+\subsubsection*{5c}
+\begin{center}
+    \begin{circuitikz}
+        \draw
+        (0,0) node[flipflop JK](A){A}
+        (2.5,0) node[flipflop JK](B){B}
+        (5,0) node[flipflop JK](C){C}
+        (7.5,0) node[flipflop JK](D){D}
+        (10,0) node[flipflop JK](E){E}
+        (12.5,0) node[flipflop JK](F){F}
+        (A.pin 6) -- (B.pin 1)
+        (B.pin 6) -- (C.pin 1)
+        (C.pin 6) -- (D.pin 1)
+        (D.pin 6) -- (E.pin 1)
+        (E.pin 6) -- (F.pin 1)
+        (A.pin 2) -- ++(-0.125,0) -- ++(0,-2.5) node[circ](clk){} -- ++(-0.5,0) node[left]{CLK}
+        (F.pin 2) -- ++(-0.125,0) -- (\currcoor|-clk) -- (clk)
+        (E.pin 2) -- ++(-0.125,0) -- (\currcoor|-clk) node[circ]{}
+        (D.pin 2) -- (\currcoor|-clk) node[circ]{}
+        (C.pin 2) -- ++(-0.125,0) -- (\currcoor|-clk) node[circ]{}
+        (B.pin 2) -- ++(-0.125,0) -- (\currcoor|-clk) node[circ]{}
+        (F.pin 3) -- (E.pin 4)
+        (E.pin 3) -- (D.pin 4)
+        (D.pin 3) -- (C.pin 4)
+        (C.pin 3) -- (B.pin 4)
+        (B.pin 3) -- (A.pin 4)
+        (F.pin 6) -- ++(0,1.5) -- (\currcoor-|D) coordinate(bot)
+        (F.pin 4) -- ++(1,0) -- ++(0,4) -- (\currcoor-|D) coordinate(top)
+        (top) -- (bot-|C) -- (\currcoor-|A.pin 1) -- (A.pin 1)
+        (bot) -- (top-|C) -- (\currcoor-|A.pin 1) -- ++(-1,0) -- (\currcoor|-A.pin 3) -- (A.pin 3) 
+        (A.pin 6) ++(0.125,0) node[circ]{} -- ++(0,3) node[nand port,rotate=90, anchor=in 1](nand){} node[left]{A}
+        (nand.in 2) node[right]{$\overline{\text{C}}$} -- (\currcoor|-bot) -- ++(0,-0.5) -- (\currcoor-|C.pin 4) -- (C.pin 4) node[circ]{}
+        (nand.out) node[above]{R}
+        ;       
+    \end{circuitikz}
+\end{center}
+\newpage
+\subsubsection*{6a}
+\begin{center}
+    \begin{circuitikz}
+        \node [muxdemux, muxdemux def={NL=5, Lh=5,Rh=5,NR=0, NB=7, NR=1, w=15},external pins width=0](cntr) at (0,0) {};
+        \draw (cntr.blpin 2) node[right,font=\small]{SI/A};
+        \draw (cntr.blpin 3) ++(0,0.1) -- ++(0.1,-0.1) node[right, font=\small]{CLK} -- ++(-0.1,-0.1);
+        \draw (cntr.blpin 4) -- ++(-0.5,0) node[left]{+V};
+        \draw (cntr.blpin 4) node[ocirc, anchor=0]{} node[right,font=\small]{CLR};
+        \draw
+        (cntr.bbpin 1) node[above]{$\text{Q}_\text{A}$}
+        (cntr.bbpin 2) node[above]{$\text{Q}_\text{B}$}
+        (cntr.bbpin 3) node[above]{$\text{Q}_\text{C}$}
+        (cntr.bbpin 4) node[above]{$\text{Q}_\text{D}$}
+        (cntr.bbpin 5) node[above]{$\text{Q}_\text{E}$}
+        (cntr.bbpin 6) node[above]{$\text{Q}_\text{F}$}
+        (cntr.bbpin 7) node[above]{$\text{Q}_\text{G}$}
+        (cntr.rpin 1)  node[left]{SO/$\text{Q}_\text{H}$}
+        (cntr.lpin 3) -- ++(-1,0) node[left]{CLK}
+        (cntr.bbpin 1) -- ++(0,-0.25)
+        (cntr.bbpin 2) -- ++(0,-0.25)
+        (cntr.bbpin 3) -- ++(0,-0.25)
+        (cntr.bbpin 4) -- ++(0,-0.25)
+        (cntr.bbpin 5) -- ++(0,-0.25)
+        (cntr.bbpin 6) -- ++(0,-1) -- ++(-9,0) -- (\currcoor|-cntr.blpin 2) -- (cntr.blpin 2)
+        (cntr.bbpin 7) -- ++(0,-0.25)
+        (cntr.brpin 1) -- ++(0.25,0)
+
+        ;
+    \end{circuitikz}
+\end{center}
+\newpage
+\subsubsection*{6a}
+\begin{center}
+    \begin{circuitikz}
+        \node [muxdemux, muxdemux def={NL=5, Lh=5,Rh=5,NR=0, NB=7, NR=1, w=15},external pins width=0](cntr) at (0,0) {};
+        \draw (cntr.blpin 2) node[right,font=\small]{SI/A};
+        \draw (cntr.blpin 3) ++(0,0.1) -- ++(0.1,-0.1) node[right, font=\small]{CLK} -- ++(-0.1,-0.1);
+        \draw (cntr.blpin 4) -- ++(-0.5,0) node[left]{+V};
+        \draw (cntr.blpin 4) node[ocirc, anchor=0]{} node[right,font=\small]{CLR};
+        \draw
+        (cntr.bbpin 1) node[above]{$\text{Q}_\text{A}$}
+        (cntr.bbpin 2) node[above]{$\text{Q}_\text{B}$}
+        (cntr.bbpin 3) node[above]{$\text{Q}_\text{C}$}
+        (cntr.bbpin 4) node[above]{$\text{Q}_\text{D}$}
+        (cntr.bbpin 5) node[above]{$\text{Q}_\text{E}$}
+        (cntr.bbpin 6) node[above]{$\text{Q}_\text{F}$}
+        (cntr.bbpin 7) node[above]{$\text{Q}_\text{G}$}
+        (cntr.rpin 1)  node[left]{SO/$\text{Q}_\text{H}$}
+        (cntr.lpin 3) -- ++(-1,0) node[left]{CLK}
+        (cntr.bbpin 1) -- ++(0,-0.25)
+        (cntr.bbpin 2) -- ++(0,-0.25)
+        (cntr.bbpin 3) to[crossing] ++(0,-2) node[nand port,rotate=270,anchor=in 2](nand){}
+        (cntr.bbpin 4) -- ++(0,-0.25)
+        (cntr.bbpin 5) -- ++(0,-0.25)
+        (cntr.bbpin 6) -- ++(0,-1) -- ++(-9,0) -- (\currcoor|-cntr.blpin 2) -- (cntr.blpin 2)
+        (cntr.bbpin 7) -- ++(0,-0.25)
+        (cntr.brpin 1) -- ++(0.25,0)
+        (nand.in 1) -- ++(0,1) node[circ]{}
+        (nand.out) node[below]{X}
+        ;
+    \end{circuitikz}
+\end{center}
+\end{document}

@@ -13,7 +13,7 @@
 \title{ECE2300L_Prelab1}
 \author{Choi Tim Antony }
 \begin{document}
-
+\subsubsection*{Prelab 1}
 \begin{center}
     \begin{circuitikz}
         \draw
@@ -25,11 +25,11 @@
         to[Do] (1,-2.5)
         node[ground]{}
         (1,-1) -- (2,-1)
-        node[circ] (A) {A}
-        ++(1,0) node[american not port] (not1) {04}
+        node[circ](A){} node [above]{A}
+        ++(1,0) node[american not port] (not1) {}
         (A)--(not1.in)
         (not1.out)
-        node[circ] (barA) {$\bar{A}$}
+        node[circ] (barA){} node [above] {$\bar{A}$}
         
         (0,-5) node[vcc] {5V}
         to[nos] (0,-6)
@@ -39,15 +39,15 @@
         to[Do] (1,-7.5)
         node[ground]{}
         (1,-6) -- (2,-6)
-        node[circ](B){B}
-        ++(1,0) node[american not port] (not2) {04}
+        node[circ](B){} node [above]{B}
+        ++(1,0) node[american not port] (not2) {}
         (B)--(not2.in)
         (not2.out)
-        node[circ] (barB) {$\bar{B}$}
+        node[circ] (barB){} node [above] {$\bar{B}$}
         
-        (not1.out)++(2,-1) node[american and port] (and1) {08}
+        (not1.out)++(2,-1) node[american and port] (and1) {}
         
-        (not2.out)++(2,1) node[american and port] (and2) {08}
+        (not2.out)++(2,1) node[american and port] (and2) {}
 
         (not1.out)-|(and1.in 1)
         (and1.in 2)--(B)
@@ -55,7 +55,7 @@
         (not2.out)-|(and2.in 2)
         (and2.in 1)--(A)
         
-        (and1.out)++(2,-1.5) node[american or port] (or) {32}
+        (and1.out)++(2,-1.5) node[american or port] (or) {}
         
         (and1.out)--(or.in 1)
         (and2.out)--(or.in 2)
@@ -66,5 +66,56 @@
         ;
     \end{circuitikz}
 \end{center}
-
+\begin{center}
+    \begin{circuitikz}
+        \draw
+        (0,0) node[american and port](and){}
+        ;
+        \draw[color=red]
+        (and.in 1) node[above]{1}
+        (and.in 2) node[above]{2}
+        (and.out) node[above]{3}
+        ;
+        \draw
+        (3,0) node[american or port](or){}
+        ;
+        \draw[color=red]
+        (or.in 1) node[above]{1}
+        (or.in 2) node[above]{2}
+        (or.out) node[above]{3}
+        ;
+        \draw
+        (5,0) node[american not port](not){}
+        ;
+        \draw[color=red]
+        (not.in) node[above]{1}
+        (not.out) node[above]{2}
+        ;
+    \end{circuitikz}
+\end{center}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{cc|c}
+        $A$&$B$&$A\cdot B$\\
+        \midrule
+        0&0&0\\
+        0&1&0\\
+        1&0&0\\
+        1&1&1\\
+    \end{tabular}    
+    \begin{tabular}{cc|c}
+        $A$&$B$&$A+B$\\
+        \midrule
+        0&0&0\\
+        0&1&1\\
+        1&0&1\\
+        1&1&1\\
+    \end{tabular}
+    \begin{tabular}{c|c}
+        $A$&$\overline{A}$\\
+        \midrule
+        0&1\\
+        1&0\\
+    \end{tabular}
+\end{table}
 \end{document}

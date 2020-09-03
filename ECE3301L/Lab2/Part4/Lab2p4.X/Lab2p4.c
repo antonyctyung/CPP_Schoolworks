@@ -17,7 +17,7 @@ void main()
     TRISA = 0xFF;                   // Configuring PORTA (DIP switch) to read input
     TRISB = 0x00;                   // Configuring PORTB (4 LEDs) to output
     TRISC = 0x00;                   // Configuring PORTC (RBG LED D1) to output
-    TRISC = 0x00;                   // Configuring PORTD (RBG LED D2) to output
+    TRISD = 0x00;                   // Configuring PORTD (RBG LED D2) to output
     ADCON1 = 0x0F;                  // Put AN1-AN12 to digital I/O 
                                     // and use Vdd and Vss as Vref
     while (1)

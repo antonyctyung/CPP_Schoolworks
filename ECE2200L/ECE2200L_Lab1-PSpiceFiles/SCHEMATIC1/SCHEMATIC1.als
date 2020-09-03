@@ -1,0 +1,7 @@
+.ALIASES
+V_V1            V1(+=VS -=0 ) CN @ECE2200L_LAB1.SCHEMATIC1(sch_1):INS28@SOURCE.VAC.Normal(chips)
+R_R1            R1(1=VS 2=VOUT ) CN @ECE2200L_LAB1.SCHEMATIC1(sch_1):INS57@ANALOG.R.Normal(chips)
+C_C1            C1(1=0 2=VOUT ) CN @ECE2200L_LAB1.SCHEMATIC1(sch_1):INS82@ANALOG.C.Normal(chips)
+_    _(Vout=VOUT)
+_    _(Vs=VS)
+.ENDALIASES

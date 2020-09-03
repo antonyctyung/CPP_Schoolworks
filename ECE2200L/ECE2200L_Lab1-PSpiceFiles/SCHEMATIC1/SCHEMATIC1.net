@@ -1,0 +1,4 @@
+* source ECE2200L_LAB1
+V_V1         VS 0 DC 0Vdc AC 2.5Vac 
+R_R1         VS VOUT  10k TC=0,0 
+C_C1         0 VOUT  0.01u  TC=0,0 

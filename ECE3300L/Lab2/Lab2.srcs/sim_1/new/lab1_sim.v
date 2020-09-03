@@ -27,19 +27,12 @@ module lab1_sim;
     
     initial begin
     test_data = 0;
-    #1;
-    test_data = 1;
-    #1;
-    test_data = 2;
-    #1;
-    test_data = 3;
-    #1;
-    test_data = 4;
-    #1;
-    test_data = 5;
-    #1;
-    test_data = 6;
-    #1;
-    test_data = 7;
+    #1 test_data = 1;
+    #1 test_data = 2;
+    #1 test_data = 3;
+    #1 test_data = 4;
+    #1 test_data = 5;
+    #1 test_data = 6;
+    #1 test_data = 7;
     end
 endmodule

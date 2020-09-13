@@ -13,7 +13,7 @@ void Delay_One_Sec(void);
 
 void main()
 {
-    char in;                        // Use variable 'in' as char
+    char in = 0;                    // Use variable 'in' as char
     TRISA = 0xFF;                   // Configuring PORTA (DIP switch) to read input
     TRISB = 0x00;                   // Configuring PORTB (4 LEDs) to output
     TRISC = 0x00;                   // Configuring PORTC (RBG LED) to output
@@ -21,12 +21,18 @@ void main()
                                     // and use Vdd and Vss as Vref
     while (1)
     {
+        // for loop approach:
         for (char colorcode = 0; colorcode < 8; colorcode++ )
                                     // set color to from 000=0 to 111=7
         {
-            PORTC = colorcode;     // output the RGB signal to the corresponding port
-            Delay_One_Sec();
+           PORTC = colorcode;       // output the RGB signal to the corresponding port
+           Delay_One_Sec();
         }
+        
+        // while loop approach:
+        // in = in & 0x07;          // mask out upper 5 bits
+        // PORTC = in++;            // put 8-bits in to PORT C and increment in 
+        // Delay_One_Sec();
     }
 }
 

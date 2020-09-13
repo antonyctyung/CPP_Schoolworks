@@ -21,7 +21,7 @@
 
 
 module decoder  
-    (input [2:0] data,  output reg [7:0] y );
+    (input [3:0] data,  output reg [15:0] y );
 	always @(data)
 	begin
 		y = 0;

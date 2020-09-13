@@ -1,0 +1,156 @@
+\documentclass{article}
+\usepackage[table]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage[landscape]{geometry}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\newcommand{\greyrule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
+\newcolumntype{:}{@{\hskip\tabcolsep\color{black!30}\vrule\hskip\tabcolsep}}
+
+\ExplSyntaxOn
+\NewExpandableDocumentCommand \groupify { O{\,\allowbreak} m m }
+  { \jakob_groupify:nnn {#1} {#2} {#3} }
+\cs_new:Npn \jakob_groupify:nnn #1 #2 #3
+  { \__jakob_groupify_loop:nnw { 1 } {#2} #3 \q_recursion_tail {#1} \q_recursion_stop }
+\cs_new:Npn \__jakob_groupify_loop:nnw #1 #2 #3
+  {
+    \quark_if_recursion_tail_stop:n {#3}
+    \exp_not:n {#3}
+    \int_compare:nNnTF {#1} = {#2}
+      { \__jakob_groupify_sep:n }
+      { \exp_args:Nf \__jakob_groupify_loop:nnw { \int_eval:n { #1+1 } } }
+          {#2}
+  }
+\cs_new:Npn \__jakob_groupify_sep:n #1 #2 \q_recursion_tail #3
+  {
+    \tl_if_empty:nF {#2} { \exp_not:n {#3} }
+    \__jakob_groupify_loop:nnw { 1 } {#1}
+    #2 \q_recursion_tail {#3}
+  }
+\ExplSyntaxOff
+ 
+\begin{document}
+
+\begin{center}
+    \begin{circuitikz}
+        \tikzset{mux/.style={muxdemux,muxdemux def={Lh= 6,Rh= 4,NL=6,NB=2,w=2},no input leads}}
+        \draw
+        
+        
+        (-8,0) node[mux](mux1){}
+
+        (mux1.blpin 2) node[right]{$W_0$}         -- (mux1.lpin 2) coordinate (1d0)
+        (mux1.blpin 3) node[right]{$W_1$}         -- (mux1.lpin 3) coordinate (1d1)
+        (mux1.blpin 4) node[right]{$W_2$}         -- (mux1.lpin 4) coordinate (1d2)
+        (mux1.blpin 5) node[right]{$W_3$}         -- (mux1.lpin 5) coordinate (1d3)
+        (mux1.bbpin 1) node[above]{\small{$S_1$}} -- (mux1.bpin 1) coordinate (1S1)
+        (mux1.bbpin 2) node[above]{\small{$S_0$}} -- (mux1.bpin 2) coordinate (1S0)
+        (mux1.brpin 1) node[left]{$f$}            -- (mux1.rpin 1) coordinate (1Y)
+
+        
+        (-4,0) node[mux](mux2){}
+
+        (mux2.blpin 2) node[right]{$W_0$}         -- (mux2.lpin 2) coordinate (2d0)
+        (mux2.blpin 3) node[right]{$W_1$}         -- (mux2.lpin 3) coordinate (2d1)
+        (mux2.blpin 4) node[right]{$W_2$}         -- (mux2.lpin 4) coordinate (2d2)
+        (mux2.blpin 5) node[right]{$W_3$}         -- (mux2.lpin 5) coordinate (2d3)
+        (mux2.bbpin 1) node[above]{\small{$S_1$}} -- (mux2.bpin 1) coordinate (2S1)
+        (mux2.bbpin 2) node[above]{\small{$S_0$}} -- (mux2.bpin 2) coordinate (2S0)
+        (mux2.brpin 1) node[left]{$f$}            -- (mux2.rpin 1) coordinate (2Y)
+
+        
+        (0,0) node[mux](mux3){}
+
+        (mux3.blpin 2) node[right]{$W_0$}         -- (mux3.lpin 2) coordinate (3d0)
+        (mux3.blpin 3) node[right]{$W_1$}         -- (mux3.lpin 3) coordinate (3d1)
+        (mux3.blpin 4) node[right]{$W_2$}         -- (mux3.lpin 4) coordinate (3d2)
+        (mux3.blpin 5) node[right]{$W_3$}         -- (mux3.lpin 5) coordinate (3d3)
+        (mux3.bbpin 1) node[above]{\small{$S_1$}} -- (mux3.bpin 1) coordinate (3S1)
+        (mux3.bbpin 2) node[above]{\small{$S_0$}} -- (mux3.bpin 2) coordinate (3S0)
+        (mux3.brpin 1) node[left]{$f$}            -- (mux3.rpin 1) coordinate (3Y)
+
+        (4,0) node[mux](mux4){}
+
+        (mux4.blpin 2) node[right]{$W_0$}         -- (mux4.lpin 2) coordinate (4d0)
+        (mux4.blpin 3) node[right]{$W_1$}         -- (mux4.lpin 3) coordinate (4d1)
+        (mux4.blpin 4) node[right]{$W_2$}         -- (mux4.lpin 4) coordinate (4d2)
+        (mux4.blpin 5) node[right]{$W_3$}         -- (mux4.lpin 5) coordinate (4d3)
+        (mux4.bbpin 1) node[above]{\small{$S_1$}} -- (mux4.bpin 1) coordinate (4S1)
+        (mux4.bbpin 2) node[above]{\small{$S_0$}} -- (mux4.bpin 2) coordinate (4S0)
+        (mux4.brpin 1) node[left]{$f$}            -- (mux4.rpin 1) coordinate (4Y)
+
+        (1S1-|1S0) node[jump crossing](xing1){}
+        (xing1.north)-- (1S0)
+        (xing1.east) -- (2S1) node[circ]{}
+        (xing1.west) -- (1S1) node[circ]{}
+        (xing1.south) -- ++(0,-0.25) node[circ](cntk1){}
+        (2S1-|2S0) node[jump crossing](xing2){}
+        (xing2.north)-- (2S0)
+        (xing2.east) -- (3S1) 
+        (xing2.west) -- (2S1)
+        (xing2.south) -- ++(0,-0.25) node[circ](cntk2){}
+        (3S1-|3S0) node[jump crossing](xing3){}
+        (xing3.north)-- (3S0)
+        (xing3.east) -- (4S1)
+        (xing3.west) -- (3S1)
+        (xing3.south) -- ++(0,-0.25) node[circ](cntk3){}
+        (4S0) -- (4S0|-cntk3) -- (mux1.lpin 1|-cntk1) node[left]{$S_0$}
+        (3S1) node[circ]{} -- (mux3.lpin 1|-4S1) 
+        (1S1) -- (mux1.lpin 1|-1S1) node[left]{$S_1$}
+
+        (1d0) node[left] {$W_{0}$}
+        (1d1) node[left] {$W_{1}$}
+        (1d2) node[left] {$W_{2}$}
+        (1d3) node[left] {$W_{3}$}
+        (2d0) node[left] {$W_{4}$}
+        (2d1) node[left] {$W_{5}$}
+        (2d2) node[left] {$W_{6}$}
+        (2d3) node[left] {$W_{7}$}
+        (3d0) node[left] {$W_{8}$}
+        (3d1) node[left] {$W_{9}$}
+        (3d2) node[left] {$W_{10}$}
+        (3d3) node[left] {$W_{11}$}
+        (4d0) node[left] {$W_{12}$}
+        (4d1) node[left] {$W_{13}$}
+        (4d2) node[left] {$W_{14}$}
+        (4d3) node[left] {$W_{15}$}
+
+        (1Y) node[right] {$M_{0}$}
+        (2Y) node[right] {$M_{1}$}
+        (3Y) node[right] {$M_{2}$}
+        (4Y) node[right] {$M_{3}$}
+
+        (7,2.5) node[mux](mux5){}
+
+        (mux5.blpin 2) node[right]{$W_0$}         -- (mux5.lpin 2) coordinate (5d0)
+        (mux5.blpin 3) node[right]{$W_1$}         -- (mux5.lpin 3) coordinate (5d1)
+        (mux5.blpin 4) node[right]{$W_2$}         -- (mux5.lpin 4) coordinate (5d2)
+        (mux5.blpin 5) node[right]{$W_3$}         -- (mux5.lpin 5) coordinate (5d3)
+        (mux5.bbpin 1) node[above]{\small{$S_1$}} -- (mux5.bpin 1) coordinate (5S1)
+        (mux5.bbpin 2) node[above]{\small{$S_0$}} -- (mux5.bpin 2) coordinate (5S0)
+        (mux5.brpin 1) node[left]{$f$}            -- (mux5.rpin 1) coordinate (5Y)
+
+        (1Y) -- (1Y|-5d0) -- (5d0)
+        (2Y) -- (2Y|-5d1) -- (5d1)
+        (3Y) -- (3Y|-5d2) -- (5d2)
+        (4Y) -- (4Y|-5d3) -- (5d3)
+
+        (5S0) node[below] {$S_2$}
+        (5S1) node[below] {$S_3$}
+
+        (5Y) node[right] {$f$}
+
+
+        ;
+    \end{circuitikz}
+\end{center}
+
+
+\end{document}

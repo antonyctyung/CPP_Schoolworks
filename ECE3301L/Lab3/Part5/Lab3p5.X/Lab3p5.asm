@@ -24,11 +24,11 @@
 
 START: 
 
-    MOVLW 0x0F			        ; Load W with 0x0F0
-    MOVWF ADCON1		        ; Make ADCON1 to be all digital
+    MOVLW 0x0F	                ; Load W with 0x0F0
+    MOVWF ADCON1                ; Make ADCON1 to be all digital
 
-    MOVLW 0xFF			        ; Load W with 0xFF
-    MOVWF TRISA			        ; Set PORT A as all inputs
+    MOVLW 0xFF	                ; Load W with 0xFF
+    MOVWF TRISA	                ; Set PORT A as all inputs
 	    
     MOVLW 0x00                  ; Load W with 0x00
     MOVWF TRISC                 ; Make PORT C bits 0-7 as outputs

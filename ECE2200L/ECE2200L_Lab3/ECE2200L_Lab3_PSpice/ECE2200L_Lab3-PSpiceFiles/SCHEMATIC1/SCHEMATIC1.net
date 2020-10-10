@@ -1,0 +1,8 @@
+* source ECE2200L_LAB3
+R_R1         N00311 VO  10k TC=0,0 
+V_V2         N00303 0 5Vdc
+V_V3         0 N00307 5Vdc
+V_V4         N00311 0 DC 0Vdc AC {vin*1Vac} 
+D_D5         N00307 VO D1N4001 
+D_D6         VO N00303 D1N4001 
+.PARAM  vin=1

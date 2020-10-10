@@ -1,0 +1,292 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Mon Sep 21 16:22:08 2020
+# Process ID: 2348
+# Current directory: D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.runs/synth_1
+# Command line: vivado.exe -log BinaryToSevenSegmentDisplay.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source BinaryToSevenSegmentDisplay.tcl
+# Log file: D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.runs/synth_1/BinaryToSevenSegmentDisplay.vds
+# Journal file: D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source BinaryToSevenSegmentDisplay.tcl -notrace
+Command: synth_design -top BinaryToSevenSegmentDisplay -part xc7a100tcsg324-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Device 21-403] Loading part xc7a100tcsg324-1
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 3404 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 717.449 ; gain = 178.391
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'BinaryToSevenSegmentDisplay' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.srcs/sources_1/new/main.v:80]
+INFO: [Synth 8-6157] synthesizing module 'sign_mag_add' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.srcs/sources_1/new/main.v:3]
+	Parameter N bound to: 4 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'sign_mag_add' (1#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.srcs/sources_1/new/main.v:3]
+INFO: [Synth 8-6157] synthesizing module 'SevenSegmentController' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.srcs/sources_1/new/main.v:70]
+INFO: [Synth 8-6157] synthesizing module 'SevenSegmentDecoder' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.srcs/sources_1/new/main.v:42]
+INFO: [Synth 8-226] default block is never used [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.srcs/sources_1/new/main.v:47]
+INFO: [Synth 8-6155] done synthesizing module 'SevenSegmentDecoder' (2#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.srcs/sources_1/new/main.v:42]
+INFO: [Synth 8-6155] done synthesizing module 'SevenSegmentController' (3#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.srcs/sources_1/new/main.v:70]
+INFO: [Synth 8-6155] done synthesizing module 'BinaryToSevenSegmentDisplay' (4#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.srcs/sources_1/new/main.v:80]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 780.742 ; gain = 241.684
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 780.742 ; gain = 241.684
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 780.742 ; gain = 241.684
+---------------------------------------------------------------------------------
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.srcs/constrs_1/imports/ECE3300L/Nexys-A7-100T.xdc]
+Finished Parsing XDC File [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.srcs/constrs_1/imports/ECE3300L/Nexys-A7-100T.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.srcs/constrs_1/imports/ECE3300L/Nexys-A7-100T.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/BinaryToSevenSegmentDisplay_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/BinaryToSevenSegmentDisplay_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 847.434 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 847.434 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 847.434 ; gain = 308.375
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a100tcsg324-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 847.434 ; gain = 308.375
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 847.434 ; gain = 308.375
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 847.434 ; gain = 308.375
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input      3 Bit       Adders := 1     
+	   2 Input      3 Bit       Adders := 1     
++---Muxes : 
+	   2 Input      3 Bit        Muxes := 3     
+	   2 Input      1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module sign_mag_add 
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input      3 Bit       Adders := 1     
+	   2 Input      3 Bit       Adders := 1     
++---Muxes : 
+	   2 Input      3 Bit        Muxes := 3     
+	   2 Input      1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 240 (col length:80)
+BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+WARNING: [Synth 8-3917] design BinaryToSevenSegmentDisplay has port DP driven by constant 1
+WARNING: [Synth 8-3917] design BinaryToSevenSegmentDisplay has port AN[7] driven by constant 1
+WARNING: [Synth 8-3917] design BinaryToSevenSegmentDisplay has port AN[6] driven by constant 1
+WARNING: [Synth 8-3917] design BinaryToSevenSegmentDisplay has port AN[5] driven by constant 1
+WARNING: [Synth 8-3917] design BinaryToSevenSegmentDisplay has port AN[4] driven by constant 1
+WARNING: [Synth 8-3917] design BinaryToSevenSegmentDisplay has port AN[3] driven by constant 1
+WARNING: [Synth 8-3917] design BinaryToSevenSegmentDisplay has port AN[2] driven by constant 1
+WARNING: [Synth 8-3917] design BinaryToSevenSegmentDisplay has port AN[1] driven by constant 1
+WARNING: [Synth 8-3917] design BinaryToSevenSegmentDisplay has port AN[0] driven by constant 0
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 847.434 ; gain = 308.375
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 872.750 ; gain = 333.691
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 872.824 ; gain = 333.766
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 886.516 ; gain = 347.457
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 902.355 ; gain = 363.297
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 902.355 ; gain = 363.297
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 902.355 ; gain = 363.297
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 902.355 ; gain = 363.297
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 902.355 ; gain = 363.297
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 902.355 ; gain = 363.297
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-----+------+
+|      |Cell |Count |
++------+-----+------+
+|1     |LUT2 |     4|
+|2     |LUT3 |     1|
+|3     |LUT4 |     2|
+|4     |LUT6 |    11|
+|5     |IBUF |     8|
+|6     |OBUF |    20|
++------+-----+------+
+
+Report Instance Areas: 
++------+---------+-------+------+
+|      |Instance |Module |Cells |
++------+---------+-------+------+
+|1     |top      |       |    46|
++------+---------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 902.355 ; gain = 363.297
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 9 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:12 ; elapsed = 00:00:15 . Memory (MB): peak = 902.355 ; gain = 296.605
+Synthesis Optimization Complete : Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 902.355 ; gain = 363.297
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 920.656 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+19 Infos, 9 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:21 ; elapsed = 00:00:23 . Memory (MB): peak = 920.656 ; gain = 619.527
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 920.656 ; gain = 0.000
+WARNING: [Constraints 18-5210] No constraints selected for write.
+Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
+INFO: [Common 17-1381] The checkpoint 'D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab5/ECE3300L_Lab5.runs/synth_1/BinaryToSevenSegmentDisplay.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file BinaryToSevenSegmentDisplay_utilization_synth.rpt -pb BinaryToSevenSegmentDisplay_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Mon Sep 21 16:22:33 2020...

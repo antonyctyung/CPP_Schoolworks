@@ -1,0 +1,187 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[dvipsnames,table]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{multirow}
+\usepackage{tikz}
+\usepackage{karnaugh-map}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage{adjustbox}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\usetikzlibrary{calc}
+%\usepackage[landscape]{geometry}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\newcommand{\greyrule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
+\makeatletter
+\newcommand\currcoor{\the\tikz@lastxsaved,\the\tikz@lastysaved}
+\makeatother
+\newcolumntype{:}{@{\hskip\tabcolsep\color{black!30}\vrule\hskip\tabcolsep}}
+
+\ExplSyntaxOn
+\NewExpandableDocumentCommand \groupify { O{\,\allowbreak} m m }
+  { \jakob_groupify:nnn {#1} {#2} {#3} }
+\cs_new:Npn \jakob_groupify:nnn #1 #2 #3
+  { \__jakob_groupify_loop:nnw { 1 } {#2} #3 \q_recursion_tail {#1} \q_recursion_stop }
+\cs_new:Npn \__jakob_groupify_loop:nnw #1 #2 #3
+  {
+    \quark_if_recursion_tail_stop:n {#3}
+    \exp_not:n {#3}
+    \int_compare:nNnTF {#1} = {#2}
+      { \__jakob_groupify_sep:n }
+      { \exp_args:Nf \__jakob_groupify_loop:nnw { \int_eval:n { #1+1 } } }
+          {#2}
+  }
+\cs_new:Npn \__jakob_groupify_sep:n #1 #2 \q_recursion_tail #3
+  {
+    \tl_if_empty:nF {#2} { \exp_not:n {#3} }
+    \__jakob_groupify_loop:nnw { 1 } {#1}
+    #2 \q_recursion_tail {#3}
+  }
+\ExplSyntaxOff
+
+\title{ECE 3301\\Introduction to Microcontrollers\\\,\\Assignment 5}
+\author{Choi Tim Antony Yung}
+\begin{document}
+\maketitle
+
+\thispagestyle{empty}
+\setcounter{page}{0}
+
+\newpage
+
+\section{(25) List the different types of reset that can reset the PIC18F? Describe how the power‐on reset and the manual reset operate?}
+\begin{itemize}
+  \item Power-On Reset (POR)
+  
+  Upon power-up, a power-on reset pulse is generated internally whenever VDD rises above a certain threshold. This allows the PIC18F chip to start inthe initialized state when VDD is adequate for operation.\\
+  
+  \item Manual Reset
+  
+  A manual reset is performed by driving the $\overline{MCLR}$ pin to LOW via external circuitry. The internal on-chip circuitry connected to the $\overline{MCLR}$ pin ensures that the pin is LOW for at least \SI{2}{\micro\second} (minimum requirement for reset).\\
+
+  \item Brown-out reset (BOR)
+  \item Watchdog timer (WDT) reset
+  \item RESET instruction
+\end{itemize}
+
+\newpage
+
+\section{(20) Write a single assembly instruction to configure PIC18F:}
+
+\subsection{all bits of Port C as inputs.}
+\begin{verbatim}
+  SETF TRISC
+\end{verbatim}
+\subsection{all bits of Port D as outputs.}
+\begin{verbatim}
+  CLRF TRISD
+\end{verbatim}
+\subsection{Bits 0 through 4 of Port B as inputs.}
+For digital input:
+\begin{verbatim}
+  SETF TRISB
+\end{verbatim}
+For analog input:
+\begin{verbatim}
+  CLRF ADCON1
+\end{verbatim}
+\subsection{Bit 3 of Port A as output.}
+\begin{verbatim}
+  BCF TRISA, 3
+\end{verbatim}
+
+\newpage
+
+\section{(20) Repeat Q2 using C code, more than one line of C code is accepted.}
+
+\subsection{all bits of Port C as inputs.}
+\begin{verbatim}
+  TRISC = 0xFF;
+\end{verbatim}
+\subsection{all bits of Port D as outputs.}
+\begin{verbatim}
+  TRISD = 0;
+\end{verbatim}
+\subsection{Bits 0 through 4 of Port B as inputs.}
+For digital input:
+\begin{verbatim}
+  TRISB &= 0xE0;    // mask off lower 5 bits and keep higher 3 bit intact
+  TRISB += 0x1F;    // make lower 5 bit all 1 => bits 0 to 4 as inputs
+\end{verbatim}
+For analog input:
+\begin{verbatim}
+  ADCON1 &= 0xF0;   // mask off PCFG to make AN0 through AN12 analog input
+\end{verbatim}
+\subsection{Bit 3 of Port A as output.}
+\begin{verbatim}
+  TRISAbits.TRISA3 = 0;
+\end{verbatim}
+
+
+\newpage
+
+\section{(5) What is the default clock frequency of the PIC18F4321?}
+According to page 31 of \href{http://ww1.microchip.com/downloads/en/DeviceDoc/39689b.pdf}{the PIC18F4321 Datasheet}, the default output frequency of INTOSC on Reset is \SI{1}{\mega\hertz}
+
+\newpage
+
+\section{(5) In the PIC18F458, how many pins are designated as I/O port pins? how many pins are assigned to Vcc and GND?}
+According to page 2 of \href{http://ww1.microchip.com/downloads/en/DeviceDoc/41159e.pdf}{the PIC18F458 Datasheet}, 
+\begin{itemize}
+  \item 33 pins are designated as I/O port pins; 
+  \item 2 pins are assigned to Vcc; and 
+  \item 2 pins are assigned to GND
+\end{itemize}
+
+
+
+
+\newpage
+
+\section{(25) For the table below use the following assembly code to fill the table, note that lines 1, 2, 3, and 9 are dirctives not instructions.}
+\begin{enumerate}
+  \item \begin{verbatim}PRDL EQU   0x50        ; Assign an alias for GBR 0x50\end{verbatim}
+  \item \begin{verbatim}PRDH EQU   0x51        ; Assign an alias for GBR 0x51\end{verbatim}
+  \item \begin{verbatim}     ORG   0x100       ; Start program at program memory address 0x100\end{verbatim}
+  \item \begin{verbatim}     MOVLW 0xF9        ; Move 0xF9 to the WREG\end{verbatim}
+  \item \begin{verbatim}     MULLW B'11111001' ; Mutiply binary value B'11111001' by the content of WREG\end{verbatim}
+  \item \begin{verbatim}     MOVFF PRODH, PRDL ; Move the high product output byte from SFR PRODH register to GPR 0x50\end{verbatim}
+  \item \begin{verbatim}     MOVFF PRODL, PRDH ; Move the low product output byte from SFR PRODL register to GPR 0x51\end{verbatim}
+  \item \begin{verbatim}HERE BRA   HERE        ; Create continuous loop\end{verbatim}
+  \item \begin{verbatim}     END               ; End the program\end{verbatim}
+\end{enumerate}
+
+\adjustbox{max width=\textwidth}{%
+\begin{tabular}{r|l|l|l|l}
+  \toprule
+  No.&Label&Opcode/  &Operand&Comments\\
+          &&Directive&&\\
+  \midrule
+  1.&PRDL &EQU   &0x50        &; Assign an alias for GBR 0x50\\
+  2.&PRDH &EQU   &0x51        &; Assign an alias for GBR 0x51\\
+  3.&     &ORG   &0x100       &; Start program at program memory address 0x100\\
+  4.&     &MOVLW &0xF9        &; Move 0xF9 to the WREG\\
+  5.&     &MULLW &B'11111001' &; Mutiply binary value B'11111001' by the content of WREG\\
+  6.&     &MOVFF &PRODH, PRDL &; Move the high product output byte from SFR PRODH register to GPR 0x50\\
+  7.&     &MOVFF &PRODL, PRDH &; Move the low product output byte from SFR PRODL register to GPR 0x51\\
+  8.&HERE &BRA   &HERE        &; Create continuous loop\\
+  9.&     &END   &            &; End the program\\
+  \bottomrule
+\end{tabular}
+}
+
+\end{document}

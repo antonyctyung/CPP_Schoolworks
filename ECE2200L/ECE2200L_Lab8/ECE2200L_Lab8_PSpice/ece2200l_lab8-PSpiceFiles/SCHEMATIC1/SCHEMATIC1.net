@@ -1,0 +1,13 @@
+* source ECE2200L_LAB8
+C_C1         N00326 N00340  0.1u  
+R_RD         N00326 N00347  3.9k TC=0,0 
+R_RL         0 N00340  100k TC=0,0 
+V_V2         N00347 0 22Vdc
+V_V3         N00902 0  
++SIN 0V 100mV 1k 0 0 0
+C_C2         N00482 0  0.1u  
+R_RS         0 N00482  2.2k TC=0,0 
+R_R2         0 N00453  100k TC=0,0 
+R_R1         N00453 N00347  220k TC=0,0 
+C_C3         N00453 N00902  0.1u  
+X_M1         N00326 N00453 N00482 BSP110/PLP

@@ -1,0 +1,8 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../ECE4304_Lecture3.srcs/sources_1/new/FA.vhd" \
+"../../../../ECE4304_Lecture3.srcs/sources_1/new/NFA.vhd" \
+"../../../../ECE4304_Lecture3.srcs/sim_1/imports/new/NFA_TB_TEXT.vhd" \
+
+# Do not sort compile order
+nosort

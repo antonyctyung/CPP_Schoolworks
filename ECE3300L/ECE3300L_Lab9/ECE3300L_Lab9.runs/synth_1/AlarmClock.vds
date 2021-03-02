@@ -1,0 +1,849 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Tue Nov  3 16:05:27 2020
+# Process ID: 15780
+# Current directory: D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.runs/synth_1
+# Command line: vivado.exe -log AlarmClock.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source AlarmClock.tcl
+# Log file: D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.runs/synth_1/AlarmClock.vds
+# Journal file: D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source AlarmClock.tcl -notrace
+Command: synth_design -top AlarmClock -part xc7a100tcsg324-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Device 21-403] Loading part xc7a100tcsg324-1
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 13872 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 717.145 ; gain = 178.070
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'AlarmClock' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:95]
+INFO: [Synth 8-6157] synthesizing module 'clockGen' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'clockGen' (1#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:1]
+INFO: [Synth 8-6157] synthesizing module 'DigitalClock' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:138]
+INFO: [Synth 8-6157] synthesizing module 'counter2bit' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:34]
+INFO: [Synth 8-6155] done synthesizing module 'counter2bit' (2#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:34]
+INFO: [Synth 8-6157] synthesizing module 'dec2to4' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:85]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:92]
+INFO: [Synth 8-6155] done synthesizing module 'dec2to4' (3#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:85]
+INFO: [Synth 8-6157] synthesizing module 'minuteClkGen' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:101]
+INFO: [Synth 8-6155] done synthesizing module 'minuteClkGen' (4#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:101]
+INFO: [Synth 8-6157] synthesizing module 'counter60' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:44]
+WARNING: [Synth 8-5788] Register Q_reg in module counter60 is has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:50]
+INFO: [Synth 8-6155] done synthesizing module 'counter60' (5#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:44]
+INFO: [Synth 8-6157] synthesizing module 'sixBitBinaryToTwoDisplayDecoder' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:108]
+INFO: [Synth 8-6157] synthesizing module 'SevenSegmentDecoder' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:57]
+INFO: [Synth 8-226] default block is never used [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:62]
+INFO: [Synth 8-6155] done synthesizing module 'SevenSegmentDecoder' (6#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:57]
+INFO: [Synth 8-6155] done synthesizing module 'sixBitBinaryToTwoDisplayDecoder' (7#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:108]
+INFO: [Synth 8-6157] synthesizing module 'sevenBits4x1Mux' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:121]
+WARNING: [Synth 8-567] referenced signal 'D' should be on the sensitivity list [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:126]
+INFO: [Synth 8-6155] done synthesizing module 'sevenBits4x1Mux' (8#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:121]
+INFO: [Synth 8-6155] done synthesizing module 'DigitalClock' (9#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:138]
+INFO: [Synth 8-6157] synthesizing module 'SoundGen' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:1081]
+INFO: [Synth 8-6157] synthesizing module 'SongPlayer' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:1]
+	Parameter clockFrequency bound to: 100000000 - type: integer 
+	Parameter startNum bound to: 102 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'SongPlayer' (10#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:1]
+INFO: [Synth 8-6157] synthesizing module 'BadApple1' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:120]
+	Parameter THIRTYTWOTH bound to: 6'b000001 
+	Parameter SIXTEENTH bound to: 2 - type: integer 
+	Parameter EIGHTH bound to: 4 - type: integer 
+	Parameter QUARTER bound to: 8 - type: integer 
+	Parameter HALF bound to: 16 - type: integer 
+	Parameter ONE bound to: 32 - type: integer 
+	Parameter A0 bound to: 1818182 - type: integer 
+	Parameter B0F bound to: 1716135 - type: integer 
+	Parameter B0 bound to: 1619816 - type: integer 
+	Parameter C1 bound to: 1528903 - type: integer 
+	Parameter D1F bound to: 1443092 - type: integer 
+	Parameter D1 bound to: 1362097 - type: integer 
+	Parameter E1F bound to: 1285649 - type: integer 
+	Parameter E1 bound to: 1213491 - type: integer 
+	Parameter F1 bound to: 1145383 - type: integer 
+	Parameter G1F bound to: 1081097 - type: integer 
+	Parameter G1 bound to: 1020420 - type: integer 
+	Parameter A1F bound to: 963148 - type: integer 
+	Parameter A1 bound to: 909091 - type: integer 
+	Parameter B1F bound to: 858068 - type: integer 
+	Parameter B1 bound to: 809908 - type: integer 
+	Parameter C2 bound to: 764451 - type: integer 
+	Parameter D2F bound to: 721546 - type: integer 
+	Parameter D2 bound to: 681049 - type: integer 
+	Parameter E2F bound to: 642824 - type: integer 
+	Parameter E2 bound to: 606745 - type: integer 
+	Parameter F2 bound to: 572691 - type: integer 
+	Parameter G2F bound to: 540549 - type: integer 
+	Parameter G2 bound to: 510210 - type: integer 
+	Parameter A2F bound to: 481574 - type: integer 
+	Parameter A2 bound to: 454545 - type: integer 
+	Parameter B2F bound to: 429034 - type: integer 
+	Parameter B2 bound to: 404954 - type: integer 
+	Parameter C3 bound to: 382226 - type: integer 
+	Parameter D3F bound to: 360773 - type: integer 
+	Parameter D3 bound to: 340524 - type: integer 
+	Parameter E3F bound to: 321412 - type: integer 
+	Parameter E3 bound to: 303373 - type: integer 
+	Parameter F3 bound to: 286346 - type: integer 
+	Parameter G3F bound to: 270274 - type: integer 
+	Parameter G3 bound to: 255105 - type: integer 
+	Parameter A3F bound to: 240787 - type: integer 
+	Parameter A3 bound to: 227273 - type: integer 
+	Parameter B3F bound to: 214517 - type: integer 
+	Parameter B3 bound to: 202477 - type: integer 
+	Parameter C4 bound to: 191113 - type: integer 
+	Parameter D4F bound to: 180386 - type: integer 
+	Parameter D4 bound to: 170262 - type: integer 
+	Parameter E4F bound to: 160706 - type: integer 
+	Parameter E4 bound to: 151686 - type: integer 
+	Parameter F4 bound to: 143173 - type: integer 
+	Parameter G4F bound to: 135137 - type: integer 
+	Parameter G4 bound to: 127553 - type: integer 
+	Parameter A4F bound to: 120394 - type: integer 
+	Parameter A4 bound to: 113636 - type: integer 
+	Parameter B4F bound to: 107258 - type: integer 
+	Parameter B4 bound to: 101238 - type: integer 
+	Parameter C5 bound to: 95556 - type: integer 
+	Parameter D5F bound to: 90193 - type: integer 
+	Parameter D5 bound to: 85131 - type: integer 
+	Parameter E5F bound to: 80353 - type: integer 
+	Parameter E5 bound to: 75843 - type: integer 
+	Parameter F5 bound to: 71586 - type: integer 
+	Parameter G5F bound to: 67569 - type: integer 
+	Parameter G5 bound to: 63776 - type: integer 
+	Parameter A5F bound to: 60197 - type: integer 
+	Parameter A5 bound to: 56818 - type: integer 
+	Parameter B5F bound to: 53629 - type: integer 
+	Parameter B5 bound to: 50619 - type: integer 
+	Parameter C6 bound to: 47778 - type: integer 
+	Parameter D6F bound to: 45097 - type: integer 
+	Parameter D6 bound to: 42566 - type: integer 
+	Parameter E6F bound to: 40177 - type: integer 
+	Parameter E6 bound to: 37922 - type: integer 
+	Parameter F6 bound to: 35793 - type: integer 
+	Parameter G6F bound to: 33784 - type: integer 
+	Parameter G6 bound to: 31888 - type: integer 
+	Parameter A6F bound to: 30098 - type: integer 
+	Parameter A6 bound to: 28409 - type: integer 
+	Parameter B6F bound to: 26815 - type: integer 
+	Parameter B6 bound to: 25310 - type: integer 
+	Parameter C7 bound to: 23889 - type: integer 
+	Parameter D7F bound to: 22548 - type: integer 
+	Parameter D7 bound to: 21283 - type: integer 
+	Parameter E7F bound to: 20088 - type: integer 
+	Parameter E7 bound to: 18961 - type: integer 
+	Parameter F7 bound to: 17897 - type: integer 
+	Parameter G7F bound to: 16892 - type: integer 
+	Parameter G7 bound to: 15944 - type: integer 
+	Parameter A7F bound to: 15049 - type: integer 
+	Parameter A7 bound to: 14205 - type: integer 
+	Parameter B7F bound to: 13407 - type: integer 
+	Parameter B7 bound to: 12655 - type: integer 
+	Parameter SP bound to: 1 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'BadApple1' (11#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:120]
+INFO: [Synth 8-6157] synthesizing module 'BadApple2' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:436]
+	Parameter THIRTYTWOTH bound to: 6'b000001 
+	Parameter SIXTEENTH bound to: 2 - type: integer 
+	Parameter EIGHTH bound to: 4 - type: integer 
+	Parameter QUARTER bound to: 8 - type: integer 
+	Parameter HALF bound to: 16 - type: integer 
+	Parameter ONE bound to: 32 - type: integer 
+	Parameter A0 bound to: 1818182 - type: integer 
+	Parameter B0F bound to: 1716135 - type: integer 
+	Parameter B0 bound to: 1619816 - type: integer 
+	Parameter C1 bound to: 1528903 - type: integer 
+	Parameter D1F bound to: 1443092 - type: integer 
+	Parameter D1 bound to: 1362097 - type: integer 
+	Parameter E1F bound to: 1285649 - type: integer 
+	Parameter E1 bound to: 1213491 - type: integer 
+	Parameter F1 bound to: 1145383 - type: integer 
+	Parameter G1F bound to: 1081097 - type: integer 
+	Parameter G1 bound to: 1020420 - type: integer 
+	Parameter A1F bound to: 963148 - type: integer 
+	Parameter A1 bound to: 909091 - type: integer 
+	Parameter B1F bound to: 858068 - type: integer 
+	Parameter B1 bound to: 809908 - type: integer 
+	Parameter C2 bound to: 764451 - type: integer 
+	Parameter D2F bound to: 721546 - type: integer 
+	Parameter D2 bound to: 681049 - type: integer 
+	Parameter E2F bound to: 642824 - type: integer 
+	Parameter E2 bound to: 606745 - type: integer 
+	Parameter F2 bound to: 572691 - type: integer 
+	Parameter G2F bound to: 540549 - type: integer 
+	Parameter G2 bound to: 510210 - type: integer 
+	Parameter A2F bound to: 481574 - type: integer 
+	Parameter A2 bound to: 454545 - type: integer 
+	Parameter B2F bound to: 429034 - type: integer 
+	Parameter B2 bound to: 404954 - type: integer 
+	Parameter C3 bound to: 382226 - type: integer 
+	Parameter D3F bound to: 360773 - type: integer 
+	Parameter D3 bound to: 340524 - type: integer 
+	Parameter E3F bound to: 321412 - type: integer 
+	Parameter E3 bound to: 303373 - type: integer 
+	Parameter F3 bound to: 286346 - type: integer 
+	Parameter G3F bound to: 270274 - type: integer 
+	Parameter G3 bound to: 255105 - type: integer 
+	Parameter A3F bound to: 240787 - type: integer 
+	Parameter A3 bound to: 227273 - type: integer 
+	Parameter B3F bound to: 214517 - type: integer 
+	Parameter B3 bound to: 202477 - type: integer 
+	Parameter C4 bound to: 191113 - type: integer 
+	Parameter D4F bound to: 180386 - type: integer 
+	Parameter D4 bound to: 170262 - type: integer 
+	Parameter E4F bound to: 160706 - type: integer 
+	Parameter E4 bound to: 151686 - type: integer 
+	Parameter F4 bound to: 143173 - type: integer 
+	Parameter G4F bound to: 135137 - type: integer 
+	Parameter G4 bound to: 127553 - type: integer 
+	Parameter A4F bound to: 120394 - type: integer 
+	Parameter A4 bound to: 113636 - type: integer 
+	Parameter B4F bound to: 107258 - type: integer 
+	Parameter B4 bound to: 101238 - type: integer 
+	Parameter C5 bound to: 95556 - type: integer 
+	Parameter D5F bound to: 90193 - type: integer 
+	Parameter D5 bound to: 85131 - type: integer 
+	Parameter E5F bound to: 80353 - type: integer 
+	Parameter E5 bound to: 75843 - type: integer 
+	Parameter F5 bound to: 71586 - type: integer 
+	Parameter G5F bound to: 67569 - type: integer 
+	Parameter G5 bound to: 63776 - type: integer 
+	Parameter A5F bound to: 60197 - type: integer 
+	Parameter A5 bound to: 56818 - type: integer 
+	Parameter B5F bound to: 53629 - type: integer 
+	Parameter B5 bound to: 50619 - type: integer 
+	Parameter C6 bound to: 47778 - type: integer 
+	Parameter D6F bound to: 45097 - type: integer 
+	Parameter D6 bound to: 42566 - type: integer 
+	Parameter E6F bound to: 40177 - type: integer 
+	Parameter E6 bound to: 37922 - type: integer 
+	Parameter F6 bound to: 35793 - type: integer 
+	Parameter G6F bound to: 33784 - type: integer 
+	Parameter G6 bound to: 31888 - type: integer 
+	Parameter A6F bound to: 30098 - type: integer 
+	Parameter A6 bound to: 28409 - type: integer 
+	Parameter B6F bound to: 26815 - type: integer 
+	Parameter B6 bound to: 25310 - type: integer 
+	Parameter C7 bound to: 23889 - type: integer 
+	Parameter D7F bound to: 22548 - type: integer 
+	Parameter D7 bound to: 21283 - type: integer 
+	Parameter E7F bound to: 20088 - type: integer 
+	Parameter E7 bound to: 18961 - type: integer 
+	Parameter F7 bound to: 17897 - type: integer 
+	Parameter G7F bound to: 16892 - type: integer 
+	Parameter G7 bound to: 15944 - type: integer 
+	Parameter A7F bound to: 15049 - type: integer 
+	Parameter A7 bound to: 14205 - type: integer 
+	Parameter B7F bound to: 13407 - type: integer 
+	Parameter B7 bound to: 12655 - type: integer 
+	Parameter SP bound to: 1 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'BadApple2' (12#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:436]
+INFO: [Synth 8-6157] synthesizing module 'BadApple3' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:752]
+	Parameter THIRTYTWOTH bound to: 6'b000001 
+	Parameter SIXTEENTH bound to: 2 - type: integer 
+	Parameter EIGHTH bound to: 4 - type: integer 
+	Parameter QUARTER bound to: 8 - type: integer 
+	Parameter HALF bound to: 16 - type: integer 
+	Parameter ONE bound to: 32 - type: integer 
+	Parameter A0 bound to: 1818182 - type: integer 
+	Parameter B0F bound to: 1716135 - type: integer 
+	Parameter B0 bound to: 1619816 - type: integer 
+	Parameter C1 bound to: 1528903 - type: integer 
+	Parameter D1F bound to: 1443092 - type: integer 
+	Parameter D1 bound to: 1362097 - type: integer 
+	Parameter E1F bound to: 1285649 - type: integer 
+	Parameter E1 bound to: 1213491 - type: integer 
+	Parameter F1 bound to: 1145383 - type: integer 
+	Parameter G1F bound to: 1081097 - type: integer 
+	Parameter G1 bound to: 1020420 - type: integer 
+	Parameter A1F bound to: 963148 - type: integer 
+	Parameter A1 bound to: 909091 - type: integer 
+	Parameter B1F bound to: 858068 - type: integer 
+	Parameter B1 bound to: 809908 - type: integer 
+	Parameter C2 bound to: 764451 - type: integer 
+	Parameter D2F bound to: 721546 - type: integer 
+	Parameter D2 bound to: 681049 - type: integer 
+	Parameter E2F bound to: 642824 - type: integer 
+	Parameter E2 bound to: 606745 - type: integer 
+	Parameter F2 bound to: 572691 - type: integer 
+	Parameter G2F bound to: 540549 - type: integer 
+	Parameter G2 bound to: 510210 - type: integer 
+	Parameter A2F bound to: 481574 - type: integer 
+	Parameter A2 bound to: 454545 - type: integer 
+	Parameter B2F bound to: 429034 - type: integer 
+	Parameter B2 bound to: 404954 - type: integer 
+	Parameter C3 bound to: 382226 - type: integer 
+	Parameter D3F bound to: 360773 - type: integer 
+	Parameter D3 bound to: 340524 - type: integer 
+	Parameter E3F bound to: 321412 - type: integer 
+	Parameter E3 bound to: 303373 - type: integer 
+	Parameter F3 bound to: 286346 - type: integer 
+	Parameter G3F bound to: 270274 - type: integer 
+	Parameter G3 bound to: 255105 - type: integer 
+	Parameter A3F bound to: 240787 - type: integer 
+	Parameter A3 bound to: 227273 - type: integer 
+	Parameter B3F bound to: 214517 - type: integer 
+	Parameter B3 bound to: 202477 - type: integer 
+	Parameter C4 bound to: 191113 - type: integer 
+	Parameter D4F bound to: 180386 - type: integer 
+	Parameter D4 bound to: 170262 - type: integer 
+	Parameter E4F bound to: 160706 - type: integer 
+	Parameter E4 bound to: 151686 - type: integer 
+	Parameter F4 bound to: 143173 - type: integer 
+	Parameter G4F bound to: 135137 - type: integer 
+	Parameter G4 bound to: 127553 - type: integer 
+	Parameter A4F bound to: 120394 - type: integer 
+	Parameter A4 bound to: 113636 - type: integer 
+	Parameter B4F bound to: 107258 - type: integer 
+	Parameter B4 bound to: 101238 - type: integer 
+	Parameter C5 bound to: 95556 - type: integer 
+	Parameter D5F bound to: 90193 - type: integer 
+	Parameter D5 bound to: 85131 - type: integer 
+	Parameter E5F bound to: 80353 - type: integer 
+	Parameter E5 bound to: 75843 - type: integer 
+	Parameter F5 bound to: 71586 - type: integer 
+	Parameter G5F bound to: 67569 - type: integer 
+	Parameter G5 bound to: 63776 - type: integer 
+	Parameter A5F bound to: 60197 - type: integer 
+	Parameter A5 bound to: 56818 - type: integer 
+	Parameter B5F bound to: 53629 - type: integer 
+	Parameter B5 bound to: 50619 - type: integer 
+	Parameter C6 bound to: 47778 - type: integer 
+	Parameter D6F bound to: 45097 - type: integer 
+	Parameter D6 bound to: 42566 - type: integer 
+	Parameter E6F bound to: 40177 - type: integer 
+	Parameter E6 bound to: 37922 - type: integer 
+	Parameter F6 bound to: 35793 - type: integer 
+	Parameter G6F bound to: 33784 - type: integer 
+	Parameter G6 bound to: 31888 - type: integer 
+	Parameter A6F bound to: 30098 - type: integer 
+	Parameter A6 bound to: 28409 - type: integer 
+	Parameter B6F bound to: 26815 - type: integer 
+	Parameter B6 bound to: 25310 - type: integer 
+	Parameter C7 bound to: 23889 - type: integer 
+	Parameter D7F bound to: 22548 - type: integer 
+	Parameter D7 bound to: 21283 - type: integer 
+	Parameter E7F bound to: 20088 - type: integer 
+	Parameter E7 bound to: 18961 - type: integer 
+	Parameter F7 bound to: 17897 - type: integer 
+	Parameter G7F bound to: 16892 - type: integer 
+	Parameter G7 bound to: 15944 - type: integer 
+	Parameter A7F bound to: 15049 - type: integer 
+	Parameter A7 bound to: 14205 - type: integer 
+	Parameter B7F bound to: 13407 - type: integer 
+	Parameter B7 bound to: 12655 - type: integer 
+	Parameter SP bound to: 1 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'BadApple3' (13#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:752]
+INFO: [Synth 8-6157] synthesizing module 'mux3x1rot' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:1068]
+INFO: [Synth 8-6155] done synthesizing module 'mux3x1rot' (14#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:1068]
+INFO: [Synth 8-6155] done synthesizing module 'SoundGen' (15#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:1081]
+INFO: [Synth 8-6157] synthesizing module 'AlarmTimer' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:6]
+CRITICAL WARNING: [Synth 8-5413] Mix of synchronous and asynchronous control for register counter_reg in module AlarmTimer. [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:23]
+CRITICAL WARNING: [Synth 8-5413] Mix of synchronous and asynchronous control for register soundEnable_reg in module AlarmTimer. [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:26]
+INFO: [Synth 8-5837] Detected dual asynchronous set and preset for register soundEnable_reg in module AlarmTimer. This is not a recommended register style for Xilinx devices  [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:26]
+INFO: [Synth 8-6155] done synthesizing module 'AlarmTimer' (16#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:6]
+INFO: [Synth 8-6157] synthesizing module 'debouncer' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/debouncer.v:1]
+	Parameter zero bound to: 3'b000 
+	Parameter wait1_1 bound to: 3'b001 
+	Parameter wait1_2 bound to: 3'b010 
+	Parameter wait1_3 bound to: 3'b011 
+	Parameter one bound to: 3'b100 
+	Parameter wait0_1 bound to: 3'b101 
+	Parameter wait0_2 bound to: 3'b110 
+	Parameter wait0_3 bound to: 3'b111 
+INFO: [Synth 8-226] default block is never used [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/debouncer.v:40]
+INFO: [Synth 8-6155] done synthesizing module 'debouncer' (17#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/debouncer.v:1]
+INFO: [Synth 8-6157] synthesizing module 'T_Flip_Flop' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:78]
+INFO: [Synth 8-6155] done synthesizing module 'T_Flip_Flop' (18#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:78]
+INFO: [Synth 8-6157] synthesizing module 'SwitchingTimeDisplayDriver4Digit' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:36]
+INFO: [Synth 8-6155] done synthesizing module 'SwitchingTimeDisplayDriver4Digit' (19#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:36]
+INFO: [Synth 8-6157] synthesizing module 'CANrot' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:61]
+INFO: [Synth 8-6155] done synthesizing module 'CANrot' (20#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:61]
+INFO: [Synth 8-6155] done synthesizing module 'AlarmClock' (21#1) [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v:95]
+WARNING: [Synth 8-3331] design minuteClkGen has unconnected port second[4]
+WARNING: [Synth 8-3331] design minuteClkGen has unconnected port second[3]
+WARNING: [Synth 8-3331] design minuteClkGen has unconnected port second[2]
+WARNING: [Synth 8-3331] design minuteClkGen has unconnected port second[1]
+WARNING: [Synth 8-3331] design minuteClkGen has unconnected port second[0]
+WARNING: [Synth 8-3331] design DigitalClock has unconnected port SW[15]
+WARNING: [Synth 8-3331] design DigitalClock has unconnected port SW[14]
+WARNING: [Synth 8-3331] design DigitalClock has unconnected port SW[7]
+WARNING: [Synth 8-3331] design DigitalClock has unconnected port SW[6]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 781.109 ; gain = 242.035
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 781.109 ; gain = 242.035
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 781.109 ; gain = 242.035
+---------------------------------------------------------------------------------
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/constrs_1/imports/ECE3300L/Nexys-A7-100T.xdc]
+Finished Parsing XDC File [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/constrs_1/imports/ECE3300L/Nexys-A7-100T.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/constrs_1/imports/ECE3300L/Nexys-A7-100T.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/AlarmClock_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/AlarmClock_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 907.719 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 907.719 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 907.719 ; gain = 368.645
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a100tcsg324-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 907.719 ; gain = 368.645
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 907.719 ; gain = 368.645
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 2 [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v:46]
+INFO: [Synth 8-5546] ROM "duration" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "duration" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "note" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "duration" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg_reg' in module 'debouncer'
+WARNING: [Synth 8-327] inferring latch for variable 'Y_reg' [D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v:93]
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    zero |                         00000001 |                              000
+                 wait1_1 |                         00000010 |                              001
+                 wait1_2 |                         00000100 |                              010
+                 wait1_3 |                         00001000 |                              011
+                     one |                         00010000 |                              100
+                 wait0_1 |                         00100000 |                              101
+                 wait0_2 |                         01000000 |                              110
+                 wait0_3 |                         10000000 |                              111
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg_reg' using encoding 'one-hot' in module 'debouncer'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 907.719 ; gain = 368.645
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     24 Bit       Adders := 2     
+	   2 Input     21 Bit       Adders := 1     
+	   2 Input     10 Bit       Adders := 5     
+	   2 Input      6 Bit       Adders := 3     
+	   2 Input      3 Bit       Adders := 2     
+	   2 Input      2 Bit       Adders := 2     
++---Registers : 
+	               21 Bit    Registers := 1     
+	               10 Bit    Registers := 5     
+	                6 Bit    Registers := 5     
+	                3 Bit    Registers := 1     
+	                2 Bit    Registers := 3     
+	                1 Bit    Registers := 12    
++---Muxes : 
+	   2 Input     21 Bit        Muxes := 1     
+	 175 Input     19 Bit        Muxes := 1     
+	   2 Input     19 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 1     
+	   8 Input      8 Bit        Muxes := 1     
+	   2 Input      8 Bit        Muxes := 7     
+	   4 Input      7 Bit        Muxes := 2     
+	   2 Input      6 Bit        Muxes := 7     
+	   3 Input      6 Bit        Muxes := 2     
+	 175 Input      6 Bit        Muxes := 3     
+	   2 Input      4 Bit        Muxes := 2     
+	   4 Input      4 Bit        Muxes := 2     
+	   8 Input      3 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 19    
+	   4 Input      1 Bit        Muxes := 2     
+	   8 Input      1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module AlarmClock 
+Detailed RTL Component Info : 
++---Registers : 
+	                6 Bit    Registers := 2     
+Module clockGen 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     24 Bit       Adders := 1     
+	   2 Input     10 Bit       Adders := 1     
++---Registers : 
+	               10 Bit    Registers := 1     
+	                1 Bit    Registers := 2     
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 2     
+Module counter2bit 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      2 Bit       Adders := 1     
++---Registers : 
+	                2 Bit    Registers := 1     
+Module dec2to4 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input      4 Bit        Muxes := 1     
+	   4 Input      4 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 1     
+	   4 Input      1 Bit        Muxes := 1     
+Module counter60 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      6 Bit       Adders := 1     
++---Registers : 
+	                6 Bit    Registers := 1     
++---Muxes : 
+	   2 Input      6 Bit        Muxes := 2     
+	   3 Input      6 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 1     
+Module sevenBits4x1Mux 
+Detailed RTL Component Info : 
++---Muxes : 
+	   4 Input      7 Bit        Muxes := 1     
+Module SongPlayer 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     10 Bit       Adders := 1     
++---Registers : 
+	               10 Bit    Registers := 1     
+	                1 Bit    Registers := 2     
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 3     
+Module BadApple1 
+Detailed RTL Component Info : 
++---Muxes : 
+	 175 Input      6 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 1     
+Module BadApple2 
+Detailed RTL Component Info : 
++---Muxes : 
+	 175 Input      6 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 1     
+Module BadApple3 
+Detailed RTL Component Info : 
++---Muxes : 
+	 175 Input     19 Bit        Muxes := 1     
+	   2 Input     19 Bit        Muxes := 1     
+	 175 Input      6 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 1     
+Module mux3x1rot 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      3 Bit       Adders := 1     
++---Registers : 
+	                2 Bit    Registers := 1     
+Module AlarmTimer 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      6 Bit       Adders := 1     
++---Registers : 
+	                6 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
+Module debouncer 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     21 Bit       Adders := 1     
++---Registers : 
+	               21 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     21 Bit        Muxes := 1     
+	   8 Input      8 Bit        Muxes := 1     
+	   2 Input      8 Bit        Muxes := 7     
+	   8 Input      3 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 2     
+	   8 Input      1 Bit        Muxes := 1     
+Module T_Flip_Flop 
+Detailed RTL Component Info : 
++---Registers : 
+	                1 Bit    Registers := 1     
+Module CANrot 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      3 Bit       Adders := 1     
++---Registers : 
+	                3 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     16 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 240 (col length:80)
+BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+DSP Report: Generating DSP time13, operation Mode is: (A:0xf5e100)*B.
+DSP Report: operator time13 is absorbed into DSP time13.
+DSP Report: operator time13 is absorbed into DSP time13.
+DSP Report: Generating DSP time13, operation Mode is: (A:0xf5e100)*B.
+DSP Report: operator time13 is absorbed into DSP time13.
+DSP Report: operator time13 is absorbed into DSP time13.
+DSP Report: Generating DSP time13, operation Mode is: (A:0xf5e100)*B.
+DSP Report: operator time13 is absorbed into DSP time13.
+DSP Report: operator time13 is absorbed into DSP time13.
+WARNING: [Synth 8-3917] design AlarmClock has port DP driven by constant 1
+WARNING: [Synth 8-3331] design AlarmClock has unconnected port SW[15]
+WARNING: [Synth 8-3331] design AlarmClock has unconnected port SW[14]
+WARNING: [Synth 8-3331] design AlarmClock has unconnected port SW[7]
+WARNING: [Synth 8-3331] design AlarmClock has unconnected port SW[6]
+WARNING: [Synth 8-3332] Sequential element (dck/dec/Y_reg[3]) is unused and will be removed from module AlarmClock.
+WARNING: [Synth 8-3332] Sequential element (dck/dec/Y_reg[2]) is unused and will be removed from module AlarmClock.
+WARNING: [Synth 8-3332] Sequential element (dck/dec/Y_reg[1]) is unused and will be removed from module AlarmClock.
+WARNING: [Synth 8-3332] Sequential element (dck/dec/Y_reg[0]) is unused and will be removed from module AlarmClock.
+WARNING: [Synth 8-3332] Sequential element (std/dec/Y_reg[3]) is unused and will be removed from module AlarmClock.
+WARNING: [Synth 8-3332] Sequential element (std/dec/Y_reg[2]) is unused and will be removed from module AlarmClock.
+WARNING: [Synth 8-3332] Sequential element (std/dec/Y_reg[1]) is unused and will be removed from module AlarmClock.
+WARNING: [Synth 8-3332] Sequential element (std/dec/Y_reg[0]) is unused and will be removed from module AlarmClock.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:27 ; elapsed = 00:00:28 . Memory (MB): peak = 907.719 ; gain = 368.645
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+ROM:
++------------+------------+---------------+----------------+
+|Module Name | RTL Object | Depth x Width | Implemented As | 
++------------+------------+---------------+----------------+
+|BadApple1   | note       | 1024x20       | LUT            | 
+|BadApple2   | note       | 1024x19       | LUT            | 
+|BadApple1   | note       | 1024x20       | LUT            | 
+|BadApple2   | note       | 1024x19       | LUT            | 
++------------+------------+---------------+----------------+
+
+
+DSP: Preliminary Mapping  Report (see note below)
++------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping    | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|SongPlayer  | (A:0xf5e100)*B | 25     | 7      | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|SongPlayer  | (A:0xf5e100)*B | 25     | 7      | -      | -      | 30     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|SongPlayer  | (A:0xf5e100)*B | 25     | 7      | -      | -      | 30     | 0    | 0    | -    | -    | -     | 0    | 0    | 
++------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:37 ; elapsed = 00:00:38 . Memory (MB): peak = 938.270 ; gain = 399.195
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:39 ; elapsed = 00:00:40 . Memory (MB): peak = 985.570 ; gain = 446.496
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:41 ; elapsed = 00:00:42 . Memory (MB): peak = 1018.469 ; gain = 479.395
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:42 ; elapsed = 00:00:43 . Memory (MB): peak = 1024.156 ; gain = 485.082
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:42 ; elapsed = 00:00:43 . Memory (MB): peak = 1024.156 ; gain = 485.082
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:42 ; elapsed = 00:00:43 . Memory (MB): peak = 1024.156 ; gain = 485.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:42 ; elapsed = 00:00:43 . Memory (MB): peak = 1024.156 ; gain = 485.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:42 ; elapsed = 00:00:43 . Memory (MB): peak = 1024.156 ; gain = 485.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:42 ; elapsed = 00:00:43 . Memory (MB): peak = 1024.156 ; gain = 485.082
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+--------+------+
+|      |Cell    |Count |
++------+--------+------+
+|1     |BUFG    |     1|
+|2     |CARRY4  |   317|
+|3     |DSP48E1 |     3|
+|4     |LUT1    |    47|
+|5     |LUT2    |   384|
+|6     |LUT3    |   490|
+|7     |LUT4    |   269|
+|8     |LUT5    |   305|
+|9     |LUT6    |   773|
+|10    |MUXF7   |    46|
+|11    |FDCE    |    23|
+|12    |FDPE    |    13|
+|13    |FDRE    |   299|
+|14    |FDSE    |    12|
+|15    |LDC     |    13|
+|16    |IBUF    |    18|
+|17    |OBUF    |    19|
++------+--------+------+
+
+Report Instance Areas: 
++------+---------+---------------------------------+------+
+|      |Instance |Module                           |Cells |
++------+---------+---------------------------------+------+
+|1     |top      |                                 |  3032|
+|2     |  atm    |AlarmTimer                       |    31|
+|3     |  cgn    |clockGen                         |    85|
+|4     |  crot   |CANrot                           |     8|
+|5     |  db1    |debouncer                        |    55|
+|6     |  dck    |DigitalClock                     |   238|
+|7     |    c2b  |counter2bit_2                    |    13|
+|8     |    cgn  |clockGen_3                       |    85|
+|9     |    min  |counter60                        |    75|
+|10    |    sec  |counter60_4                      |    65|
+|11    |  sgn    |SoundGen                         |  1985|
+|12    |    ba1  |BadApple1                        |   116|
+|13    |    ba2  |BadApple2                        |    85|
+|14    |    rot  |mux3x1rot                        |     5|
+|15    |    sp1  |SongPlayer                       |   634|
+|16    |    sp2  |SongPlayer_0                     |   539|
+|17    |    sp3  |SongPlayer_1                     |   606|
+|18    |  std    |SwitchingTimeDisplayDriver4Digit |    27|
+|19    |    c2b  |counter2bit                      |    27|
+|20    |  tff    |T_Flip_Flop                      |     1|
++------+---------+---------------------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:42 ; elapsed = 00:00:43 . Memory (MB): peak = 1024.156 ; gain = 485.082
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 14 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:38 ; elapsed = 00:00:42 . Memory (MB): peak = 1024.156 ; gain = 358.473
+Synthesis Optimization Complete : Time (s): cpu = 00:00:43 ; elapsed = 00:00:44 . Memory (MB): peak = 1024.156 ; gain = 485.082
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 379 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1024.156 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 13 instances were transformed.
+  LDC => LDCE: 13 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+65 Infos, 25 Warnings, 2 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:48 ; elapsed = 00:00:50 . Memory (MB): peak = 1024.156 ; gain = 722.977
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1024.156 ; gain = 0.000
+WARNING: [Constraints 18-5210] No constraints selected for write.
+Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
+INFO: [Common 17-1381] The checkpoint 'D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.runs/synth_1/AlarmClock.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file AlarmClock_utilization_synth.rpt -pb AlarmClock_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Tue Nov  3 16:06:19 2020...

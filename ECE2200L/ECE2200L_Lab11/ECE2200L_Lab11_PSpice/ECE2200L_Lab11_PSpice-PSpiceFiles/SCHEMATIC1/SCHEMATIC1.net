@@ -1,0 +1,7 @@
+* source ECE2200L_LAB11_PSPICE
+R_Rc         OUT N00220  330 TC=0,0 
+R_Rb         IN N00481  1k TC=0,0 
+V_V1         IN 0  
++PULSE 0 5 0 1n 1n 5u 10u
+V_V2         N00220 0 5Vdc
+Q_Q1         OUT N00481 0 QMMBT2222A/PLP 

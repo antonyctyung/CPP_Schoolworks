@@ -1,0 +1,6 @@
+* source ECE2200L_LAB9_PSPICE_B
+R_R1         VOUT N00325  10k TC=0,0 
+V_V1         VIN 0 0Vdc
+V_V2         N00325 0 5Vdc
+Q_Q1         VOUT N004130 0 QMMBT2222A/PLP 
+R_R2         VIN N004130  100k TC=0,0 

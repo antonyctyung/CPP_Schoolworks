@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Fri Feb 12 10:44:22 2021
+# Process ID: 14208
+# Current directory: D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.runs/synth_1
+# Command line: vivado.exe -log Nbitdec.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Nbitdec.tcl
+# Log file: D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.runs/synth_1/Nbitdec.vds
+# Journal file: D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source Nbitdec.tcl -notrace

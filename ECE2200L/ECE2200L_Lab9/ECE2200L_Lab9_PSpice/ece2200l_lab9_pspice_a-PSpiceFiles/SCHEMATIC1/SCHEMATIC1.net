@@ -1,0 +1,5 @@
+* source ECE2200L_LAB9_PSPICE_A
+X_M1         VOUT VIN 0 BSP110/PLP
+R_R1         VOUT N00325  10k TC=0,0 
+V_V1         VIN 0 0Vdc
+V_V2         N00325 0 5Vdc

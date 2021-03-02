@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="top_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="top_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="50000000fs"></ZoomEndTime>
+      <Cursor1Time time="50000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="138"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="9" />
+   <wvobject fp_name="/top_tb/top_clk_tb" type="logic">
+      <obj_property name="ElementShortName">top_clk_tb</obj_property>
+      <obj_property name="ObjectShortName">top_clk_tb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/top_rst_tb" type="logic">
+      <obj_property name="ElementShortName">top_rst_tb</obj_property>
+      <obj_property name="ObjectShortName">top_rst_tb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/top_inst_tb" type="array">
+      <obj_property name="ElementShortName">top_inst_tb[4:0]</obj_property>
+      <obj_property name="ObjectShortName">top_inst_tb[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/top_port_A_tb" type="array">
+      <obj_property name="ElementShortName">top_port_A_tb[3:0]</obj_property>
+      <obj_property name="ObjectShortName">top_port_A_tb[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/top_port_B_tb" type="array">
+      <obj_property name="ElementShortName">top_port_B_tb[3:0]</obj_property>
+      <obj_property name="ObjectShortName">top_port_B_tb[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/top_port_out_tb" type="array">
+      <obj_property name="ElementShortName">top_port_out_tb[3:0]</obj_property>
+      <obj_property name="ObjectShortName">top_port_out_tb[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/top_port_count" type="logic">
+      <obj_property name="ElementShortName">top_port_count</obj_property>
+      <obj_property name="ObjectShortName">top_port_count</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/top_WIDTH_TB" type="other">
+      <obj_property name="ElementShortName">top_WIDTH_TB</obj_property>
+      <obj_property name="ObjectShortName">top_WIDTH_TB</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top_tb/clock_period" type="other">
+      <obj_property name="ElementShortName">clock_period</obj_property>
+      <obj_property name="ObjectShortName">clock_period</obj_property>
+   </wvobject>
+</wave_config>

@@ -1,0 +1,208 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{circuitikz}
+\usepackage{float}
+\usepackage{pdfpages}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\makeatletter
+\newcommand\currcoor{\the\tikz@lastxsaved,\the\tikz@lastysaved}
+\makeatother
+\begin{document}
+
+\title{Alarm Clock Project Development Report\\
+}
+
+\author{\IEEEauthorblockN{Choi Tim Antony Yung}
+\IEEEauthorblockA{\textit{Department of Electrical and Computer Engineering} \\
+\textit{California State Polytechnic University, Pomona}\\
+Pomona, United States of America \\
+choiyung@cpp.edu}
+}
+
+\maketitle
+
+\begin{abstract}
+    An alarm clock system was successfully proposed, designed and developed utilizing previously developed Verilog HDL modules including sound generation, digital clock, and debounding circuit modules. These modules are integrated along with modules including alarm controller, storage elements and seven segment display controller and implemented on a Digilent Nexys A7 Development board.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Verilog HDL, FPGA, Sound Generation, Sequential Circuit
+\end{IEEEkeywords}
+
+\section{Introduction}
+This report documents the description, development process and result of the alarm clock project.
+
+\section{System Description}
+The alarm clock system will have the functionality of displaying time to end user. The user will be 
+able to obtain the minutes and seconds passed since the clock was powered on, reset, or overflow. 
+The user will also be able to input a certain value of time to be notified by sound when the clock 
+matches the designated time.
+
+\section{System Development}
+\subsection{Requirement}
+From the system description the following requirements are proposed.
+\begin{enumerate}
+    \item The system shall display time passed, up to 59 minutes and 59 seconds, since last occurrence of
+    any of the following events:
+    \begin{itemize}
+        \item Power on of the system
+        \item Reset of the system
+        \item One hour passed since either of the two above event
+    \end{itemize}
+    This value of time will be referred as "clock time" in this document.
+    \item The system shall provide alarm functionality, i.e., when enabled, it shall notify user  
+    when clock time matches a value of time designated by user. This value of time will be referred as 
+    "alarm time" in this document.
+    \item The system shall provide a mean for user to input alarm time.
+    \item The system shall display alarm time.
+    \item The system shall allow user to enable or disable the alarm functionality.
+    \item The system shall indicate to user if alarm functionality is enabled or disabled.
+    \item The system shall play sound when clock time matches alarm time for a maximum of one minutes.
+    \item The system shall provide a mean for user to stop the system from continuing to play sound.
+    \item The system shall allow user to reset the system.
+\end{enumerate}
+
+\subsection{Design}
+The system will utilize the Verilog modules developed in the Digital Clock and Sound Generation labs. 
+The use of the digital clock module will satisfy requirement 1.
+
+Satisfying requirement 3 to 8 will satisfy requirement 2.
+
+To satisfy requirement 3, two sets of six switches will be used to allow user to input two 6-bits binary number representing minutes and seconds of alarm time respectively. The user will then be able to press a button to feed it into the registers that will hold the value.
+
+To satisfy requirement 4, the alarm time will be converted to four BCD number, which will then be fed into seven segment decoders that will display it to seven segment display. 
+
+To satisfy requirement 5, a T flip flop will be used to store the status of alarm functionality, i.e., if it is enabled or disabled. The user will be able to toggle the flip flop by pressing a button. The signal from the button will be fed to a debouncing module and the debounced signal will be fed to both T input and clock to toggle the flip flop. 
+
+To satisfy requirement 6, an LED will be wired to the output of the T flip flop to provide an indicator to the status of alarm functionality.
+
+To satisfy requirement 7, a one minute timer module will be used to control the sound generation module. It will receive alarm time from registers and clock time from digital clock module. If the alarm time matches the clock time, it will start the timer and it will output an enable signal to the enable input of the sound generation while the timer is running.
+
+To satisfy requirement 8, a button will be wired to the reset input of the timer to disable the song generation module.
+
+To satisfy requirement 9, a button will be wired to the reset input of all the modules.
+
+Figure \ref{fig:block} show the block diagram of such a design.
+
+\begin{figure}[htbp]
+\centering
+    \begin{circuitikz}[scale=0.5,transform shape]
+        \tikzset{mux 2by1/.style={muxdemux,muxdemux def={Lh=2, NL=2, Rh=1,NB=1, w=1, square pins=1}}}
+        \draw 
+        (0,0) node[dipchip,num pins=8, hide numbers, no topmark, external pins width=0](dclk){}
+        (dclk.pin 1) node[right] {\tiny{D}}
+        (dclk.pin 1) -- ++(-0.25,0) node[left]{\tiny{switches}}
+        (dclk.pin 2) -- ++(-0.25,0) node[left]{\tiny{clock load}}
+        (dclk.pin 2) node[right] {\tiny{load}}
+        (dclk.pin 3) -- ++(-0.25,0) node[left]{\tiny{reset}}
+        (dclk.pin 3) node[right] {\tiny{reset}}
+        (dclk.pin 4) node[right] {\tiny{clk}}
+        (dclk.pin 4) -- ++(-0.25,0) node[left]{\tiny{clock}}
+        (dclk.pin 5) node[left]  {\tiny{second}} 
+        (dclk.pin 6) node[left]  {\tiny{minute}} 
+        (dclk.pin 7) node[left]  {\tiny{CA:CG}} 
+        (dclk.pin 8) node[left]  {\tiny{AN}} 
+        (dclk.south) node[below] {\tiny{Digital Clock}}
+
+        (4,-3) node[dipchip,num pins=14, hide numbers, no topmark, external pins width=0](alarmctrl){}
+        (alarmctrl.pin 1) node[right] {\tiny{clock min}} -- ++(-0.75,0) -- (\currcoor|-dclk.pin 6) -- (dclk.pin 6)
+        (alarmctrl.pin 2) node[right] {\tiny{clock sec}} -- ++(-1.25,0) -- (\currcoor|-dclk.pin 5) -- (dclk.pin 5)
+        (alarmctrl.pin 3) node[right]  {\tiny{alarm min}} 
+        (alarmctrl.pin 4) node[right]  {\tiny{alarm sec}} 
+        (alarmctrl.pin 5) node[right]  {\tiny{enable}} 
+        (alarmctrl.pin 11) node[left]  {\tiny{enable}} node[below left] {\tiny{sound}} 
+        (alarmctrl.pin 6) -- ++(-0.25,0) node[or port, anchor = out, scale = 0.5](or1){} 
+        (or1.in 1) node[left]{\tiny{reset}}
+        (or1.in 2) node[left]{\tiny{stop}}
+        (alarmctrl.pin 6) node[right] {\tiny{reset}}
+        (alarmctrl.pin 7) node[right] {\tiny{clk}}
+        (alarmctrl.pin 7) -- ++(-0.25,0) node[left]{\tiny{clock}}
+        (alarmctrl.south) node[below] {\tiny{Alarm Controller}}
+
+        (8,-4) node[dipchip,num pins=6, hide numbers, no topmark, external pins width=0](soundgen){}
+        (soundgen.pin 1) node[right] {\tiny{enable}} -- ++(-0.75,0) -- (\currcoor|-alarmctrl.pin 11) -- (alarmctrl.pin 11)
+        (soundgen.pin 2) node[right] {\tiny{reset}}
+        (soundgen.pin 2) -- ++(-0.25,0) node[left]{\tiny{reset}}
+        (soundgen.pin 3) node[right] {\tiny{clk}}
+        (soundgen.pin 3) -- ++(-0.25,0) node[left]{\tiny{clock}}
+        (soundgen.pin 5) node[left]  {\tiny{audio out}} 
+        (soundgen.pin 5) -- ++(0.25,0) node[right]{\tiny{audio out}}
+        (soundgen.south) node[below] {\tiny{Sound Generator}}
+
+        (alarmctrl.pin 5) -- ++(-2,0) node[flipflop T, anchor = pin 6, scale = 0.5](TFF){}
+        (TFF.south) node[below] {\tiny{Alarm Status}}
+        (TFF.pin 1) -- (TFF.pin 3) -- ++(-0.5,0) node[dipchip, num pins = 4, hide numbers, no topmark, external pins width=0, anchor = pin 4](db){}
+        (db.south) node[below] {\tiny{Debouncing Circuit}}
+        (db.pin 1) node[right] {\tiny{in}} -- ++(-0.25,0) node[left]{\tiny{toggle alarm}}
+        (db.pin 2) node[right] {\tiny{clk}} -- ++(-0.25,0) node[left]{\tiny{clock}}
+        (db.pin 4) node[left]  {\tiny{debounced out}} 
+        (alarmctrl.pin 5) ++(-1.75,0) -- ++(0,-1.5) to [full led] ++(0,-0.5) node[ground]{}
+        
+        (alarmctrl.pin 3) -- ++(-2,0) -- ++(0,0.75) -- ++(-6.5,0) node[flipflop D, anchor = pin 6, scale = 0.5](minDFF){}
+        (alarmctrl.pin 4) -- ++(-4,0) -- ++(0,-0.5) -- ++(-4.5,0) node[flipflop D, anchor = pin 6, scale = 0.5](secDFF){}
+        (minDFF.pin 1) -- ++(-0.25,0) node[left]{\tiny{switches}}
+        (minDFF.pin 3) -- ++(-0.25,0) node[left]{\tiny{alarm load}}
+        (minDFF.south) node[below]{\tiny{Alarm Minutes}}
+        (secDFF.pin 1) -- ++(-0.25,0) node[left]{\tiny{switches}}
+        (secDFF.pin 3) -- ++(-0.25,0) node[left]{\tiny{alarm load}}
+        (secDFF.south) node[below]{\tiny{Alarm Seconds}}
+        (secDFF.pin 6) -- ++(0.5,0) node[circ]{} -- ++(0,3) -- ++ (0.25,0) node[dipchip, anchor = pin 4 ,num pins=8, hide numbers, no topmark, external pins width=0](alarmdisp){}
+        (alarmdisp.pin 4) node[right]{\tiny{second}}
+        (minDFF.pin 6) ++(0.15,0) node[circ]{} -- (\currcoor|-alarmdisp.pin 3) -- (alarmdisp.pin 3) node[right]{\tiny{minute}}
+        (alarmdisp.pin 1) node[right]{\tiny{clk}} -- ++(-0.25,0) node[left]{\tiny{clock}}
+        (alarmdisp.pin 2) node[right]{\tiny{reset}} -- ++(-0.25,0) node[left]{\tiny{reset}}
+        (alarmdisp.pin 7) node[left] {\tiny{CA:CG}} coordinate (alarmC)
+        (alarmdisp.pin 8) node[left] {\tiny{AN}}    coordinate (alarmAN)
+        (alarmdisp.south) node[below]{\tiny{Alarm Display Controller}}
+        (dclk.pin 7) -- ++(3,0) node[mux 2by1, anchor = lpin 2](Cmux){}
+        (dclk.pin 8) -- ++(1,0) -- ++(0,2) -- ++(2,0) node[mux 2by1, anchor = lpin 2](ANmux){}
+        (alarmC) -- ++(0.75,0) -- ++(0,1) -- (\currcoor-|Cmux.lpin 1) -- (Cmux.lpin 1) 
+        (Cmux.rpin 1) node[right]{\tiny{CA:CG}}
+        (alarmAN) -- ++(0.25,0) -- ++(0,1) -- (\currcoor|-ANmux.lpin 1) -- (ANmux.lpin 1)
+        (ANmux.rpin 1) node[right]{\tiny{AN}}
+        (Cmux.bpin 1) -- ++(2.5,0) coordinate (Q) -- ++(0,-1) node[dipchip,num pins=2,anchor = north, hide numbers, no topmark, external pins width=0](counter){} node[below]{\tiny{Q}}
+        (counter.pin 1) node[right]{\tiny{clk}} -- ++(-0.25,0) node[left]{\tiny{clock}}
+        (counter.south) node[below]{\tiny{1 bit Counter}}
+        (ANmux.bpin 1) -- (ANmux.bpin 1-|Q) -- (Q)
+        ;
+    \end{circuitikz}
+\caption{Block Diagram of Alarm clock}
+\label{fig:block}
+\end{figure}
+
+\subsection{Implementation}
+The Verilog code implementing the alarm clock system is attached at the end of report.
+
+\subsection{Verification}
+A user manual is proposed below demonstrating the normal usage procedure of the alarm clock system.
+
+\begin{enumerate}
+    \item Turn on the alarm clock by flipping the top left switch to the ON position
+    \item Enter the desired alarm time by putting the binary representation of the minute value to the left eight switches and the second value to the right eight switches, from left to right in decreasing significance
+    \item Press the bottom button to load alarm time into the alarm clock
+    \item Press the top button to enable alarm
+    \item When the alarm goes off, press the center button to stop the alarm if so desired 
+\end{enumerate}
+
+To verify the alarm clock system, a Digilent Nexys A7 development board was used to implement the alarm clock system and the user manual was followed to replicate normal usage of the system.
+
+The video demonstrating the verification process of the alarm clock system is submitted separately.
+
+\section{Result}
+Utilizing the previously developed sound generation, digital clock and debouncing circuit modules, in addition to the integration of new modules including alarm controller, storage elements and seven segment display controller, an alarm clock was successfully developed.
+
+\begin{thebibliography}{00}
+\bibitem{b1} Brown, A., 2020. Nexys A7 Reference Manual [Digilent Documentation]. [online] Reference.digilentinc.com. Available at: <https://reference.digilentinc.com/reference/programmable-logic/nexys-a7/reference-manual> [Accessed 20 October 2020].
+\bibitem{b2} Brown, S. and Vranesic, Z., 2014. Fundamentals Of Digital Logic With Verilog Design. 3rd ed. New York: McGraw-Hill. 
+\end{thebibliography}
+
+\end{document}

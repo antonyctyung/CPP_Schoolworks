@@ -1,0 +1,270 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Fri Feb 12 10:44:22 2021
+# Process ID: 14208
+# Current directory: D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.runs/synth_1
+# Command line: vivado.exe -log Nbitdec.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Nbitdec.tcl
+# Log file: D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.runs/synth_1/Nbitdec.vds
+# Journal file: D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source Nbitdec.tcl -notrace
+Command: synth_design -top Nbitdec -part xc7a100tcsg324-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 8872 
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 471.094 ; gain = 170.027
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-1565] actual for formal port rst is neither a static name nor a globally static expression [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:98]
+INFO: [Synth 8-638] synthesizing module 'Nbitdec' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:44]
+	Parameter N bound to: 5 - type: integer 
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-638] synthesizing module 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:43]
+INFO: [Synth 8-226] default block is never used [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:52]
+INFO: [Synth 8-256] done synthesizing module 'dec2x4' (1#1) [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:43]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-3491] module 'dec2x4' declared at 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/dec2x4.vhd:34' bound to instance 'D2x4' of component 'dec2x4' [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:96]
+INFO: [Synth 8-256] done synthesizing module 'Nbitdec' (2#1) [D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.srcs/sources_1/new/Nbitdec.vhd:44]
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 531.062 ; gain = 229.996
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 531.062 ; gain = 229.996
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a100tcsg324-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 531.062 ; gain = 229.996
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7a100tcsg324-1
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 531.062 ; gain = 229.996
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Registers : 
+	                4 Bit    Registers := 21    
++---Muxes : 
+	   4 Input      4 Bit        Muxes := 21    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module dec2x4 
+Detailed RTL Component Info : 
++---Registers : 
+	                4 Bit    Registers := 1     
++---Muxes : 
+	   4 Input      4 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 240 (col length:80)
+BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 689.508 ; gain = 388.441
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 690.402 ; gain = 389.336
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 690.402 ; gain = 389.336
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5365] Flop GEN_LAYERS[0].GEN_DECS[0].D2x4/p_reg[0] is being inverted and renamed to GEN_LAYERS[0].GEN_DECS[0].D2x4/p_reg[0]_inv.
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 691.445 ; gain = 390.379
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 691.445 ; gain = 390.379
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 691.445 ; gain = 390.379
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 691.445 ; gain = 390.379
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 691.445 ; gain = 390.379
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 691.445 ; gain = 390.379
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-----+------+
+|      |Cell |Count |
++------+-----+------+
+|1     |BUFG |     1|
+|2     |LUT1 |    41|
+|3     |LUT2 |     8|
+|4     |FDCE |    41|
+|5     |FDPE |     1|
+|6     |IBUF |     7|
+|7     |OBUF |    32|
++------+-----+------+
+
+Report Instance Areas: 
++------+-----------------------------------+---------+------+
+|      |Instance                           |Module   |Cells |
++------+-----------------------------------+---------+------+
+|1     |top                                |         |   131|
+|2     |  \GEN_LAYERS[0].GEN_DECS[0].D2x4  |dec2x4   |     3|
+|3     |  \GEN_LAYERS[1].GEN_DECS[0].D2x4  |dec2x4_0 |    10|
+|4     |  \GEN_LAYERS[1].GEN_DECS[1].D2x4  |dec2x4_1 |    10|
+|5     |  \GEN_LAYERS[2].GEN_DECS[0].D2x4  |dec2x4_2 |    10|
+|6     |  \GEN_LAYERS[2].GEN_DECS[1].D2x4  |dec2x4_3 |     8|
+|7     |  \GEN_LAYERS[2].GEN_DECS[2].D2x4  |dec2x4_4 |     8|
+|8     |  \GEN_LAYERS[2].GEN_DECS[3].D2x4  |dec2x4_5 |     8|
+|9     |  \GEN_LAYERS[2].GEN_DECS[4].D2x4  |dec2x4_6 |     8|
+|10    |  \GEN_LAYERS[2].GEN_DECS[5].D2x4  |dec2x4_7 |     8|
+|11    |  \GEN_LAYERS[2].GEN_DECS[6].D2x4  |dec2x4_8 |     8|
+|12    |  \GEN_LAYERS[2].GEN_DECS[7].D2x4  |dec2x4_9 |    10|
++------+-----------------------------------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 691.445 ; gain = 390.379
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 691.445 ; gain = 390.379
+Synthesis Optimization Complete : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 691.445 ; gain = 390.379
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 806.555 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+34 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 806.555 ; gain = 505.488
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 806.555 ; gain = 0.000
+WARNING: [Constraints 18-5210] No constraints selected for write.
+Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
+INFO: [Common 17-1381] The checkpoint 'D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab2/ECE4304L_Lab2_VHDL/ECE4304L_Lab2_VHDL.runs/synth_1/Nbitdec.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file Nbitdec_utilization_synth.rpt -pb Nbitdec_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Fri Feb 12 10:44:36 2021...

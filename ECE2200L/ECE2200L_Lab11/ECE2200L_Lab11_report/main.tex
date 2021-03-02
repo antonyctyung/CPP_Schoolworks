@@ -1,0 +1,167 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[dvipsnames,table]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{multirow}
+\usepackage{tikz}
+\usepackage{karnaugh-map}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\usepackage{caption} 
+
+\makeatletter
+\ctikzset{lx/.code args={#1 and #2}{ 
+  \pgfkeys{/tikz/circuitikz/bipole/label/name=\parbox{1cm}{\centering #1  \\ #2}}
+    \ctikzsetvalof{bipole/label/unit}{}
+    \ifpgf@circ@siunitx 
+        \pgf@circ@handleSI{#2}
+        \ifpgf@circ@siunitx@res 
+            \edef\pgf@temp{\pgf@circ@handleSI@val}
+            \pgfkeyslet{/tikz/circuitikz/bipole/label/name}{\pgf@temp}
+            \edef\pgf@temp{\pgf@circ@handleSI@unit}
+            \pgfkeyslet{/tikz/circuitikz/bipole/label/unit}{\pgf@temp}
+        \else
+        \fi
+    \else
+    \fi
+}}
+
+\ctikzset{lx^/.style args={#1 and #2}{ 
+    lx=#2 and #1,
+    \circuitikzbasekey/bipole/label/position=90 } 
+}
+
+\ctikzset{lx_/.style args={#1 and #2}{ 
+    lx=#1 and #2,
+    \circuitikzbasekey/bipole/label/position=-90 } 
+}
+\makeatother
+
+\captionsetup[table]{skip=10pt}
+
+\usetikzlibrary{calc}
+%\usepackage[landscape]{geometry}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\newcommand{\greyrule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
+\makeatletter
+\newcommand\currcoor{\the\tikz@lastxsaved,\the\tikz@lastysaved}
+\makeatother
+\newcolumntype{:}{@{\hskip\tabcolsep\color{black!30}\vrule\hskip\tabcolsep}}
+
+\ExplSyntaxOn
+\NewExpandableDocumentCommand \groupify { O{\,\allowbreak} m m }
+  { \jakob_groupify:nnn {#1} {#2} {#3} }
+\cs_new:Npn \jakob_groupify:nnn #1 #2 #3
+  { \__jakob_groupify_loop:nnw { 1 } {#2} #3 \q_recursion_tail {#1} \q_recursion_stop }
+\cs_new:Npn \__jakob_groupify_loop:nnw #1 #2 #3
+  {
+    \quark_if_recursion_tail_stop:n {#3}
+    \exp_not:n {#3}
+    \int_compare:nNnTF {#1} = {#2}
+      { \__jakob_groupify_sep:n }
+      { \exp_args:Nf \__jakob_groupify_loop:nnw { \int_eval:n { #1+1 } } }
+          {#2}
+  }
+\cs_new:Npn \__jakob_groupify_sep:n #1 #2 \q_recursion_tail #3
+  {
+    \tl_if_empty:nF {#2} { \exp_not:n {#3} }
+    \__jakob_groupify_loop:nnw { 1 } {#1}
+    #2 \q_recursion_tail {#3}
+  }
+\ExplSyntaxOff
+
+\title{ECE 2200L\\Introduction to Microelectronics Circuits Laboratory\\\,\\Experiment 11\\Switching Characteristic of BJT\\\,\\Report}
+\author{Choi Tim Antony Yung}
+\date{December 2, 2020}
+\begin{document}
+\maketitle
+
+\thispagestyle{empty}
+\setcounter{page}{0}
+
+\newpage
+
+\section*{Objective}
+To study the large signal switching characteristics of the bipolar junction transistor in time domain as it is driven into ON and OFF states.
+\section*{Result}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{ECE2200L_Lab11_PSpice_ckt_1k.png}
+  \caption{PSpice Circuit with $R_b = \SI{1}{\kilo\ohm}$}
+  \label{fig:ckt1k}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{ECE2200L_Lab11_PSpice_ckt_3_3k.png}
+  \caption{PSpice Circuit with $R_b = \SI{3.3}{\kilo\ohm}$}
+  \label{fig:ckt3k3}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{ECE2200L_1k_rise.png}
+  \caption{Oscilloscope display of collector current rise with $R_b = \SI{1}{\kilo\ohm}$}
+  \label{fig:scope1krise}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{ECE2200L_3k3_rise.png}
+  \caption{Oscilloscope display of collector current rise with $R_b = \SI{3.3}{\kilo\ohm}$}
+  \label{fig:scope3k3rise}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{ECE2200L_1k_fall.png}
+  \caption{Oscilloscope display of collector current fall with $R_b = \SI{1}{\kilo\ohm}$}
+  \label{fig:scope1kfall}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{ECE2200L_3k3_fall.png}
+  \caption{Oscilloscope display of collector current fall with $R_b = \SI{3.3}{\kilo\ohm}$}
+  \label{fig:scope3k3fall}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{ECE2200L_Lab11_PSpice_plot_1k.png}
+  \caption{PSpice simulation $V_{in}$ and $V_{out}$ plot with $R_b = \SI{1}{\kilo\ohm}$}
+  \label{fig:plot1k}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{ECE2200L_Lab11_PSpice_plot_3_3k.png}
+  \caption{PSpice simulation $V_{in}$ and $V_{out}$ plot with $R_b = \SI{3.3}{\kilo\ohm}$}
+  \label{fig:plot3k3}
+\end{figure}
+
+From the oscilloscope output we obtained the following data:
+
+With $R_b = \SI{1}{\kilo\ohm}$, $T_d=\SI{17}{\nano\second}$, $T_r=\SI{11}{\nano\second}$, $T_s=\SI{1900}{\nano\second}$, $T_f=\SI{70}{\nano\second}$;
+
+With $R_b = \SI{3.3}{\kilo\ohm}$, $T_d=\SI{38}{\nano\second}$, $T_r=\SI{30}{\nano\second}$, $T_s=\SI{2000}{\nano\second}$, $T_f=\SI{176}{\nano\second}$
+
+
+From the simulation output we obtained the following data:
+
+With $R_b = \SI{1}{\kilo\ohm}$, $T_d=\SI{6.6}{\nano\second}$, $T_r=\SI{8.4}{\nano\second}$, $T_s=\SI{735}{\nano\second}$, $T_f=\SI{297}{\nano\second}$;
+
+With $R_b = \SI{3.3}{\kilo\ohm}$, $T_d=\SI{18.5}{\nano\second}$, $T_r=\SI{29}{\nano\second}$, $T_s=\SI{365}{\nano\second}$, $T_f=\SI{252}{\nano\second}$
+
+
+\section*{Conclusion}
+As demonstrated above, the simulation have a significantly shorter turn-on time and turn-off time than actual circuit, which is likely a result of a considerably sharp rising and falling edge and the use of an ideal BJT in simulation.
+\end{document}

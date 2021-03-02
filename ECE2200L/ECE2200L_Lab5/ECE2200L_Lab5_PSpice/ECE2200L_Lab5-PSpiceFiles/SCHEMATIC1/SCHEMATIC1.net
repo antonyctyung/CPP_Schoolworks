@@ -1,0 +1,8 @@
+* source ECE2200L_LAB5
+R_Rc         N00200 N00126  824 TC=0,0 
+R_R1         N00208 N00126  15.04k TC=0,0 
+R_R2         0 N00208  3.356k TC=0,0 
+R_Re         0 N00204  217 TC=0,0 
+V_V1         N00126 0 10Vdc
+X_Q3         N00200 N00208 N00204 awb2n2222 PARAMS:                            
++                 

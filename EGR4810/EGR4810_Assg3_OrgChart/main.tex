@@ -1,0 +1,149 @@
+\documentclass[tikz,border=5pt,multi]{standalone}
+\usepackage{forest,array}
+\newcolumntype{C}[1]{>{\centering}p{#1}}
+\begin{document}
+
+  \begin{forest}
+    for tree={
+      if level=0{align=center}{% allow multi-line text and set alignment
+        align={@{}C{25mm}@{}},
+      },
+      draw,
+      edge path={
+        \noexpand\path [draw, \forestoption{edge}] (!u.parent anchor) -- +(0,-5mm) -| (.child anchor)\forestoption{edge label};
+      },
+      parent anchor=south,
+      child anchor=north,
+      l sep=10mm,
+      tier/.wrap pgfmath arg={tier #1}{level()},
+    }
+  [Shareholders
+    [Board of directors\\(San Francisco)
+      [CEO\\(San Francisco)
+        [VP Engineering (San Francisco)
+          [Research Manager (San Francisco)
+            [Chief Scientist (San Francisco)
+              [Scientists (San Francisco)]
+            ]
+            [Chief Research Engineer (San Francisco)
+              [Engineers (San Francisco)]
+            ]
+          ]
+          [Europe Country 3 Development Manager (Europe Country 3)
+            [Project Managers (Europe Country 3)
+              [Engineers (Europe Country 3)]
+            ]
+          ]
+          [South America Country Development Manager (South America Country)
+            [Project Managers (South America Country)
+              [Engineers (South America Country)]
+            ]
+        ]
+        ]
+        [HQ Administrator (San Francisco)
+          [HR Director (San Francisco)
+            [HR Managers (San Francisco)]
+          ]
+          [Legal Director (San Francisco)
+            [Lawyers (San Francisco)]
+          ]
+          [Finance Director (San Francisco)
+            [Accountants (San Francisco)]
+          ]
+        ]
+        [Asia Director\\(Asian Country 1)
+          [Asian Country 1 Director (Asian Country 1)
+            [Marketing Manager (Asian Country 1)
+              [Marketers (Asian Country 1)]
+              [Market Researchers (Asian Country 1)]
+            ]
+            [Sale Manager (Asian Country 1)
+              [Sales Reps (Asian Country 1)]
+            ]
+            [Tech Support Manager (Asian Country 1)
+              [Tech Supports (Asian Country 1)]
+            ]
+            [HR Director (Asian Country 1)
+              [HR Managers (Asian Country 1)]
+            ]
+            [Legal Director (Asian Country 1)
+              [Lawyers (Asian Country 1)]
+            ]
+            [Finance Director (Asian Country 1)
+              [Accountants (Asian Country 1)]
+            ]
+          ]
+          [Asian Country 2 Director (Asian Country 2)
+            [Marketing Manager (Asian Country 2)
+              [Marketers (Asian Country 2)]
+              [Market Researchers (Asian Country 2)]
+            ]
+            [Sale Manager (Asian Country 2)
+              [Sales Reps (Asian Country 2)]
+            ]
+            [Tech Support Manager (Asian Country 2)
+              [Tech Supports (Asian Country 2)]
+            ]
+            [HR Director (Asian Country 2)
+              [HR Managers (Asian Country 2)]
+            ]
+            [Legal Director (Asian Country 2)
+              [Lawyers (Asian Country 2)]
+              [Lobbyists (Asian Country 2)]
+            ]
+            [Finance Director (Asian Country 2)
+              [Accountants (Asian Country 2)]
+            ]
+          ]
+        ]
+        [Europe Director\\(European Country 1)
+          [European Country 1 Director (European Country 1)
+            [Marketing Manager (European Country 1)
+              [Marketers (European Country 1)]
+              [Market Researchers (European Country 1)]
+            ]
+            [Sale Manager (European Country 1)
+              [Sales Reps (European Country 1)]
+            ]
+            [Tech Support Manager (European Country 1)
+              [Tech Supports (European Country 1)]
+            ]
+            [HR Director (European Country 1)
+              [HR Managers (European Country 1)]
+            ]
+            [Legal Director (European Country 1)
+              [Lawyers (European Country 1)]
+            ]
+            [Finance Director (European Country 1)
+              [Accountants (European Country 1)]
+            ]
+          ]
+          [European Country 2 Director (European Country 2)
+            [Marketing Manager (European Country 2)
+              [Marketers (European Country 2)]
+              [Market Researchers (European Country 2)]
+              [Mascot (European Country 2)]
+            ]
+            [Sale Manager (European Country 2)
+              [Sales Reps (European Country 2)]
+            ]
+            [Tech Support Manager (European Country 2)
+              [Tech Supports (European Country 2)]
+            ]
+            [HR Director (European Country 2)
+              [HR Managers (European Country 2)]
+            ]
+            [Legal Director (European Country 2)
+              [Lawyers (European Country 2)]
+            ]
+            [Finance Director (European Country 2)
+              [Accountants (European Country 2)]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+  \end{forest}
+
+\end{document}

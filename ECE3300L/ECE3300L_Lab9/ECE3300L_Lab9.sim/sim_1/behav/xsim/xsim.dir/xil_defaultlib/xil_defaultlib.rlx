@@ -1,0 +1,9 @@
+0.6
+2019.1
+May 24 2019
+15:06:07
+D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.sim/sim_1/behav/xsim/glbl.v,1558713910,verilog,,,,glbl,,,,,,,,
+D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v,1604435962,verilog,,,,DigitalClock;SevenSegmentDecoder;clockGen;counter2bit;counter60;dec2to4;minuteClkGen;sevenBits4x1Mux;sixBitBinaryToTwoDisplayDecoder,,,,,,,,
+D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v,1604398662,verilog,,,,BadApple1;BadApple2;BadApple3;MusicSheet;SongPlayer;SoundGen;mux3x1rot,,,,,,,,
+D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/debouncer.v,1604394735,verilog,,,,debouncer,,,,,,,,
+D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/main.v,1604436663,verilog,,,D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/SoundGen.v;D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/debouncer.v;D:/Documents/workspace/CPP_Schoolworks/ECE3300L/ECE3300L_Lab9/ECE3300L_Lab9.srcs/sources_1/new/DigitalClock.v,AlarmClock;AlarmTimer;CANrot;SwitchingTimeDisplayDriver4Digit,,,,,,,,

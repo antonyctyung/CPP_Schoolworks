@@ -3,7 +3,7 @@
 #include <xc.h>
 #include <math.h>
 #include <p18f4620.h>
-#include <usart.h>
+//#include <usart.h>
 
 #pragma config OSC    = INTIO67
 #pragma config WDT    = OFF
@@ -64,6 +64,9 @@ void Set_NSLT(char color);
 void Set_EW  (char color);
 void Set_EWLT(char color);
 
+inline void turn_off_lower_digit();
+inline void turn_off_upper_digit();
+
 void PED_Control(char Direction, char Num_Sec);                             // Pedestrian counter and buzzer control sequence
 
 inline unsigned int mode(void);                                             // return 0 when day and 1 when night
@@ -83,7 +86,8 @@ void main(void)
     init_ADC();
     init_IO();
     OSCCON = 0x60;
-    
+    turn_off_lower_digit();
+    turn_off_upper_digit();    
     //test_loop_LEDs();
     //test_loop_Ped_Ctr();
 
@@ -208,9 +212,9 @@ void PED_Control(char Direction, char Num_Sec)
 {
     if (Direction)
     {   // EW direction
+        turn_off_upper_digit();
         for (int i = Num_Sec-1; i >=0; i--)
         {
-            turn_off_upper_digit();
             display_lower_digit(i);
             if (i == 0) turn_off_lower_digit();
             Wait_One_Second_With_Beep();
@@ -218,9 +222,9 @@ void PED_Control(char Direction, char Num_Sec)
     }
     else
     {   // NS direction
+        turn_off_lower_digit();
         for (int i = Num_Sec-1; i >=0; i--)
         {
-            turn_off_lower_digit();
             display_upper_digit(i);
             if (i == 0) turn_off_upper_digit();
             Wait_One_Second_With_Beep();

@@ -1,0 +1,136 @@
+\documentclass[12pt]{article}
+\usepackage[table]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+%\usepackage[landscape]{geometry}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\newcommand{\greyrule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
+\newcolumntype{:}{@{\hskip\tabcolsep\color{black!30}\vrule\hskip\tabcolsep}}
+
+\ExplSyntaxOn
+\NewExpandableDocumentCommand \groupify { O{\,\allowbreak} m m }
+  { \jakob_groupify:nnn {#1} {#2} {#3} }
+\cs_new:Npn \jakob_groupify:nnn #1 #2 #3
+  { \__jakob_groupify_loop:nnw { 1 } {#2} #3 \q_recursion_tail {#1} \q_recursion_stop }
+\cs_new:Npn \__jakob_groupify_loop:nnw #1 #2 #3
+  {
+    \quark_if_recursion_tail_stop:n {#3}
+    \exp_not:n {#3}
+    \int_compare:nNnTF {#1} = {#2}
+      { \__jakob_groupify_sep:n }
+      { \exp_args:Nf \__jakob_groupify_loop:nnw { \int_eval:n { #1+1 } } }
+          {#2}
+  }
+\cs_new:Npn \__jakob_groupify_sep:n #1 #2 \q_recursion_tail #3
+  {
+    \tl_if_empty:nF {#2} { \exp_not:n {#3} }
+    \__jakob_groupify_loop:nnw { 1 } {#1}
+    #2 \q_recursion_tail {#3}
+  }
+\ExplSyntaxOff
+ 
+\begin{document}
+\pagestyle{empty}
+\section*{$2^N\times1$ mux using $2\times1$ mux network}
+\begin{center}
+    \begin{circuitikz}
+        \tikzset{mux/.style={muxdemux,muxdemux def={Lh= 4,Rh= 3,NL=5,NB=1,w=2},no input leads}}
+        \draw
+        
+        
+        (0,0) node[mux](mux1){}
+
+        (mux1.blpin 2) node[right]{$d_0$}         -- (mux1.lpin 2) coordinate (1d0)
+        (mux1.blpin 4) node[right]{$d_1$}         -- (mux1.lpin 4) coordinate (1d1)
+
+        (mux1.bbpin 1) node[above]{\small{$s$}}   -- (mux1.bpin 1) coordinate (1s) node[below] {$S_{N-1}$}
+        (mux1.brpin 1) node[left]{$y$}            -- (mux1.rpin 1) coordinate (1y) node[right] {Y}
+
+        (1d0) -- ++(0,0) -- ++(0,3.5) node[mux, anchor = rpin 1](mux2_1){} -- (mux2_1.brpin 1)
+        (mux2_1.blpin 2) node[right]{$d_0$}         -- (mux2_1.lpin 2) coordinate (2_1d0)
+        (mux2_1.blpin 4) node[right]{$d_1$}         -- (mux2_1.lpin 4) coordinate (2_1d1)
+        (mux2_1.bbpin 1) node[above]{\small{$s$}}   -- (mux2_1.bpin 1) coordinate (2_1s) node[below] {$S_{N-2}$}
+        (mux2_1.brpin 1) node[left]{$y$}            -- (mux2_1.rpin 1) coordinate (2_1y)
+
+        (1d1) -- ++(0,0) -- ++(0,-3.5) node[mux, anchor = rpin 1](mux2_2){} -- (mux2_2.brpin 1)
+        (mux2_2.blpin 2) node[right]{$d_0$}         -- (mux2_2.lpin 2) coordinate (2_2d0)
+        (mux2_2.blpin 4) node[right]{$d_1$}         -- (mux2_2.lpin 4) coordinate (2_2d1)
+        (mux2_2.bbpin 1) node[above]{\small{$s$}}   -- (mux2_2.bpin 1) coordinate (2_2s) node[below] {$S_{N-2}$}
+        (mux2_2.brpin 1) node[left]{$y$}            -- (mux2_2.rpin 1) coordinate (2_2y)
+
+        (2_1d0) -- ++(0,0) -- ++(0,1.5) node[mux, anchor = rpin 1](mux3_1){} -- (mux3_1.brpin 1)
+        (mux3_1.blpin 2) node[right]{$d_0$}         -- (mux3_1.lpin 2) coordinate (3_1d0)
+        (mux3_1.blpin 4) node[right]{$d_1$}         -- (mux3_1.lpin 4) coordinate (3_1d1)
+        (mux3_1.bbpin 1) node[above]{\small{$s$}}   -- (mux3_1.bpin 1) coordinate (3_1s) node[below] {$S_{N-3}$}
+        (mux3_1.brpin 1) node[left]{$y$}            -- (mux3_1.rpin 1) coordinate (3_1y)
+
+        (2_1d1) -- ++(0,0) -- ++(0,-1.5) node[mux, anchor = rpin 1](mux3_2){} -- (mux3_2.brpin 1)
+        (mux3_2.blpin 2) node[right]{$d_0$}         -- (mux3_2.lpin 2) coordinate (3_2d0)
+        (mux3_2.blpin 4) node[right]{$d_1$}         -- (mux3_2.lpin 4) coordinate (3_2d1)
+        (mux3_2.bbpin 1) node[above]{\small{$s$}}   -- (mux3_2.bpin 1) coordinate (3_2s) node[below] {$S_{N-3}$}
+        (mux3_2.brpin 1) node[left]{$y$}            -- (mux3_2.rpin 1) coordinate (3_2y)
+
+        (2_2d0) -- ++(0,0) -- ++(0,1.5) node[mux, anchor = rpin 1](mux3_3){} -- (mux3_3.brpin 1)
+        (mux3_3.blpin 2) node[right]{$d_0$}         -- (mux3_3.lpin 2) coordinate (3_3d0)
+        (mux3_3.blpin 4) node[right]{$d_1$}         -- (mux3_3.lpin 4) coordinate (3_3d1)
+        (mux3_3.bbpin 1) node[above]{\small{$s$}}   -- (mux3_3.bpin 1) coordinate (3_3s) node[below] {$S_{N-3}$}
+        (mux3_3.brpin 1) node[left]{$y$}            -- (mux3_3.rpin 1) coordinate (3_3y)
+
+        (2_2d1) -- ++(0,0) -- ++(0,-1.5) node[mux, anchor = rpin 1](mux3_4){} -- (mux3_4.brpin 1)
+        (mux3_4.blpin 2) node[right]{$d_0$}         -- (mux3_4.lpin 2) coordinate (3_4d0)
+        (mux3_4.blpin 4) node[right]{$d_1$}         -- (mux3_4.lpin 4) coordinate (3_4d1)
+        (mux3_4.bbpin 1) node[above]{\small{$s$}}   -- (mux3_4.bpin 1) coordinate (3_4s) node[below] {$S_{N-3}$}
+        (mux3_4.brpin 1) node[left]{$y$}            -- (mux3_4.rpin 1) coordinate (3_4y)
+
+        (mux3_2.lpin 5) ++(-0.5,-1) node[left] {\Huge\dots}
+
+        (3_1d0) ++(-3,1.25) node[mux, anchor = rpin 1](mux0_1){}  -- (mux0_1.brpin 1)
+        (mux0_1.blpin 2) node[right]{$d_0$}       -- (mux0_1.lpin 2) coordinate (0_1d0) node[left]{$D_0$} 
+        (mux0_1.blpin 4) node[right]{$d_1$}       -- (mux0_1.lpin 4) coordinate (0_1d1) node[left]{$D_1$} 
+        (mux0_1.bbpin 1) node[above]{\small{$s$}} -- (mux0_1.bpin 1) coordinate (0_1s) node[below] {$S_0$}
+        (mux0_1.brpin 1) node[left]{$y$}          -- (mux0_1.rpin 1) coordinate (0_1y) -- ++(0,-1) -- ++(0.25,0)
+
+        (0_1y) ++(0,-3) node[mux, anchor = rpin 1](mux0_1){}  -- (mux0_1.brpin 1)
+        (mux0_1.blpin 2) node[right]{$d_0$}       -- (mux0_1.lpin 2) coordinate (0_1d0) node[left]{$D_2$} 
+        (mux0_1.blpin 4) node[right]{$d_1$}       -- (mux0_1.lpin 4) coordinate (0_1d1) node[left]{$D_3$} 
+        (mux0_1.bbpin 1) node[above]{\small{$s$}} -- (mux0_1.bpin 1) coordinate (0_1s) node[below] {$S_0$}
+        (mux0_1.brpin 1) node[left]{$y$}          -- (mux0_1.rpin 1) coordinate (0_1y) -- ++(0,1) -- ++(0.25,0)
+        
+        (0_1y) ++(0,-3) node[mux, anchor = rpin 1](mux0_1){}  -- (mux0_1.brpin 1)
+        (mux0_1.blpin 2) node[right]{$d_0$}       -- (mux0_1.lpin 2) coordinate (0_1d0) node[left]{$D_4$} 
+        (mux0_1.blpin 4) node[right]{$d_1$}       -- (mux0_1.lpin 4) coordinate (0_1d1) node[left]{$D_5$} 
+        (mux0_1.bbpin 1) node[above]{\small{$s$}} -- (mux0_1.bpin 1) coordinate (0_1s) node[below] {$S_0$}
+        (mux0_1.brpin 1) node[left]{$y$}          -- (mux0_1.rpin 1) coordinate (0_1y) -- ++(0,-1) -- ++(0.25,0)
+
+        (0_1y) ++(0,-3) node[mux, anchor = rpin 1](mux0_1){}  -- (mux0_1.brpin 1)
+        (mux0_1.blpin 2) node[right]{$d_0$}       -- (mux0_1.lpin 2) coordinate (0_1d0) node[left]{$D_6$} 
+        (mux0_1.blpin 4) node[right]{$d_1$}       -- (mux0_1.lpin 4) coordinate (0_1d1) node[left]{$D_7$} 
+        (mux0_1.bbpin 1) node[above]{\small{$s$}} -- (mux0_1.bpin 1) coordinate (0_1s) node[below] {$S_0$}
+        (mux0_1.brpin 1) node[left]{$y$}          -- (mux0_1.rpin 1) coordinate (0_1y) -- ++(0,1) -- ++(0.25,0)
+
+        (0_1y) ++(0,-3) node[mux, anchor = rpin 1](mux0_1){}  -- (mux0_1.brpin 1)
+        (mux0_1.blpin 2) node[right]{$d_0$}       -- (mux0_1.lpin 2) coordinate (0_1d0) node[left]{$D_8$} 
+        (mux0_1.blpin 4) node[right]{$d_1$}       -- (mux0_1.lpin 4) coordinate (0_1d1) node[left]{$D_9$} 
+        (mux0_1.bbpin 1) node[above]{\small{$s$}} -- (mux0_1.bpin 1) coordinate (0_1s) node[below] {$S_0$}
+        (mux0_1.brpin 1) node[left]{$y$}          -- (mux0_1.rpin 1) coordinate (0_1y) -- ++(0,-1) -- ++(0.25,0)
+
+        (0_1y) ++(0,-3) node[mux, anchor = rpin 1](mux0_1){}  -- (mux0_1.brpin 1)
+        (mux0_1.blpin 2) node[right]{$d_0$}       -- (mux0_1.lpin 2) coordinate (0_1d0) node[left]{$D_{10}$} 
+        (mux0_1.blpin 4) node[right]{$d_1$}       -- (mux0_1.lpin 4) coordinate (0_1d1) node[left]{$D_{11}$} 
+        (mux0_1.bbpin 1) node[above]{\small{$s$}} -- (mux0_1.bpin 1) coordinate (0_1s) node[below] {$S_0$}
+        (mux0_1.brpin 1) node[left]{$y$}          -- (mux0_1.rpin 1) coordinate (0_1y) -- ++(0,1) -- ++(0.25,0)
+        
+        (0_1s) ++(0,-1) node[label, rotate=-90]{\dots}
+        ;
+    \end{circuitikz}
+\end{center}
+
+
+\end{document}

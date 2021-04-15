@@ -1,0 +1,11 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"ECE4304_Midterm1_5_tb_func_synth.vhd" \
+"../../../../../ECE4304_Midterm1_VHDL.srcs/sim_1/new/ECE4304_Midterm1_1_tb.vhd" \
+"../../../../../ECE4304_Midterm1_VHDL.srcs/sim_1/new/ECE4304_Midterm1_2_tb.vhd" \
+"../../../../../ECE4304_Midterm1_VHDL.srcs/sim_1/new/ECE4304_Midterm1_3_tb.vhd" \
+"../../../../../ECE4304_Midterm1_VHDL.srcs/sim_1/new/ECE4304_Midterm1_4_tb.vhd" \
+"../../../../../ECE4304_Midterm1_VHDL.srcs/sim_1/new/ECE4304_Midterm1_5_tb.vhd" \
+
+# Do not sort compile order
+nosort

@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Wed Mar 24 08:37:08 2021
+# Process ID: 320
+# Current directory: D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab6/ECE4304L_Lab6_VHDL/ECE4304L_Lab6_VHDL.sim/sim_1/behav/xsim
+# Command line: wbtcv.exe -mode batch -source D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab6/ECE4304L_Lab6_VHDL/ECE4304L_Lab6_VHDL.sim/sim_1/behav/xsim/xsim.dir/downcounter_TB_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab6/ECE4304L_Lab6_VHDL/ECE4304L_Lab6_VHDL.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab6/ECE4304L_Lab6_VHDL/ECE4304L_Lab6_VHDL.sim/sim_1/behav/xsim\webtalk.jou
+#-----------------------------------------------------------
+source D:/Documents/workspace/CPP_Schoolworks/ECE4304L/ECE4304L_Lab6/ECE4304L_Lab6_VHDL/ECE4304L_Lab6_VHDL.sim/sim_1/behav/xsim/xsim.dir/downcounter_TB_behav/webtalk/xsim_webtalk.tcl -notrace

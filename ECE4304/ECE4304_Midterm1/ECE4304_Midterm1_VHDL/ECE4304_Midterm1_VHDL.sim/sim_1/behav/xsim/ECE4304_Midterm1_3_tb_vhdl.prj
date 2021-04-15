@@ -1,0 +1,16 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../ECE4304_Midterm1_VHDL.srcs/sources_1/new/NFA.vhd" \
+"../../../../ECE4304_Midterm1_VHDL.srcs/sources_1/new/ECE4304_Midterm1_4.vhd" \
+"../../../../ECE4304_Midterm1_VHDL.srcs/sources_1/new/DFlipflop.vhd" \
+"../../../../ECE4304_Midterm1_VHDL.srcs/sources_1/new/ECE4304_Midterm1_3.vhd" \
+"../../../../ECE4304_Midterm1_VHDL.srcs/sources_1/new/ECE4304_Midterm1_2.vhd" \
+"../../../../ECE4304_Midterm1_VHDL.srcs/sources_1/new/ECE4304_Midterm1_1.vhd" \
+"../../../../ECE4304_Midterm1_VHDL.srcs/sources_1/new/ECE4304_Midterm1_5.vhd" \
+"../../../../ECE4304_Midterm1_VHDL.srcs/sim_1/new/ECE4304_Midterm1_1_tb.vhd" \
+"../../../../ECE4304_Midterm1_VHDL.srcs/sim_1/new/ECE4304_Midterm1_2_tb.vhd" \
+"../../../../ECE4304_Midterm1_VHDL.srcs/sim_1/new/ECE4304_Midterm1_3_tb.vhd" \
+"../../../../ECE4304_Midterm1_VHDL.srcs/sim_1/new/ECE4304_Midterm1_4_tb.vhd" \
+
+# Do not sort compile order
+nosort

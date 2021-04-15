@@ -1,0 +1,1 @@
+.\pystuff\python.exe .\pystuff\chkoutput.py

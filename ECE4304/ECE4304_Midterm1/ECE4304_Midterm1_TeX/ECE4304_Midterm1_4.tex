@@ -1,0 +1,167 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[dvipsnames,table]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage[american,siunitx]{circuitikz}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xparse, xfp}
+\usepackage{multirow}
+\usepackage{tikz}
+\usepackage{karnaugh-map}
+\usepackage{pdfpages}
+\usepackage{pdflscape}
+\usepackage{hyperref}
+\usepackage{adjustbox}
+
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\usepackage{caption} 
+
+\makeatletter
+\ctikzset{lx/.code args={#1 and #2}{ 
+  \pgfkeys{/tikz/circuitikz/bipole/label/name=\parbox{1cm}{\centering #1  \\ #2}}
+    \ctikzsetvalof{bipole/label/unit}{}
+    \ifpgf@circ@siunitx 
+        \pgf@circ@handleSI{#2}
+        \ifpgf@circ@siunitx@res 
+            \edef\pgf@temp{\pgf@circ@handleSI@val}
+            \pgfkeyslet{/tikz/circuitikz/bipole/label/name}{\pgf@temp}
+            \edef\pgf@temp{\pgf@circ@handleSI@unit}
+            \pgfkeyslet{/tikz/circuitikz/bipole/label/unit}{\pgf@temp}
+        \else
+        \fi
+    \else
+    \fi
+}}
+
+\ctikzset{lx^/.style args={#1 and #2}{ 
+    lx=#2 and #1,
+    \circuitikzbasekey/bipole/label/position=90 } 
+}
+
+\ctikzset{lx_/.style args={#1 and #2}{ 
+    lx=#1 and #2,
+    \circuitikzbasekey/bipole/label/position=-90 } 
+}
+\makeatother
+
+\captionsetup[table]{skip=10pt}
+
+\usetikzlibrary{calc, automata, positioning}
+%\usepackage[landscape]{geometry}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\newcommand{\equal}{=}
+\newcommand{\greyrule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
+\makeatletter
+\newcommand\currcoor{\the\tikz@lastxsaved,\the\tikz@lastysaved}
+\makeatother
+\newcolumntype{:}{@{\hskip\tabcolsep\color{black!30}\vrule\hskip\tabcolsep}}
+
+\ExplSyntaxOn
+\NewExpandableDocumentCommand \groupify { O{\,\allowbreak} m m }
+  { \jakob_groupify:nnn {#1} {#2} {#3} }
+\cs_new:Npn \jakob_groupify:nnn #1 #2 #3
+  { \__jakob_groupify_loop:nnw { 1 } {#2} #3 \q_recursion_tail {#1} \q_recursion_stop }
+\cs_new:Npn \__jakob_groupify_loop:nnw #1 #2 #3
+  {
+    \quark_if_recursion_tail_stop:n {#3}
+    \exp_not:n {#3}
+    \int_compare:nNnTF {#1} = {#2}
+      { \__jakob_groupify_sep:n }
+      { \exp_args:Nf \__jakob_groupify_loop:nnw { \int_eval:n { #1+1 } } }
+          {#2}
+  }
+\cs_new:Npn \__jakob_groupify_sep:n #1 #2 \q_recursion_tail #3
+  {
+    \tl_if_empty:nF {#2} { \exp_not:n {#3} }
+    \__jakob_groupify_loop:nnw { 1 } {#1}
+    #2 \q_recursion_tail {#3}
+  }
+\ExplSyntaxOff
+
+% \title{ECE 3300\\Digital Circuit Design Using Verilog\\\,\\Exercise 3}
+% \author{Choi Tim Antony Yung}
+\begin{document}
+% \maketitle
+
+% \thispagestyle{empty}
+% \setcounter{page}{0}
+% \newpage
+
+\pagenumbering{gobble}
+
+
+\section*{Truth Table}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ccccc|c}
+    \toprule
+    $A$ & $B$ & $C$ & $D$ & $E$ & $maj$ \\
+    \midrule
+    0   & 0   & 0   & 0   & 0   & 0     \\
+    0   & 0   & 0   & 0   & 1   & 0     \\
+    0   & 0   & 0   & 1   & 0   & 0     \\
+    0   & 0   & 0   & 1   & 1   & 0     \\
+    0   & 0   & 1   & 0   & 0   & 0     \\
+    0   & 0   & 1   & 0   & 1   & 0     \\
+    0   & 0   & 1   & 1   & 0   & 0     \\
+    0   & 0   & 1   & 1   & 1   & 1     \\
+    0   & 1   & 0   & 0   & 0   & 0     \\
+    0   & 1   & 0   & 0   & 1   & 0     \\
+    0   & 1   & 0   & 1   & 0   & 0     \\
+    0   & 1   & 0   & 1   & 1   & 1     \\
+    0   & 1   & 1   & 0   & 0   & 0     \\
+    0   & 1   & 1   & 0   & 1   & 1     \\
+    0   & 1   & 1   & 1   & 0   & 1     \\
+    0   & 1   & 1   & 1   & 1   & 1     \\
+    1   & 0   & 0   & 0   & 0   & 0     \\
+    1   & 0   & 0   & 0   & 1   & 0     \\
+    1   & 0   & 0   & 1   & 0   & 0     \\
+    1   & 0   & 0   & 1   & 1   & 1     \\
+    1   & 0   & 1   & 0   & 0   & 0     \\
+    1   & 0   & 1   & 0   & 1   & 1     \\
+    1   & 0   & 1   & 1   & 0   & 1     \\
+    1   & 0   & 1   & 1   & 1   & 1     \\
+    1   & 1   & 0   & 0   & 0   & 0     \\
+    1   & 1   & 0   & 0   & 1   & 1     \\
+    1   & 1   & 0   & 1   & 0   & 1     \\
+    1   & 1   & 0   & 1   & 1   & 1     \\
+    1   & 1   & 1   & 0   & 0   & 1     \\
+    1   & 1   & 1   & 0   & 1   & 1     \\
+    1   & 1   & 1   & 1   & 0   & 1     \\
+    1   & 1   & 1   & 1   & 1   & 1     \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\newpage
+\section*{Karnaugh Maps}
+
+\begin{karnaugh-map}[4][4][2][$DE$][$BC$][$A$]
+\minterms{7,11,13,14,15,19,21,22,23,25,26,27,28,29,30,31}
+\implicant{7}{15}[0,1]
+\implicant{15}{11}[0,1]
+\implicant{13}{15}[0,1]
+\implicant{15}{14}[0,1]
+\implicant{5}{15}[1]
+\implicant{7}{14}[1]
+\implicant{15}{10}[1]
+\implicant{13}{11}[1]
+\implicant{12}{14}[1]
+\implicant{3}{11}[1]
+\end{karnaugh-map}
+
+\section*{function}
+$$maj(A,B,C,D,E)=\textcolor{red}{CDE}+\textcolor{green}{BDE}+\textcolor{cyan}{BCD}+\textcolor{YellowOrange}{BCE}+\textcolor{blue}{ACE}+\textcolor{magenta}{ACD}
+  +\textcolor{cyan}{ABE}+\textcolor{cyan}{ABD}+\textcolor{cyan}{ABC}+\textcolor{cyan}{ADE}$$
+
+\end{document}

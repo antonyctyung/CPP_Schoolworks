@@ -1,0 +1,110 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{indentfirst}
+
+\definecolor{codegreen}{rgb}{0,0.7,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{ECE 4310\\Operating Systems for Embedded Application\\\,\\Extra Credit 1}
+\author{Choi Tim Antony Yung}
+\date{May 13, 2021}
+\begin{document}
+\maketitle
+
+\thispagestyle{empty}
+\setcounter{page}{0}
+
+\newpage
+
+\section{What is the Mars 2020 team looking to implement in order to increase the productivity of the Mars 2020 rover?}
+
+The Mars 2020 team is looking to implement an onboard scheduler to:
+\begin{itemize}
+  \item depending on status of the rover not known to remote operators, plan extra activity
+ when more resources than planned is available without waiting for communication
+  \item create tasks on-board to reduce remote operator's time spent on doing that
+\end{itemize}
+
+\section{Explain the 3 main phases of the Mars 2020 rover’s mission.}
+\begin{enumerate}
+  \item Cruise: the spacecraft containing the rover travels from Earth to Mars
+  \item Entry Descent and Landing: the rover is being landed on Mars
+  \item Surface: the rover drives on Mars and perform tasks
+\end{enumerate}
+
+\section{Explain the hardware used in the onboard flight computer and operating system being utilized.}
+Hardware: BAE Rad750 single board computer
+\begin{itemize}
+  \item PowerPC architecture
+  \item 128 MB volatile DRAM
+  \item 133 MHz clock speed
+  \item 4 GB of NAND non-volatile memory on separate card
+\end{itemize}
+
+Operating system: VxWorks\texttrademark
+\begin{itemize}
+  \item RTOS
+  \item written in C
+  \item flight software decomposed into different module each running different VxWorks tasks
+  \item modules communicate with each other via inter-process communication (IPC)
+  \item priority queue that can be individually enabled/disabled to manage IPC messages
+\end{itemize}
+
+\section{What is a martian \textit{sol}?  Explain how it compares to that of time on earth?}
+A martian \textit{sol} is a solar day on Mars, which is equivalent to approximately 24 hours and 40 minutes
+
+\section{How are timelines, and their constraints, being used in this algorithm for planning of activities in the Mars 2020 rover?  Explain thoroughly.}
+Timelines are used to represent the projected states of the rover performing planned activities.
+Each timelines represents a state of the rover and a constraint on that timeline is the range of value that state should be in.
+An impact is a change in the value of the state the timeline is recording.
+When an activity is being planned, the algorithm goes through each timeline and make sure to start
+the activity at a time that does not bring the rover to a state that it should not be in by calculating
+its impacts on the timelines and whether or not it will violate the constraints of each timelines.
+
+\section{What algorithm are they looking at implementing for scheduling on the Mars 2020 rover and how will it help increase productivity of the rover?  Explain thoroughly.}
+A greedy algorithm is used to schedule activities. It add activities from highest priority to lowest, with all mandatory activities having a higher priority than all optional activities.
+For each activities, it will attempt to find an intersection of valid start time in all timelines
+such that no constraints in any timelines are violated.
+If there exist such a start time, the activity will then be added and new impacts and possibly new constraints will be added to the timelines.
+By using this algorithm, it can schedule the activities such that more activities can be performed 
+concurrently given that there are not violation on the constraints.
+
+\section{Explain in your own words whether you think this scheduling algorithm may or may not be effective in increasing the productivity of the Mars 2020 rover?}
+I believe that this scheduling algorithm is effective in increasing the productivity of the Mars 2020 rover.
+One of the goals of this scheduler is to allow for dynamic rescheduling of the activities on the rover without reaching to remote operators.
+The time delay in communication may produce missed opportunity in which an activity may be
+able to be squeezed in when performed activities uses less resources/ take less time etc.
+This scheduling algorithm helps mitigate that by dynamically rescheduling depending on the
+state of the rovers and new estimation of the state of the rover. 
+
+
+\end{document}

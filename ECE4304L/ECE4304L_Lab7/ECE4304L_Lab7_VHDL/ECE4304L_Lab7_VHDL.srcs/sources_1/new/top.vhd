@@ -26,7 +26,7 @@ end top;
 
 architecture Behavioral of top is
 
-    constant baud : integer := 9600;
+    constant baud : integer := 115200;
     constant top_g_clks_per_bit : integer := 100000000/baud;
 
     component hexAU IS
@@ -238,8 +238,10 @@ begin
           c7s_x3 => top_C(15 downto 12),
           c7s_x4 => top_B(3 downto 0),
           c7s_x5 => top_B(7 downto 4),
-          c7s_x6 => top_A(3 downto 0),
-          c7s_x7 => top_A(7 downto 4),
+          c7s_x6 => rx_data(3 downto 0),
+          c7s_x7 => rx_data(7 downto 4),
+          --c7s_x6 => top_A(3 downto 0),
+          --c7s_x7 => top_A(7 downto 4),
           c7s_en => "11111111",
           c7s_a_to_g => top_a_to_g,
           c7s_an => top_an,

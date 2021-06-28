@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-| Date             : Wed Apr  7 17:39:18 2021
+| Date             : Mon Apr 19 15:50:32 2021
 | Host             : DESKTOP-6CH2PUK running 64-bit major release  (build 9200)
 | Command          : report_power -file top_power_routed.rpt -pb top_power_summary_routed.pb -rpx top_power_routed.rpx
 | Design           : top
@@ -33,7 +33,7 @@ Table of Contents
 | Total On-Chip Power (W)  | 0.123        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.026        |
+| Dynamic (W)              | 0.025        |
 | Device Static (W)        | 0.097        |
 | Effective TJA (C/W)      | 4.6          |
 | Max Ambient (C)          | 84.4         |
@@ -52,17 +52,17 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.001 |        3 |       --- |             --- |
-| Slice Logic              |     0.002 |      476 |       --- |             --- |
-|   LUT as Logic           |     0.001 |      223 |     63400 |            0.35 |
-|   CARRY4                 |    <0.001 |       24 |     15850 |            0.15 |
-|   Register               |    <0.001 |      103 |    126800 |            0.08 |
-|   F7/F8 Muxes            |    <0.001 |        5 |     63400 |           <0.01 |
+| Clocks                   |    <0.001 |        3 |       --- |             --- |
+| Slice Logic              |     0.002 |      489 |       --- |             --- |
+|   LUT as Logic           |     0.002 |      228 |     63400 |            0.36 |
+|   CARRY4                 |    <0.001 |       20 |     15850 |            0.13 |
+|   Register               |    <0.001 |       99 |    126800 |            0.08 |
 |   LUT as Distributed RAM |    <0.001 |       24 |     19000 |            0.13 |
+|   F7/F8 Muxes            |    <0.001 |        4 |     63400 |           <0.01 |
 |   BUFG                   |    <0.001 |        1 |        32 |            3.13 |
 |   Others                 |     0.000 |       14 |       --- |             --- |
-| Signals                  |     0.002 |      355 |       --- |             --- |
-| I/O                      |     0.022 |       30 |       210 |           14.29 |
+| Signals                  |     0.002 |      353 |       --- |             --- |
+| I/O                      |     0.021 |       30 |       210 |           14.29 |
 | Static Power             |     0.097 |          |           |                 |
 | Total                    |     0.123 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
@@ -140,11 +140,10 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+----------+-----------+
-| Name     | Power (W) |
-+----------+-----------+
-| top      |     0.026 |
-|   FIFO_A |     0.001 |
-+----------+-----------+
++------+-----------+
+| Name | Power (W) |
++------+-----------+
+| top  |     0.025 |
++------+-----------+
 
 

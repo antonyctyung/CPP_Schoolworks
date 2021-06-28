@@ -1,0 +1,7 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../ECE4304L_SHA1_IMPL.srcs/sources_1/new/SHA1_CORE.vhd" \
+"../../../../ECE4304L_SHA1_IMPL.srcs/sim_1/new/SHA1_CORE_TB.vhd" \
+
+# Do not sort compile order
+nosort

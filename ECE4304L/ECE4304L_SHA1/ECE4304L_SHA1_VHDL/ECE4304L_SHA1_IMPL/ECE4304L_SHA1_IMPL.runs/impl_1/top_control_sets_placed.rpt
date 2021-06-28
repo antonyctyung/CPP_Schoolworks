@@ -1,0 +1,94 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Mon May 17 17:03:07 2021
+| Host         : DESKTOP-6CH2PUK running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file top_control_sets_placed.rpt
+| Design       : top
+| Device       : xc7a100t
+------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    16 |
+|    Minimum number of control sets                        |    16 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    56 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    16 |
+| >= 0 to < 4        |     2 |
+| >= 4 to < 6        |     1 |
+| >= 6 to < 8        |     1 |
+| >= 8 to < 10       |     1 |
+| >= 10 to < 12      |     3 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     0 |
+| >= 16              |     8 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              19 |            7 |
+| No           | No                    | Yes                    |              20 |            7 |
+| No           | Yes                   | No                     |              17 |            6 |
+| Yes          | No                    | No                     |             184 |           37 |
+| Yes          | No                    | Yes                    |              21 |            9 |
+| Yes          | Yes                   | No                     |             555 |          145 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++------------------------+------------------------------------------+---------------------------+------------------+----------------+
+|      Clock Signal      |               Enable Signal              |      Set/Reset Signal     | Slice Load Count | Bel Load Count |
++------------------------+------------------------------------------+---------------------------+------------------+----------------+
+|  top_clk_IBUF          | VGA/vga_sync_unit/E[0]                   | top_rst_IBUF              |                1 |              1 |
+|  VGA/vga_sync_unit/CLK |                                          | top_rst_IBUF              |                2 |              3 |
+|  top_Q_BUFG            | SHA1/tcnt200                             | SHA1/tcnt20[4]_i_1_n_0    |                2 |              5 |
+|  top_Q_BUFG            |                                          | top_rst_IBUF              |                4 |              6 |
+|  top_Q_BUFG            | RX/r_Clk_Count[8]_i_2_n_0                | RX/r_Clk_Count[8]_i_1_n_0 |                4 |              8 |
+|  VGA/vga_sync_unit/CLK | VGA/vga_sync_unit/v_count_reg[9]_i_1_n_0 | top_rst_IBUF              |                3 |             10 |
+|  VGA/vga_sync_unit/CLK | VGA/vga_sync_unit/E[0]                   | top_rst_IBUF              |                5 |             10 |
+| ~top_Q_BUFG            |                                          | top_rst_IBUF              |                2 |             11 |
+|  top_clk_IBUF          |                                          | top_rst_IBUF              |                5 |             17 |
+|  top_Q_BUFG            |                                          |                           |                7 |             19 |
+|  top_Q_BUFG            | SHA1/word_high0                          |                           |               11 |             24 |
+|  top_Q_BUFG            | SHA1/length0                             | top_rst_IBUF              |               16 |             61 |
+|  top_Q_BUFG            | SHA1/tcnt200                             | top_rst_IBUF              |               38 |            160 |
+|  top_Q_BUFG            | SHA1/h0                                  | top_rst_IBUF              |               40 |            160 |
+| ~top_Q_BUFG            | SHA1/E[0]                                | top_rst_IBUF              |               45 |            161 |
+|  top_Q_BUFG            | SHA1/hashing                             |                           |               26 |            256 |
++------------------------+------------------------------------------+---------------------------+------------------+----------------+
+
+

@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-| Date         : Wed Apr  7 17:38:48 2021
+| Date         : Mon Apr 19 15:50:03 2021
 | Host         : DESKTOP-6CH2PUK running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file top_control_sets_placed.rpt
 | Design       : top
@@ -27,7 +27,7 @@ Table of Contents
 |    Minimum number of control sets                        |    13 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    33 |
+| Unused register locations in slices containing registers |    37 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -44,9 +44,9 @@ Table of Contents
 | >= 4 to < 6        |     1 |
 | >= 6 to < 8        |     1 |
 | >= 8 to < 10       |     3 |
-| >= 10 to < 12      |     0 |
+| >= 10 to < 12      |     1 |
 | >= 12 to < 14      |     0 |
-| >= 14 to < 16      |     1 |
+| >= 14 to < 16      |     0 |
 | >= 16              |     5 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
@@ -58,34 +58,34 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              25 |           11 |
+| No           | No                    | No                     |              25 |            8 |
 | No           | No                    | Yes                    |              21 |            5 |
-| No           | Yes                   | No                     |              17 |            8 |
-| Yes          | No                    | No                     |              24 |            6 |
+| No           | Yes                   | No                     |              17 |            7 |
+| Yes          | No                    | No                     |              34 |           12 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              16 |            7 |
+| Yes          | Yes                   | No                     |               2 |            2 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+--------------------+--------------------------------------+------------------------------+------------------+----------------+
-|    Clock Signal    |             Enable Signal            |       Set/Reset Signal       | Slice Load Count | Bel Load Count |
-+--------------------+--------------------------------------+------------------------------+------------------+----------------+
-|  top_clk_IBUF_BUFG | FIFO_A/Empty_i_2__0_n_0              | FIFO_A/Empty_i_1__0_n_0      |                1 |              1 |
-|  top_clk_IBUF_BUFG | FIFO_B/Empty_i_2__1_n_0              | FIFO_B/Empty_i_1__1_n_0      |                1 |              1 |
-|  clock_out         |                                      | top_rst_IBUF                 |                3 |              5 |
-|  top_clk_IBUF_BUFG |                                      |                              |                3 |              7 |
-|  clock_out         | UART/FIFO/DataOut[7]_i_1_n_0         |                              |                2 |              8 |
-|  top_clk_IBUF_BUFG | FIFO_A/DataOut[7]_i_1__0_n_0         |                              |                2 |              8 |
-|  top_clk_IBUF_BUFG | FIFO_B/DataOut[7]_i_1__1_n_0         |                              |                2 |              8 |
-|  clock_out         | UART/r_Clk_Count[13]_i_2_n_0         | UART/r_Clk_Count[13]_i_1_n_0 |                5 |             14 |
-|  clock_out         | UART/FIFO/Memory_reg_0_3_0_5_i_1_n_0 |                              |                2 |             16 |
-|  top_clk_IBUF_BUFG | FIFO_A/Memory_reg_0_3_0_5_i_1__0_n_0 |                              |                2 |             16 |
-|  top_clk_IBUF_BUFG | FIFO_B/Memory_reg_0_3_0_5_i_1__1_n_0 |                              |                2 |             16 |
-|  clock_out         |                                      |                              |                8 |             18 |
-|  top_clk_IBUF_BUFG |                                      | top_rst_IBUF                 |               10 |             33 |
-+--------------------+--------------------------------------+------------------------------+------------------+----------------+
++--------------------+--------------------------------------+-------------------------+------------------+----------------+
+|    Clock Signal    |             Enable Signal            |     Set/Reset Signal    | Slice Load Count | Bel Load Count |
++--------------------+--------------------------------------+-------------------------+------------------+----------------+
+|  top_clk_IBUF_BUFG | FIFO_A/Empty_i_2__0_n_0              | FIFO_A/Empty_i_1__0_n_0 |                1 |              1 |
+|  top_clk_IBUF_BUFG | FIFO_B/Empty_i_2__1_n_0              | FIFO_B/Empty_i_1__1_n_0 |                1 |              1 |
+|  clock_out         |                                      | top_rst_IBUF            |                2 |              5 |
+|  top_clk_IBUF_BUFG |                                      |                         |                1 |              7 |
+|  clock_out         | UART/FIFO/DataOut[7]_i_1__1_n_0      |                         |                2 |              8 |
+|  top_clk_IBUF_BUFG | FIFO_A/DataOut[7]_i_1_n_0            |                         |                2 |              8 |
+|  top_clk_IBUF_BUFG | FIFO_B/DataOut[7]_i_1__0_n_0         |                         |                2 |              8 |
+|  clock_out         | UART/r_Clk_Count[9]_i_1_n_0          |                         |                6 |             10 |
+|  clock_out         | UART/FIFO/Memory_reg_0_3_0_5_i_1_n_0 |                         |                2 |             16 |
+|  top_clk_IBUF_BUFG | FIFO_A/Memory_reg_0_3_0_5_i_1__0_n_0 |                         |                2 |             16 |
+|  top_clk_IBUF_BUFG | FIFO_B/Memory_reg_0_3_0_5_i_1__1_n_0 |                         |                2 |             16 |
+|  clock_out         |                                      |                         |                7 |             18 |
+|  top_clk_IBUF_BUFG |                                      | top_rst_IBUF            |               10 |             33 |
++--------------------+--------------------------------------+-------------------------+------------------+----------------+
 
 

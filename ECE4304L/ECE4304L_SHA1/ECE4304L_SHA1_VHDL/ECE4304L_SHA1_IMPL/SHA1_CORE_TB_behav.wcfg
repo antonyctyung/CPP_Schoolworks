@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="SHA1_CORE_TB_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="SHA1_CORE_TB" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="4844542259fs"></ZoomEndTime>
+      <Cursor1Time time="0fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="251"></NameColumnWidth>
+      <ValueColumnWidth column_width="476"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="66" />
+   <wvobject fp_name="/SHA1_CORE_TB/tb_clk" type="logic">
+      <obj_property name="ElementShortName">tb_clk</obj_property>
+      <obj_property name="ObjectShortName">tb_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/tb_rst" type="logic">
+      <obj_property name="ElementShortName">tb_rst</obj_property>
+      <obj_property name="ObjectShortName">tb_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/tb_valid_in" type="logic">
+      <obj_property name="ElementShortName">tb_valid_in</obj_property>
+      <obj_property name="ObjectShortName">tb_valid_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/tb_last" type="logic">
+      <obj_property name="ElementShortName">tb_last</obj_property>
+      <obj_property name="ObjectShortName">tb_last</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/tb_valid_out" type="logic">
+      <obj_property name="ElementShortName">tb_valid_out</obj_property>
+      <obj_property name="ObjectShortName">tb_valid_out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/tb_ready_in" type="logic">
+      <obj_property name="ElementShortName">tb_ready_in</obj_property>
+      <obj_property name="ObjectShortName">tb_ready_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/tb_byte" type="array">
+      <obj_property name="ElementShortName">tb_byte[7:0]</obj_property>
+      <obj_property name="ObjectShortName">tb_byte[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/tb_hash" type="array">
+      <obj_property name="ElementShortName">tb_hash[159:0]</obj_property>
+      <obj_property name="ObjectShortName">tb_hash[159:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/clock_period" type="other">
+      <obj_property name="ElementShortName">clock_period</obj_property>
+      <obj_property name="ObjectShortName">clock_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/rst_in" type="logic">
+      <obj_property name="ElementShortName">rst_in</obj_property>
+      <obj_property name="ObjectShortName">rst_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/byte" type="array">
+      <obj_property name="ElementShortName">byte[7:0]</obj_property>
+      <obj_property name="ObjectShortName">byte[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/valid_in" type="logic">
+      <obj_property name="ElementShortName">valid_in</obj_property>
+      <obj_property name="ObjectShortName">valid_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/last" type="logic">
+      <obj_property name="ElementShortName">last</obj_property>
+      <obj_property name="ObjectShortName">last</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/hash" type="array">
+      <obj_property name="ElementShortName">hash[159:0]</obj_property>
+      <obj_property name="ObjectShortName">hash[159:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/valid_out" type="logic">
+      <obj_property name="ElementShortName">valid_out</obj_property>
+      <obj_property name="ObjectShortName">valid_out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/ready_in" type="logic">
+      <obj_property name="ElementShortName">ready_in</obj_property>
+      <obj_property name="ObjectShortName">ready_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/h0" type="array">
+      <obj_property name="ElementShortName">h0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">h0[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/h1" type="array">
+      <obj_property name="ElementShortName">h1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">h1[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/h2" type="array">
+      <obj_property name="ElementShortName">h2[31:0]</obj_property>
+      <obj_property name="ObjectShortName">h2[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/h3" type="array">
+      <obj_property name="ElementShortName">h3[31:0]</obj_property>
+      <obj_property name="ObjectShortName">h3[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/h4" type="array">
+      <obj_property name="ElementShortName">h4[31:0]</obj_property>
+      <obj_property name="ObjectShortName">h4[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/a" type="array">
+      <obj_property name="ElementShortName">a[31:0]</obj_property>
+      <obj_property name="ObjectShortName">a[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/b" type="array">
+      <obj_property name="ElementShortName">b[31:0]</obj_property>
+      <obj_property name="ObjectShortName">b[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/c" type="array">
+      <obj_property name="ElementShortName">c[31:0]</obj_property>
+      <obj_property name="ObjectShortName">c[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/d" type="array">
+      <obj_property name="ElementShortName">d[31:0]</obj_property>
+      <obj_property name="ObjectShortName">d[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/e" type="array">
+      <obj_property name="ElementShortName">e[31:0]</obj_property>
+      <obj_property name="ObjectShortName">e[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/f" type="array">
+      <obj_property name="ElementShortName">f[31:0]</obj_property>
+      <obj_property name="ObjectShortName">f[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/w" type="array">
+      <obj_property name="ElementShortName">w[31:0]</obj_property>
+      <obj_property name="ObjectShortName">w[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/k" type="array">
+      <obj_property name="ElementShortName">k[31:0]</obj_property>
+      <obj_property name="ObjectShortName">k[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/ch" type="array">
+      <obj_property name="ElementShortName">ch[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ch[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/parity" type="array">
+      <obj_property name="ElementShortName">parity[31:0]</obj_property>
+      <obj_property name="ObjectShortName">parity[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/maj" type="array">
+      <obj_property name="ElementShortName">maj[31:0]</obj_property>
+      <obj_property name="ObjectShortName">maj[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/rotl1" type="array">
+      <obj_property name="ElementShortName">rotl1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rotl1[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/rotl5" type="array">
+      <obj_property name="ElementShortName">rotl5[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rotl5[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/rotl30" type="array">
+      <obj_property name="ElementShortName">rotl30[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rotl30[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/wregxor" type="array">
+      <obj_property name="ElementShortName">wregxor[31:0]</obj_property>
+      <obj_property name="ObjectShortName">wregxor[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/word_low" type="array">
+      <obj_property name="ElementShortName">word_low[7:0]</obj_property>
+      <obj_property name="ObjectShortName">word_low[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/word_high" type="array">
+      <obj_property name="ElementShortName">word_high[31:8]</obj_property>
+      <obj_property name="ObjectShortName">word_high[31:8]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/length" type="array">
+      <obj_property name="ElementShortName">length[63:3]</obj_property>
+      <obj_property name="ObjectShortName">length[63:3]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/wreg" type="array">
+      <obj_property name="ElementShortName">wreg[1:16][31:0]</obj_property>
+      <obj_property name="ObjectShortName">wreg[1:16][31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/incnt4" type="array">
+      <obj_property name="ElementShortName">incnt4[1:0]</obj_property>
+      <obj_property name="ObjectShortName">incnt4[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/tcnt20" type="array">
+      <obj_property name="ElementShortName">tcnt20[4:0]</obj_property>
+      <obj_property name="ObjectShortName">tcnt20[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/tcnt4" type="array">
+      <obj_property name="ElementShortName">tcnt4[1:0]</obj_property>
+      <obj_property name="ObjectShortName">tcnt4[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/lasted" type="logic">
+      <obj_property name="ElementShortName">lasted</obj_property>
+      <obj_property name="ObjectShortName">lasted</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/skip" type="logic">
+      <obj_property name="ElementShortName">skip</obj_property>
+      <obj_property name="ObjectShortName">skip</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/done" type="logic">
+      <obj_property name="ElementShortName">done</obj_property>
+      <obj_property name="ObjectShortName">done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/hashing" type="logic">
+      <obj_property name="ElementShortName">hashing</obj_property>
+      <obj_property name="ObjectShortName">hashing</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/tcntunder20" type="logic">
+      <obj_property name="ElementShortName">tcntunder20</obj_property>
+      <obj_property name="ObjectShortName">tcntunder20</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/tcntunder16" type="logic">
+      <obj_property name="ElementShortName">tcntunder16</obj_property>
+      <obj_property name="ObjectShortName">tcntunder16</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/tcnt14or15" type="logic">
+      <obj_property name="ElementShortName">tcnt14or15</obj_property>
+      <obj_property name="ObjectShortName">tcnt14or15</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/tcnt20is19" type="logic">
+      <obj_property name="ElementShortName">tcnt20is19</obj_property>
+      <obj_property name="ObjectShortName">tcnt20is19</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/tcntis79" type="logic">
+      <obj_property name="ElementShortName">tcntis79</obj_property>
+      <obj_property name="ObjectShortName">tcntis79</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/init_h0" type="array">
+      <obj_property name="ElementShortName">init_h0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">init_h0[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/init_h1" type="array">
+      <obj_property name="ElementShortName">init_h1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">init_h1[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/init_h2" type="array">
+      <obj_property name="ElementShortName">init_h2[31:0]</obj_property>
+      <obj_property name="ObjectShortName">init_h2[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/init_h3" type="array">
+      <obj_property name="ElementShortName">init_h3[31:0]</obj_property>
+      <obj_property name="ObjectShortName">init_h3[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/init_h4" type="array">
+      <obj_property name="ElementShortName">init_h4[31:0]</obj_property>
+      <obj_property name="ObjectShortName">init_h4[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/k0" type="array">
+      <obj_property name="ElementShortName">k0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">k0[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/k1" type="array">
+      <obj_property name="ElementShortName">k1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">k1[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/k2" type="array">
+      <obj_property name="ElementShortName">k2[31:0]</obj_property>
+      <obj_property name="ObjectShortName">k2[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/k3" type="array">
+      <obj_property name="ElementShortName">k3[31:0]</obj_property>
+      <obj_property name="ObjectShortName">k3[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/one" type="array">
+      <obj_property name="ElementShortName">one[4:0]</obj_property>
+      <obj_property name="ObjectShortName">one[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/sixtyzeroes" type="array">
+      <obj_property name="ElementShortName">sixtyzeroes[63:4]</obj_property>
+      <obj_property name="ObjectShortName">sixtyzeroes[63:4]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/SHA1_CORE_TB/UUT/lenone" type="array">
+      <obj_property name="ElementShortName">lenone[63:3]</obj_property>
+      <obj_property name="ObjectShortName">lenone[63:3]</obj_property>
+   </wvobject>
+</wave_config>
